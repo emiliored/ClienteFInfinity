@@ -1,0 +1,58 @@
+.base{
+    -fx-background-image: url("/infinito/fondoGrisDegradado.jpg");
+    -fx-background-size: contain;
+    -fx-opacity: 0.2;
+/*    -fx-background-repeat: stretch;   
+    -fx-background-size: 900 506;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); */
+}
+.inicio{
+    -fx-font-size: 30pt;
+    -fx-font-family: "Segoe UI Black";
+    -fx-text-fill: black;
+}
+
+.hBox{
+    -fx-font-size: 16px;
+    -fx-font-family: "System";
+}
+.base1{
+    -fx-background-image: url("/infinito/fondoInicio.jpg");
+    -fx-background-size: contain;
+/*    -fx-background-repeat: stretch;   
+    -fx-background-size: 900 506;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); */
+}
+/*--------------------INICIO---------------------------------*/
+.parent{
+    -fx-background-color:transparent;
+}
+.pane{
+    -fx-background-color:#333333;
+}
+.trans-btn-white-border{
+    -fx-background-color:transparent;
+    -fx-background-radius:5px;
+    -fx-border-color:#cccccc;
+    -fx-border-radius:5px;
+    -fx-border-width:1px;
+    -fx-text-fill:whitesmoke;
+}
+.white-pane{
+    -fx-background-color:#FFFFFF;
+}
+.tf_box{
+    -fx-background-color:transparent;
+    -fx-border-color:#DEDEE4;
+    -fx-border-width:0px 0px 1px 0px;    
+}
+.tf{
+    -fx-background-color:transparent;    
+}
+.pink-btn{
+    -fx-background-color:#FF6B6B;
+    -fx-background-radius:5px;
+    -fx-text-fill:#FFFFFF;
+}
