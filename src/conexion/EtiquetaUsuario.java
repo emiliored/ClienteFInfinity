@@ -22,7 +22,7 @@ public class EtiquetaUsuario {
     public static List<Etiqueta> obtenerEtiquetasUsuarios(){
         Client client=ClientBuilder.newClient();
         return (List<Etiqueta>) client.target(
-             "http://"+IPSERVER+":8080/Servidor/servicios/etiqueta" )
+             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/etiqueta" )
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Etiqueta>>(){});
        
     }

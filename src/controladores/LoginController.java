@@ -58,6 +58,7 @@ public class LoginController implements Initializable {
             }
         });
         
+       
     }    
 
     @FXML
@@ -102,7 +103,7 @@ public class LoginController implements Initializable {
             StackPane pane = FXMLLoader.load(getClass().getResource(("/fxml/Splash.fxml")));
             loginParent.getChildren().setAll(pane);
 
-            javafx.animation.FadeTransition fadeIn = new javafx.animation.FadeTransition(Duration.seconds(1), pane);
+            javafx.animation.FadeTransition fadeIn = new javafx.animation.FadeTransition(Duration.seconds(4), pane);
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.setCycleCount(1);

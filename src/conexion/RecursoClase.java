@@ -24,7 +24,7 @@ public class RecursoClase {
     public static List<Recurso> obtenerRecursos(){
         Client client=ClientBuilder.newClient();
         return (List<Recurso>) client.target(
-             "http://"+IPSERVER+":8080/Servidor/servicios/recurso" )
+             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/recurso" )
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Recurso>>(){});
        
     }
@@ -32,7 +32,7 @@ public class RecursoClase {
     public static Recurso obtenerRecursosPorId(int idRecurso){
         Client client=ClientBuilder.newClient();
         return (Recurso) client.target(
-                    "http://"+IPSERVER+":8080/Servidor/servicios/recurso/"+ idRecurso )
+                    "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/recurso/"+ idRecurso )
                        .request(MediaType.APPLICATION_JSON).get(Recurso.class);
     }
 }

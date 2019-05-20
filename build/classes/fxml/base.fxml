@@ -87,7 +87,7 @@
                         <Font name="Modern No. 20" size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="vista" mnemonicParsing="false" onAction="#vista" prefHeight="35.0" prefWidth="123.0" text="Recursos">
+                  <Button fx:id="btnAnadirRecurso" mnemonicParsing="false" onAction="#anadirRecurso" prefHeight="35.0" prefWidth="123.0" text="Recursos">
                      <HBox.margin>
                         <Insets top="17.0" />
                      </HBox.margin>
@@ -96,7 +96,7 @@
                      </font></Button>
                   <HBox prefHeight="35.0" prefWidth="357.0" styleClass="boxBuscar" stylesheets="@../estilos/estilos.css">
                      <HBox.margin>
-                        <Insets bottom="15.0" left="20.0" top="15.0" />
+                        <Insets bottom="15.0" left="540.0" top="15.0" />
                      </HBox.margin>
                      <children>
                         <TextField onKeyPressed="#buscarRecursosHBox" prefHeight="38.0" prefWidth="320.0" style="-fx-background-color: white;" styleClass="tf" stylesheets="@../estilos/estilos.css">
@@ -111,8 +111,6 @@
                         </FontAwesomeIcon>
                      </children>
                   </HBox>
-                  <Button fx:id="boton" mnemonicParsing="false" onAction="#seleccionarArchivos" text="Button" />
-                  <TextField />
                </children></HBox>
          </top>
          <center>

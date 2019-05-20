@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,8 +44,9 @@ public class IdentificarController implements Initializable {
     @FXML
     private Label lbError;
     
-    static String superNombre;
+    static String superNombre;//Quitar importante, y usar usuario.
     
+    public static Usuario usuarioActual;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {        

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -44,7 +47,18 @@
             </Label>
             <JFXButton layoutX="132.0" layoutY="283.0" onAction="#registrar" prefWidth="130.0" styleClass="trans-btn-white-border" stylesheets="@../estilos/estilos.css" text="REGISTRATE" />
             <JFXButton layoutX="943.0" layoutY="284.0" onAction="#identificar" prefWidth="130.0" styleClass="trans-btn-white-border" stylesheets="@../estilos/estilos.css" text="IDENTIFICATE" />
-            <VBox fx:id="vbox" layoutX="25.0" layoutY="-85.0" prefHeight="600.0" prefWidth="600.0" styleClass="white-pane" stylesheets="@../estilos/estilos.css" />
+            <VBox fx:id="vbox" layoutX="25.0" layoutY="-85.0" prefHeight="600.0" prefWidth="600.0" styleClass="white-pane" stylesheets="@../estilos/estilos.css">
+               <children>
+                  <ImageView fitHeight="529.0" fitWidth="602.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/cargando2.gif" />
+                     </image>
+                     <VBox.margin>
+                        <Insets top="75.0" />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+            </VBox>
          </children>
       </Pane>
    </children>

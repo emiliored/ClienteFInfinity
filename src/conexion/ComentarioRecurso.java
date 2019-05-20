@@ -22,7 +22,7 @@ public class ComentarioRecurso {
      public static List<Comentario> obtenerComentariosRecursos(){
         Client client=ClientBuilder.newClient();
         return (List<Comentario>) client.target(
-             "http://"+IPSERVER+":8080/Servidor/servicios/comentario" )
+             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/comentario" )
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Comentario>>(){});
        
     }

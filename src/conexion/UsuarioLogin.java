@@ -7,12 +7,14 @@ package conexion;
 
 import static conexion.Conectar.IPSERVER;
 import conexion.objetos.Usuario;
+import controladores.IdentificarController;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 /**
@@ -24,12 +26,14 @@ public class UsuarioLogin {
    public static boolean loginUsuario(String apodoUser, String contrasenaUser){
         boolean respuesta=false;
         Client client=ClientBuilder.newClient();
-        int estadoServidor=(client.target(
-             "http://"+IPSERVER+":8080/Servidor/servicios/usuario/login?apodo="+apodoUser+"&contrasena="+contrasenaUser).request()
-                .get().getStatus());
-        if(Status.ACCEPTED.getStatusCode()==estadoServidor)
+        Response respuestaServidor=client.target(
+             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/usuario/login?apodo="+apodoUser+"&contrasena="+contrasenaUser).request()
+                .get();
+        if(Status.ACCEPTED.getStatusCode()==respuestaServidor.getStatus()){
+            IdentificarController.usuarioActual=respuestaServidor.readEntity(Usuario.class);
             respuesta=true;
-       return respuesta;
+        }    
+        return respuesta;
     }
    
     public static boolean registroUsuario(String nombreUser, String apellidosUser,String apodoUser, String contrasenaUser){
@@ -37,7 +41,7 @@ public class UsuarioLogin {
         Usuario u=new Usuario(null,apodoUser,nombreUser,apellidosUser,contrasenaUser,null);
         Client client=ClientBuilder.newClient();
         int estadoServidor=client.target(
-             "http://"+IPSERVER+":8080/Servidor/servicios/usuario/registro").request()
+             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/usuario/registro").request()
                 .put(Entity.entity(u,MediaType.APPLICATION_JSON)).getStatus();
         if(Status.CREATED.getStatusCode()==estadoServidor)
             respuesta=true;
