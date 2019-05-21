@@ -26,7 +26,9 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/estilos/estilos.css");
         stage.setScene(scene);
-        stage.show();                    
+        stage.show(); 
+        
+        
     }
 
     public static void main(String[] args) {

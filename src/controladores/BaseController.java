@@ -5,7 +5,6 @@
  */
 package controladores;
 
-
 import com.pepperonas.fxiconics.FxIconicsLabel;
 import com.pepperonas.fxiconics.MaterialColor;
 import com.pepperonas.fxiconics.gmd.FxFontGoogleMaterial;
@@ -17,7 +16,6 @@ import static conexion.RecursoClase.obtenerRecursosPorId;
 import conexion.objetos.Etiqueta;
 import conexion.objetos.Recurso;
 import static controladores.IdentificarController.superNombre;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -25,8 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +33,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -50,7 +46,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -70,11 +65,10 @@ import javafx.stage.Stage;
  */
 public class BaseController implements Initializable {
 
-    
-    @FXML 
+    @FXML
     private BorderPane border;
-    @FXML 
-    private StackPane baseStack;    
+    @FXML
+    private StackPane baseStack;
     @FXML
     private Accordion acordeonIzq;
     @FXML
@@ -92,38 +86,34 @@ public class BaseController implements Initializable {
     @FXML
     private Label lblApodoUsuario;
     @FXML
-    private Button vista;   
-    @FXML
     private FlowPane flow;
-    @FXML
-    private Button boton;
-    
-    ListView <String>lista = new ListView<>();
+
+    ListView<String> lista = new ListView<>();
     TextField textComentar = new TextField();
+    Parent parent;
     private Stage stage;
-    final FileChooser fileChooser = new FileChooser();
-    
-    
-        
-     
+
+    @FXML
+    private Button btnAnadirRecurso;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         lblApodoUsuario.setText(superNombre);
         //recibeParametros(text);
         acordeonIzq.expandedPaneProperty().addListener(
-            (ObservableValue<? extends TitledPane> ov, TitledPane old_val, 
-                TitledPane new_val) -> {
+                (ObservableValue<? extends TitledPane> ov, TitledPane old_val,
+                        TitledPane new_val) -> {
                     if (new_val != null) {
-                        prueba();   
+                        prueba();
                     }
-                }        
+                }
         );
         recurso();
     }
-    
+
     //Métodos nuestros.
-    private void prueba() {
+    public void prueba() {
         VBox contenido = new VBox();
         contenido.setStyle("-fx-background-color:#EAB0B2;");
         Label l;
@@ -149,14 +139,8 @@ public class BaseController implements Initializable {
         POPULARES.setContent(contenido);
     }
 
-    @FXML
-    private void vista(ActionEvent event) {
-        //recurso();
-    }
-        
-        private void recurso(){
-            
-        
+    public void recurso() {
+
         HBox hboxMultiple;
         List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
         System.out.println(listaRecursos);
@@ -205,13 +189,13 @@ public class BaseController implements Initializable {
     }
 
     private void addGrid(int idRecurso) {
-        
+
         GridPane gridRecurso = new GridPane();
         Recurso recurso = obtenerRecursosPorId(idRecurso);
-        
+
         flow.getChildren().removeAll();
         flow.getChildren().clear();
-        
+
         gridRecurso.setPrefSize(818.0, 691.0);
         gridRecurso.setPadding(new Insets(20));
         gridRecurso.setHgap(25);
@@ -225,7 +209,7 @@ public class BaseController implements Initializable {
         nombreRecurso.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridRecurso.add(nombreRecurso, 2, 0);
 
-        Text descripcion = new Text(recurso.getDescripcion());
+        Text descripcion = new Text("Descripción");
         descripcion.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridRecurso.add(descripcion, 1, 1, 2, 1);
 
@@ -240,12 +224,12 @@ public class BaseController implements Initializable {
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10));
-        vbox.setSpacing(8);              
+        vbox.setSpacing(8);
 
         Text title = new Text("TAGS");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         vbox.getChildren().add(title);
-        
+
         List<Etiqueta> listaEtiquetas = obtenerEtiquetasUsuarios();
         Hyperlink options[] = new Hyperlink[]{
             new Hyperlink("#" + "playa"),
@@ -262,8 +246,8 @@ public class BaseController implements Initializable {
             VBox.setMargin(options[i], new Insets(0, 0, 0, 8));
             vbox.getChildren().add(options[i]);
         }
-        
-        for(Etiqueta e : listaEtiquetas){
+
+        for (Etiqueta e : listaEtiquetas) {
             vbox.getChildren().add(new Hyperlink("#" + e.getEtiquetaPK().getNombre()));
         }
 
@@ -272,6 +256,15 @@ public class BaseController implements Initializable {
         Button descargar = new Button("DESCARGAR");
         descargar.setPrefSize(100, 20);
         descargar.setStyle("-fx-background-color: #FAE83C;");
+        descargar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                     FileChooser fileChooser = new FileChooser();
+              //Show save file dialog
+              File file = fileChooser.showSaveDialog(stage);
+              FicherosBinarios.descargar(recurso.getIdRecurso(),file);
+            }
+        });
         gridRecurso.add(descargar, 0, 3);
 
         Button volver = new Button("VOLVER");
@@ -314,43 +307,39 @@ public class BaseController implements Initializable {
 
         flow.getChildren().add(gridRecurso);
     }
-    
-    private void comentario(){
-        
+
+    private void comentario() {
+
         Date objDate = new Date(); // Sistema actual La fecha y la hora se asignan a objDate 
- 
-        System.out.println(objDate); 
+
+        System.out.println(objDate);
         String strDateFormat = "hh:mm:ss a dd-MMM-yyyy"; // El formato de fecha está especificado  
         SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat); // La cadena de formato de fecha se pasa como un argumento al objeto 
         String fecha = (objSDF.format(objDate)); // El formato de fecha se aplica a la fecha actual
-        
-        if (!"".equals(textComentar.getText())){
-            String texto ;
-            texto = (fecha +"  Usuario: "+superNombre+"\n"+ textComentar.getText());
+
+        if (!"".equals(textComentar.getText())) {
+            String texto;
+            texto = (fecha + "  Usuario: " + superNombre + "\n" + textComentar.getText());
             System.out.println(texto);
-            lista.getItems().add(texto+"\n");
+            lista.getItems().add(texto + "\n");
             textComentar.clear();
-        }   
+        }
     }
 
     @FXML
     private void buscarRecursosHBox(KeyEvent event) {
-        
-        if(event.getCode() == KeyCode.ENTER) { 
-            
-        }else{          
+
+        if (event.getCode() == KeyCode.ENTER) {
+
+        } else {
         }
     }
 
     @FXML
-    private void seleccionarArchivos(ActionEvent event) {
-        
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            Recurso r=new Recurso();
-            
-            FicherosBinarios.subir(file, r);
-        }
-        
+    private void anadirRecurso(ActionEvent event) throws IOException {
+
+        parent = FXMLLoader.load(getClass().getResource("/fxml/AnadirRecurso.fxml"));
+        flow.getChildren().clear();
+        flow.getChildren().add(parent);
     }
 }

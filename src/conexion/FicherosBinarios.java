@@ -34,21 +34,23 @@ public class FicherosBinarios {
             File ficheroComprimido = CompresionZip.comprimirFicheroTemp(fichero);
             InputStream is = new FileInputStream(ficheroComprimido);
             //Subir
-            int estado = cliente.target("http://"+IPSERVER+":8080/Servidor/servicios/recurso/subida?idUsuario="+r.getIdUsuario()+"&nombre=" + ficheroComprimido.getName() + "&descripcion="+r.getDescripcion()+"&visibilidad="+r.getVisibilidad())
+            int estado = cliente.target("http://"+IPSERVER+":8080/ServidorFInfinity/servicios/recurso/subida?idUsuario="+r.getIdUsuario()+"&nombre=" + fichero.getName().substring(0,fichero.getName().lastIndexOf("."))+".zip" + "&descripcion="+r.getDescripcion()+"&visibilidad="+r.getVisibilidad())
                     .request()
                     .post(Entity.entity(is, MediaType.APPLICATION_OCTET_STREAM)).getStatus();
+            if(estado!=Status.CREATED.getStatusCode())
+                boo=false;
         } catch(Exception e){
             boo=false;
         }
         return boo;
     }
 
-    public static boolean descargar(int idRecurso) {
+    public static boolean descargar(int idRecurso,File nuevoFichero) {
         boolean boo=true;
         try {
             Client cliente = ClientBuilder.newClient();
             //Descargar comprimido.
-            Response respuesta = cliente.target("http://"+IPSERVER+":8080/Servidor/servicios/recurso/descargar?idRecurso="+idRecurso) 
+            Response respuesta = cliente.target("http://"+IPSERVER+":8080/ServidorFInfinity/servicios/recurso/descargar?idRecurso="+idRecurso) 
                     .request(MediaType.APPLICATION_OCTET_STREAM)
                     .get();
             File fichero = File.createTempFile("temp", ".zip");
@@ -65,7 +67,7 @@ public class FicherosBinarios {
             os.close();
             is.close();
             }
-            if(!CompresionZip.descomprimirFicheros(fichero, CARPETACLIENTE))
+            if(!CompresionZip.descomprimirFicheros(fichero, nuevoFichero))
                 throw new Exception("Compresión fallida.");
         } catch (Exception ex) {
             Logger.getLogger(FicherosBinarios.class.getName()).log(Level.SEVERE, null, ex);

@@ -15,16 +15,15 @@ import java.util.Collection;
 public class Recurso implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     private Integer idRecurso;
     private String nombre;
     private String descripcion;
     private String filehash;
     private String ruta;
     private boolean visibilidad;
-//    private Collection<Visibilidad> visibilidadCollection;
-//    private Collection<Comentario> comentarioCollection;
-//    private Collection<Aprecio> aprecioCollection;
-    private Usuario idUsuario;
+    private int idUsuario;
+    private Usuario usuario;
 
     public Recurso() {
     }
@@ -33,13 +32,31 @@ public class Recurso implements Serializable {
         this.idRecurso = idRecurso;
     }
 
-    public Recurso(Integer idRecurso, String nombre, String descripcion, String filehash, String ruta, boolean visibilidad) {
+    public Recurso(Integer idRecurso, String nombre, String descripcion, String filehash, String ruta, boolean visibilidad, int idUsuario, Usuario usuario) {
         this.idRecurso = idRecurso;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.filehash = filehash;
         this.ruta = ruta;
         this.visibilidad = visibilidad;
+        this.idUsuario = idUsuario;
+        this.usuario = usuario;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Integer getIdRecurso() {
@@ -90,40 +107,6 @@ public class Recurso implements Serializable {
         this.visibilidad = visibilidad;
     }
 
-//    @JsonbTransient
-//    public Collection<Visibilidad> getVisibilidadCollection() {
-//        return visibilidadCollection;
-//    }
-
-//    public void setVisibilidadCollection(Collection<Visibilidad> visibilidadCollection) {
-//        this.visibilidadCollection = visibilidadCollection;
-//    }
-
-//    @JsonbTransient
-//    public Collection<Comentario> getComentarioCollection() {
-//        return comentarioCollection;
-//    }
-
-//    public void setComentarioCollection(Collection<Comentario> comentarioCollection) {
-//        this.comentarioCollection = comentarioCollection;
-//    }
-
-//    @JsonbTransient
-//    public Collection<Aprecio> getAprecioCollection() {
-//        return aprecioCollection;
-//    }
-
-//    public void setAprecioCollection(Collection<Aprecio> aprecioCollection) {
-//        this.aprecioCollection = aprecioCollection;
-//    }
-
-    public Usuario getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     @Override
     public int hashCode() {
@@ -147,8 +130,9 @@ public class Recurso implements Serializable {
 
     @Override
     public String toString() {
-        return "fish.payara.ejemploserverrest.Recurso[ idRecurso=" + idRecurso + " ]";
+        return "Recurso{" + "idRecurso=" + idRecurso + ", nombre=" + nombre + ", descripcion=" + descripcion + ", filehash=" + filehash + ", ruta=" + ruta + ", visibilidad=" + visibilidad + ", idUsuario=" + idUsuario + ", usuario=" + usuario + '}';
     }
-    
+
+   
 }
 

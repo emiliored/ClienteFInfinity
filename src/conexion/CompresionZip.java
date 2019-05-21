@@ -23,12 +23,13 @@ import java.util.zip.ZipOutputStream;
 public class CompresionZip {
     
      //Descomprimir ficheros zip.
-    public static boolean descomprimirFicheros(File ficheroZip,String rutaDestino){
+    public static boolean descomprimirFicheros(File ficheroZip,File nuevoFichero){
         boolean boo=true;
         try(ZipInputStream zis=new ZipInputStream(new FileInputStream(ficheroZip))){
             for(ZipEntry ze=zis.getNextEntry();Objects.nonNull(ze);ze=zis.getNextEntry()){
                 //Preparamos el nuevo fichero.
-                File nuevoFichero=new File(rutaDestino,ze.getName());
+                //File nuevoFichero=new File(rutaDestino,ze.getName());
+                nuevoFichero=new File(nuevoFichero+ze.getName().substring(ze.getName().lastIndexOf(".")));
                 //Leemos las entradas Zip.
                 if(!ze.isDirectory()){  //Fichero
                     FileOutputStream fos=new FileOutputStream(nuevoFichero);
