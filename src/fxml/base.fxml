@@ -94,6 +94,7 @@
                      <font>
                         <Font size="15.0" />
                      </font></Button>
+                  <Button fx:id="prueba" mnemonicParsing="false" onAction="#pruebas" prefHeight="25.0" prefWidth="47.0" text="Button" />
                   <HBox prefHeight="35.0" prefWidth="357.0" styleClass="boxBuscar" stylesheets="@../estilos/estilos.css">
                      <HBox.margin>
                         <Insets bottom="15.0" left="540.0" top="15.0" />

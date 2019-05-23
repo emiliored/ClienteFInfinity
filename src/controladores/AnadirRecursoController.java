@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
 import conexion.FicherosBinarios;
 import conexion.objetos.Recurso;
+//import static controladores.BaseController.baseStack;
 import static controladores.IdentificarController.superNombre;
 import static controladores.IdentificarController.usuarioActual;
 import java.io.File;
@@ -28,6 +29,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -56,7 +58,7 @@ public class AnadirRecursoController implements Initializable {
     private Parent parent;
     private File file;
     private Recurso r;
-    
+    private FlowPane flow;
 
     
     @Override
@@ -94,7 +96,14 @@ public class AnadirRecursoController implements Initializable {
     @FXML
     private void cancelar(ActionEvent event) throws IOException {
                 
-   
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(AnadirRecursoController.class.getResource("/fxml/base.fxml"));
+//        StackPane stack = loader.load();
+        
+         parent = FXMLLoader.load(getClass().getResource("/fxml/PanelUsuario.fxml"));
+        vistaSubirRecurso.getChildren().clear();
+        vistaSubirRecurso.getChildren().add(parent);
+        
     }
 
     @FXML

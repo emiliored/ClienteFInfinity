@@ -132,7 +132,7 @@ public class LoginController implements Initializable {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void cerrar() throws IOException{
+    public void cerrar() {
         
        
     }

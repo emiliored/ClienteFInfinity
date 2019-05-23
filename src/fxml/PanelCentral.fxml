@@ -11,12 +11,12 @@
    <children>
       <HBox fx:id="vistaRecursos" prefHeight="128.0" prefWidth="801.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <FontAwesomeIcon iconName="ARCHIVE" size="2em" wrappingWidth="32.30000019073486">
+            <FontAwesomeIcon fill="#5d09f8" iconName="ARCHIVE" size="2em" wrappingWidth="32.30000019073486">
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>
             </FontAwesomeIcon>
-            <JFXButton fx:id="btnVer" prefHeight="42.0" prefWidth="110.0" styleClass="hBox" stylesheets="@../estilos/estilos.css" text="VER">
+            <JFXButton fx:id="btnVer" prefHeight="42.0" prefWidth="110.0" style="-fx-background-color: #ee2727;" styleClass="hBox" stylesheets="@../estilos/estilos.css" text="VER" textFill="#fbfafa">
                <HBox.margin>
                   <Insets top="70.0" />
                </HBox.margin>

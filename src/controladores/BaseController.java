@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import com.jfoenix.controls.JFXButton;
 import com.pepperonas.fxiconics.FxIconicsLabel;
 import com.pepperonas.fxiconics.MaterialColor;
 import com.pepperonas.fxiconics.gmd.FxFontGoogleMaterial;
@@ -23,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,6 +49,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -57,6 +61,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import static javax.ws.rs.client.Entity.text;
 
 /**
  * FXML Controller class
@@ -65,24 +70,11 @@ import javafx.stage.Stage;
  */
 public class BaseController implements Initializable {
 
-    @FXML
-    private BorderPane border;
-    @FXML
-    private StackPane baseStack;
+    
     @FXML
     private Accordion acordeonIzq;
     @FXML
-    private Accordion acordeonDer;
-    @FXML
     private TitledPane POPULARES;
-    @FXML
-    private TitledPane MASVALORADAS;
-    @FXML
-    private TitledPane NOVEDADES;
-    @FXML
-    private TitledPane GENERAL;
-    @FXML
-    private TitledPane SINETIQUETAR;
     @FXML
     private Label lblApodoUsuario;
     @FXML
@@ -94,22 +86,51 @@ public class BaseController implements Initializable {
     private Stage stage;
 
     @FXML
+    private BorderPane border;
+    @FXML
     private Button btnAnadirRecurso;
+    @FXML
+    private TitledPane MASVALORADAS;
+    @FXML
+    private TitledPane NOVEDADES;
+    @FXML
+    private TitledPane GENERAL;
+    @FXML
+    private TitledPane SINETIQUETAR;
+    @FXML
+    private Accordion acordeonDer;
+    @FXML
+    private StackPane baseStack;
+    //------------------------------
+    //Vista HBox recurso
+    private HBox vistaRecursos;
+    private Label lblApodo;
+    private Label lblRecurso;
+    private Label lblDescripcion;
+    private JFXButton btnVer;
+    //-----------------------------
+    @FXML
+    private Button prueba;
+    
 
+
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        lblApodoUsuario.setText(superNombre);
-        //recibeParametros(text);
-        acordeonIzq.expandedPaneProperty().addListener(
-                (ObservableValue<? extends TitledPane> ov, TitledPane old_val,
-                        TitledPane new_val) -> {
-                    if (new_val != null) {
-                        prueba();
+        
+            lblApodoUsuario.setText(superNombre);
+            //recibeParametros(text);
+            acordeonIzq.expandedPaneProperty().addListener(
+                    (ObservableValue<? extends TitledPane> ov, TitledPane old_val,
+                            TitledPane new_val) -> {
+                        if (new_val != null) {
+                            prueba();
+                        }
                     }
-                }
-        );
-        recurso();
+            );
+           
+        //recurso();
     }
 
     //Métodos nuestros.
@@ -119,7 +140,7 @@ public class BaseController implements Initializable {
         Label l;
 
         List<Etiqueta> lista = EtiquetaUsuario.obtenerEtiquetasUsuarios();
-        System.out.println(lista);
+        //System.out.println(lista);
 
         for (Etiqueta e : lista) {
             l = (new Label("#" + e.getEtiquetaPK().getNombre()));
@@ -128,7 +149,7 @@ public class BaseController implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                        //TODO 
+                        
                         System.out.println("Hola");
                     }
                 }
@@ -138,7 +159,7 @@ public class BaseController implements Initializable {
         }
         POPULARES.setContent(contenido);
     }
-
+    
     public void recurso() {
 
         HBox hboxMultiple;
@@ -338,8 +359,50 @@ public class BaseController implements Initializable {
     @FXML
     private void anadirRecurso(ActionEvent event) throws IOException {
 
-        parent = FXMLLoader.load(getClass().getResource("/fxml/AnadirRecurso.fxml"));
+        parent = FXMLLoader.load(getClass().getResource("/fxml/AnadirRecurso.fxml"));        
         flow.getChildren().clear();
         flow.getChildren().add(parent);
+    }   
+    
+    public void acederRecursos() throws IOException {          
+
+        HBox hboxMultiple;
+        Label a=new Label();
+        Label b=new Label();
+        Label c=new Label();
+        JFXButton j = new JFXButton();
+        List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
+        System.out.println(listaRecursos);
+        flow.getChildren().removeAll();
+        flow.getChildren().clear();        
+
+        for (Recurso r : listaRecursos){             
+            
+            a.setText(r.getNombre());            
+            b.setText(r.getDescripcion());
+            c.setText(Integer.toString(r.getIdUsuario()));
+            j.setText("VER");
+            j.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    addGrid(r.getIdRecurso());
+                }
+            });
+            hboxMultiple = new HBox();
+            //hboxMultiple = FXMLLoader.load(getClass().getResource("/fxml/BoxRecurso.fxml")); 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BoxRecurso.fxml"));
+            hboxMultiple = loader.load();
+            BoxRecursoController con = (BoxRecursoController)loader.getController();
+            con.setLabelText(a.getText(), b.getText(),c.getText());
+            hboxMultiple.getChildren().addAll(a,b,c,j);
+            flow.getChildren().add(hboxMultiple);
+        }
+        
     }
+
+    @FXML
+    private void pruebas(ActionEvent event) throws IOException {
+        acederRecursos();
+    }
+
 }
