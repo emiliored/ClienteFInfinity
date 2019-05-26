@@ -57,12 +57,12 @@
          <right>
             <Accordion fx:id="acordeonDer" style="-fx-background-color: #E8FA3C;" BorderPane.alignment="CENTER">
               <panes>
-                <TitledPane animated="false" text="PUBLICAS">
+                <TitledPane fx:id="PUBLICAS" animated="false" text="PUBLICAS">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #DFDFDF;" />
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="PRIVADAS">
+                <TitledPane fx:id="PRIVADAS" animated="false" text="PRIVADAS">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;" />
                   </content>
@@ -74,19 +74,19 @@
             <Pane prefHeight="41.0" prefWidth="1200.0" style="-fx-background-color: #FF6B6B;" BorderPane.alignment="CENTER" />
          </bottom>
          <top>
-            <HBox prefHeight="84.0" prefWidth="1222.0" style="-fx-background-color: #52E3D2;" BorderPane.alignment="CENTER">
+            <HBox prefHeight="84.0" prefWidth="1222.0" style="-fx-background-color: #38C1AC;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="68.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imagenes/infinito2.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lblApodoUsuario" prefHeight="42.0" prefWidth="103.0" text="Label">
+                  <Label fx:id="lblApodoUsuario" prefHeight="42.0" prefWidth="103.0" style="-fx-text-fill: #ffffff;" text="Label">
                      <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
+                        <Insets left="10.0" top="15.0" />
                      </HBox.margin>
                      <font>
-                        <Font name="Modern No. 20" size="20.0" />
+                        <Font name="Agency FB Bold" size="34.0" />
                      </font>
                   </Label>
                   <Button fx:id="btnAnadirRecurso" contentDisplay="TOP" mnemonicParsing="false" onAction="#anadirRecurso" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #ffffff; -fx-background-radius: 30;" text="Listar">
@@ -143,7 +143,7 @@
          <center>
             <ScrollPane fx:id="scrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/estilos.css">
                <content>
-                  <FlowPane fx:id="flow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="693.0" prefWidth="820.0" style="-fx-background-color: gray;" />
+                  <FlowPane fx:id="flow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="693.0" prefWidth="820.0" style="-fx-background-color: #A9AEB7;" />
                </content>
                <styleClass>
                   <String fx:value="decrement-arrow" />

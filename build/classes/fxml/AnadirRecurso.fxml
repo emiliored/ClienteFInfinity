@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="vistaSubirRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="693.0" prefWidth="820.0" style="-fx-background-color: #00B8D0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.AnadirRecursoController">
+<AnchorPane id="AnchorPane" fx:id="vistaSubirRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="693.0" prefWidth="820.0" style="-fx-background-color: #007A8A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.AnadirRecursoController">
    <children>
       <JFXButton fx:id="btnSeleccionar" contentDisplay="TOP" layoutX="39.0" layoutY="191.0" onAction="#seleccionar" prefHeight="97.0" prefWidth="104.0" ripplerFill="#dfdfdf" style="-fx-background-color: #FF6B6B; -fx-background-radius: 45;" text="Seleccionar" textFill="WHITE">
          <font>
