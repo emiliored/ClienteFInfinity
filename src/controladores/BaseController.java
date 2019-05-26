@@ -5,10 +5,13 @@
  */
 package controladores;
 
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import com.jfoenix.controls.JFXButton;
 import com.pepperonas.fxiconics.FxIconicsLabel;
 import com.pepperonas.fxiconics.MaterialColor;
 import com.pepperonas.fxiconics.gmd.FxFontGoogleMaterial;
+import com.sun.javafx.font.Glyph;
 import conexion.EtiquetaUsuario;
 import static conexion.EtiquetaUsuario.obtenerEtiquetasUsuarios;
 import conexion.FicherosBinarios;
@@ -17,6 +20,8 @@ import static conexion.RecursoClase.obtenerRecursosPorId;
 import conexion.objetos.Etiqueta;
 import conexion.objetos.Recurso;
 import static controladores.IdentificarController.superNombre;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -192,29 +197,31 @@ public class BaseController implements Initializable {
             caja.setStyle("-fx-background-color: #FF6B6B;");
             
             hboxMultiple.setPrefSize(801, 128);
-            //hboxMultiple.setSpacing(15);
+            hboxMultiple.setSpacing(5);
             hboxMultiple.setStyle("-fx-background-color: #AA4747;");            
-//            hboxMultiple.setPadding(new Insets(15, 20, 10, 10));
+            hboxMultiple.setPadding(new Insets(30, 0, 0, 0));
             AnchorPane.setTopAnchor(hboxMultiple, 10.0);
             AnchorPane.setLeftAnchor(hboxMultiple, 10.0);
             AnchorPane.setRightAnchor(hboxMultiple, 10.0);
             AnchorPane.setBottomAnchor(hboxMultiple, 10.0);
             
+           
             
-//            FxIconicsLabel labelTextDefault = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
-//                    .size(2)
-//                    //.text("ARCHIVO")
-//                    .color(MaterialColor.WHITE)
-//                    .build();
-            //labelTextDefault.setPadding(new Insets(10, 0, 0, 10));//public Insets(double top,double right,double bottom,double left)
-
-            //hboxMultiple.getChildren().add(labelTextDefault);
-            JFXButton btVer = new JFXButton("VER");
-            //btVer.setPrefSize(110, 42);
-            btVer.setPadding(new Insets(60, 0, 0, 0));
+            FxIconicsLabel labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
+                    .size(30)
+                    //.text("ARCHIVO")
+                    .color(MaterialColor.WHITE)
+                    .build();
+            labIcon.setPadding(new Insets(-10, 0, 0, 10));//public Insets(double top,double right,double bottom,double left)
+            hboxMultiple.getChildren().add(labIcon);
+            
+            JFXButton btVer = new JFXButton();
+            btVer.setText("VER");
+            btVer.setPrefSize(104, 30);
+            //btVer.setPadding(new Insets(0, 0, 0, 0));
             btVer.setStyle("-fx-text-fill: #000000;"
                             +"-fx-background-color: #ffffff;"
-                            + "-fx-font-size: 16px;\n" 
+                            + "-fx-font-size: 15px;\n" 
                             +"-fx-font-family: \"System\"");
             btVer.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -225,26 +232,26 @@ public class BaseController implements Initializable {
 
             hboxMultiple.getChildren().add(btVer);
             Label lbApodo = new Label(superNombre);
-            lbApodo.setPrefSize(104, 35);
-            lbApodo.setPadding(new Insets(10, 0, 0, 20));
+            lbApodo.setPrefSize(90, 35);
+            lbApodo.setPadding(new Insets(0, 0, 0, 20));
             lbApodo.setStyle("-fx-text-fill: #ffffff;"
-                            + "-fx-font-size: 16px;\n" +
+                            + "-fx-font-size: 15px;\n" +
                             "-fx-font-family: \"System\"");
             hboxMultiple.getChildren().add(lbApodo);
 
             Label lbRecurso = new Label(r.getNombre());
-            lbRecurso.setPrefSize(105, 35);
-            lbRecurso.setPadding(new Insets(10, 0, 0, 20));
+            lbRecurso.setPrefSize(140, 35);
+            lbRecurso.setPadding(new Insets(0, 0, 0, 20));
             lbRecurso.setStyle("-fx-text-fill: #ffffff;"
-                            + "-fx-font-size: 16px;\n" +
+                            + "-fx-font-size: 15px;\n" +
                             "-fx-font-family: \"System\"");
             hboxMultiple.getChildren().add(lbRecurso);
 
             Label lblDescripcion = new Label(r.getDescripcion());
-            lblDescripcion.setPrefSize(351, 58);
-            lblDescripcion.setPadding(new Insets(50, 10, 10, 20));
+            lblDescripcion.setPrefSize(340, 58);
+            lblDescripcion.setPadding(new Insets(40, 10, 10, 20));
             lblDescripcion.setStyle("-fx-text-fill: #ffffff;"
-                            + "-fx-font-size: 16px;\n" +
+                            + "-fx-font-size: 15px;\n" +
                             "-fx-font-family: \"System\"");
             lblDescripcion.setAlignment(Pos.CENTER);
             hboxMultiple.getChildren().add(lblDescripcion);
