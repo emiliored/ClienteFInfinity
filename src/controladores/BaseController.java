@@ -5,13 +5,10 @@
  */
 package controladores;
 
-import de.jensd.fx.glyphs.GlyphsDude;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import com.jfoenix.controls.JFXButton;
 import com.pepperonas.fxiconics.FxIconicsLabel;
 import com.pepperonas.fxiconics.MaterialColor;
 import com.pepperonas.fxiconics.gmd.FxFontGoogleMaterial;
-import com.sun.javafx.font.Glyph;
 import conexion.EtiquetaUsuario;
 import conexion.FicherosBinarios;
 import conexion.RecursoClase;
@@ -19,8 +16,6 @@ import static conexion.RecursoClase.obtenerRecursosPorId;
 import conexion.objetos.Etiqueta;
 import conexion.objetos.Recurso;
 import static controladores.IdentificarController.superNombre;
-import de.jensd.fx.glyphs.GlyphsDude;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -28,9 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,25 +48,20 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.faces.flow.Flow;
-import static javax.ws.rs.client.Entity.text;
 import static conexion.EtiquetaUsuario.obtenerEtiquetasGenerales;
 import conexion.objetos.RecursoCliente;
+import javafx.application.Platform;
 
 /**
  * FXML Controller class
@@ -128,6 +115,8 @@ public class BaseController implements Initializable {
     private Label lblDescripcion;
     private JFXButton btnVer;
     //-----------------------------
+    @FXML
+    private JFXButton btnSalir;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -151,7 +140,7 @@ public class BaseController implements Initializable {
                     }
                 }
         );
-        //recurso();          
+                  
 
     }
 
@@ -375,7 +364,7 @@ public class BaseController implements Initializable {
             new Hyperlink("losnepesdeEmilio")};
 
         for (int i = 0; i < 9; i++) {
-            VBox.setMargin(options[i], new Insets(0, 0, 0, 8));
+            VBox.setMargin(options[i], new Insets(0, 0, 0, 6));
             vbox.getChildren().add(options[i]);
         }
 
@@ -405,7 +394,8 @@ public class BaseController implements Initializable {
         volver.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                recurso();
+                //recurso();
+                gridNuevo();
             }
         });
         gridRecurso.add(volver, 1, 3);
@@ -470,7 +460,8 @@ public class BaseController implements Initializable {
     @FXML
     private void anadirRecurso(ActionEvent event) {
 
-        recurso();
+        //recurso();
+        gridNuevo();
     }
 
     public void cargarListaRecursos() throws IOException {
@@ -523,5 +514,83 @@ public class BaseController implements Initializable {
         flow.getChildren().add(anchor);
         //border.setCenter(anchor);      
 
+    }
+
+    @FXML
+    private void salir(ActionEvent event) {
+        Platform.exit();
+    }
+    
+    public void gridNuevo(){
+        
+        GridPane gridPane = new GridPane();
+        List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
+        System.out.println(listaRecursos);
+        flow.getChildren().removeAll();
+        flow.getChildren().clear();
+
+        for (Recurso r : listaRecursos) {
+            gridPane = new GridPane();
+            gridPane.setPrefSize(801, 87);
+            FxIconicsLabel labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
+                       .size(30)
+                       //.text("ARCHIVO")
+                       .color(MaterialColor.WHITE)
+                       .build();
+            
+            JFXButton btVer = new JFXButton();
+            btVer.setText("VER");
+            btVer.setPrefSize(104, 30);
+            //btVer.setPadding(new Insets(0, 0, 0, 0));
+            btVer.setStyle("-fx-text-fill: #000000;"
+                    + "-fx-background-color: #ffffff;"
+                    + "-fx-font-size: 15px;\n"
+                    + "-fx-font-family: \"System\"");
+            btVer.setOnAction((ActionEvent e) -> {
+                addGrid(r.getIdRecurso());
+            }); 
+
+            Label lbRecurso = new Label(r.getNombre());
+            lbRecurso.setPrefSize(140, 35);
+            lbRecurso.setStyle("-fx-text-fill: #ffffff;"
+                                + "-fx-font-size: 15px;\n"
+                                + "-fx-font-family: \"System\"");
+            
+            Label lbApodo = new Label(superNombre);
+            lbApodo.setPrefSize(90, 35);            
+            lbApodo.setStyle("-fx-text-fill: #ffffff;"
+                    + "-fx-font-size: 15px;\n"
+                    + "-fx-font-family: \"System\"");
+            
+            Label lblDescripcion = new Label(r.getDescripcion());
+            lblDescripcion.setPrefSize(340, 58);
+            lblDescripcion.setStyle("-fx-text-fill: #ffffff;"
+                    + "-fx-font-size: 15px;\n"
+                    + "-fx-font-family: \"System\"");
+            lblDescripcion.wrapTextProperty();
+            //lblDescripcion.setAlignment(Pos.CENTER);
+            
+            Label lbUsuario = new Label("Usuario: ");
+            lbUsuario.setPrefSize(90, 35);
+            lbUsuario.setStyle("-fx-text-fill: #ffffff;"
+                    + "-fx-font-size: 14px;\n"
+                    + "-fx-font-family: \"System\"");
+            
+            Label lbNombreRecurso = new Label("Recurso ");
+            lbNombreRecurso.setPrefSize(90, 35); 
+            
+            Label lbDescripcion = new Label("Descripcion: ");
+            lbDescripcion.setPrefSize(90, 35); 
+
+            gridPane.add(labIcon, 0, 0, 1, 1);
+            gridPane.add(lbUsuario, 1, 0, 1, 1);
+            gridPane.add(lbNombreRecurso, 2, 0, 1, 1);
+            gridPane.add(lbDescripcion, 3, 0, 1, 1);
+            gridPane.add(btVer, 0, 1, 1, 1);
+            gridPane.add(lbApodo, 1, 1, 1, 1);
+            gridPane.add(lbRecurso, 2, 1, 1, 1);
+            gridPane.add(lblDescripcion, 3, 1, 1, 1);
+            flow.getChildren().add(gridPane);
+        }
     }
 }

@@ -34,7 +34,7 @@ public class FicherosBinarios {
             File ficheroComprimido = CompresionZip.comprimirFicheroTemp(fichero);
             InputStream is = new FileInputStream(ficheroComprimido);
             //Subir
-            int estado = cliente.target("http://"+IPSERVER+":8080/ServidorFInfinity/servicios/recurso/subida?idUsuario="+r.getIdUsuario()+"&nombre=" + fichero.getName().substring(0,fichero.getName().lastIndexOf("."))+".zip" + "&descripcion="+r.getDescripcion()+"&visibilidad="+r.getVisibilidad())
+            int estado = cliente.target("http://"+IPSERVER+":8080/ServidorFInfinity/servicios/recurso/subir?idUsuario="+r.getIdUsuario()+"&nombre=" + fichero.getName().substring(0,fichero.getName().lastIndexOf("."))+".zip" + "&descripcion="+r.getDescripcion()+"&visibilidad="+r.getVisibilidad())
                     .request()
                     .post(Entity.entity(is, MediaType.APPLICATION_OCTET_STREAM)).getStatus();
             if(estado!=Status.CREATED.getStatusCode())

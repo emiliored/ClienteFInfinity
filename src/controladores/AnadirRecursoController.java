@@ -11,14 +11,12 @@ import com.jfoenix.controls.JFXToggleButton;
 import conexion.FicherosBinarios;
 import conexion.objetos.Recurso;
 //import static controladores.BaseController.baseStack;
-import static controladores.IdentificarController.superNombre;
 import static controladores.IdentificarController.usuarioActual;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -26,13 +24,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -78,39 +74,44 @@ public class AnadirRecursoController implements Initializable {
 //            @Override
 //            public void changed (ObservableValue arg0, Object arg1, Object arg2){
 //                double height =(double) arg2;
-//                btnSeleccionar.setPrefHeight(height/5);
-//                tgVisibilidad.setPrefHeight(height/5);
-//                btnSubir.setPrefHeight(height/5);
+//                btnSeleccionar.setPrefHeight(height/2);
+//                tgVisibilidad.setPrefHeight(height/2);
+//                btnSubir.setPrefHeight(height/2);
 //                btnCancelar.setPrefHeight(height/5);
-//                txtAreaDescripcion.setPrefHeight(height/5);
-//                lbVisibilidad.setPrefHeight(height/5);
-//                lbSubido.setPrefHeight(height/5);
-//                btnEtiquetar.setPrefHeight(height/5);
-//                flowEtiquetas.setPrefHeight(height/5);
-//                txtEtiquetar.setPrefHeight(height/5);
+//                txtAreaDescripcion.setPrefHeight(height/2);
+//                lbVisibilidad.setPrefHeight(height/2);
+//                lbSubido.setPrefHeight(height/2);
+//                btnEtiquetar.setPrefHeight(height/2);
+//                flowEtiquetas.setPrefHeight(height/2);
+//                txtEtiquetar.setPrefHeight(height/2);
 //            }
+//
+////            @Override
+////            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+////                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+////            }
 //        });
 //        vistaSubirRecurso.widthProperty().addListener(new ChangeListener(){
 //            @Override
 //            public void changed (ObservableValue arg0, Object arg1, Object arg2){
 //                double width =(double) arg2;
-//                btnSeleccionar.setPrefHeight(width/5);
-//                tgVisibilidad.setPrefHeight(width/5);
-//                btnSubir.setPrefHeight(width/5);
-//                btnCancelar.setPrefHeight(width/5);
-//                txtAreaDescripcion.setPrefHeight(width/5);
-//                lbVisibilidad.setPrefHeight(width/5);
-//                lbSubido.setPrefHeight(width/5);
-//                btnEtiquetar.setPrefHeight(width/5);
-//                flowEtiquetas.setPrefHeight(width/5);
-//                txtEtiquetar.setPrefHeight(width/5);
+//                btnSeleccionar.setPrefHeight(width/2);
+//                tgVisibilidad.setPrefHeight(width/2);
+//                btnSubir.setPrefHeight(width/2);
+//                btnCancelar.setPrefHeight(width/2);
+//                txtAreaDescripcion.setPrefHeight(width/2);
+//                lbVisibilidad.setPrefHeight(width/2);
+//                lbSubido.setPrefHeight(width/2);
+//                btnEtiquetar.setPrefHeight(width/2);
+//                flowEtiquetas.setPrefHeight(width/2);
+//                txtEtiquetar.setPrefHeight(width/2);
 //            }
 //        });
     }    
 
     @FXML
     private void seleccionar(ActionEvent event) {
-        
+        lbSubido.setText("");
         file = fileChooser.showOpenDialog(stage);
         
     }
@@ -160,7 +161,7 @@ public class AnadirRecursoController implements Initializable {
     @FXML
     private void limpiaLabel(InputMethodEvent event) {
         
-        lbSubido.setText("");
+       // lbSubido.setText("");
     }
 
     @FXML
