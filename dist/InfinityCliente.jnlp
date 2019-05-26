@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="InfinityCliente.jar" size="1124050" download="eager" />
+    <jar href="InfinityCliente.jar" size="1901834" download="eager" />
     <jar href="lib\aopalliance-repackaged-2.5.0.jar" size="14212" download="eager" />
     <jar href="lib\fontawesomefx-8.1.jar" size="179086" download="eager" />
     <jar href="lib\fxiconics-0.0.5-jfx.jar" size="375168" download="eager" />

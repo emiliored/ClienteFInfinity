@@ -30,7 +30,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="102.0" layoutY="168.0" prefHeight="108.0" prefWidth="190.0" text="Si no tienes una cuenta, por favor registarte para usar la aplicacion." textFill="#f5f4f4" wrapText="true">
+            <Label layoutX="102.0" layoutY="168.0" prefHeight="108.0" prefWidth="190.0" text="Si no tienes una cuenta, por favor registrate para usar la aplicacion." textFill="#f5f4f4" wrapText="true">
                <font>
                   <Font size="16.0" />
                </font>

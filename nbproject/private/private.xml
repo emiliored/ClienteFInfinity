@@ -4,8 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/controladores/AnadirRecursoController.java</file>
+            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/controladores/PanelCentralController.java</file>
+            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/estilos/estilos.css</file>
             <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/controladores/BoxRecursoController.java</file>
+            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/fxml/BoxRecurso.fxml</file>
             <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/controladores/BaseController.java</file>
+            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/fxml/PanelCentral.fxml</file>
         </group>
     </open-files>
 </project-private>

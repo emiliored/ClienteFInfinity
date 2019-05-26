@@ -6,11 +6,7 @@
 package controladores;
 
 import com.jfoenix.controls.JFXButton;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
@@ -40,11 +36,36 @@ public class BoxRecursoController  {
         // TODO
     }    
     
-    public void setLabelText(String text1, String text2, String text3){
+    public void setLabelText(String text1, String text2, String text3,int i){
         
         lblRecurso.setText(text1);
         lblDescripcion.setText(text2);
         lblApodo.setText(text3);
+//        btnVer.setOnAction(new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent e) {
+//                   
+//                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/base.fxml"));
+//                        try {
+//                            Flow parent = loader.load();
+//                        } catch (IOException ex) {
+//                            Logger.getLogger(BoxRecursoController.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        BaseController con = (BaseController)loader.getController();
+//                        con.addGrid(i);
+//                        System.out.println(i);
+//                        
+//                }
+//            });
         
     }
+
+//    @FXML
+//    private void verRecurso(ActionEvent event) throws IOException {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/base.fxml"));
+//            Parent parent = loader.load();
+//            BaseController con = (BaseController)loader.getController();
+//            //con.addGrid();
+//    }
+//    
 }

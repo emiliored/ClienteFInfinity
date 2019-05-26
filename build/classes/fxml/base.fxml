@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -26,60 +28,60 @@
               <panes>
                 <TitledPane fx:id="POPULARES" animated="false" text="POPULARES">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #EAB0B2;" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FAE83C;" />
                   </content>
                 </TitledPane>
                 <TitledPane fx:id="MASVALORADAS" animated="false" text="MAS VALORADAS">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #9BBEB1;" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #C5F5F0;" />
                   </content>
                 </TitledPane>
                 <TitledPane fx:id="NOVEDADES" animated="false" text="NOVEDADES">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #EAB0B2;" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #A8A47E;" />
                   </content>
                 </TitledPane>
                   <TitledPane fx:id="GENERAL" animated="false" text="GENERAL">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #8C7271;" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #C5F263;" />
                      </content>
                   </TitledPane>
                   <TitledPane fx:id="SINETIQUETAR" animated="false" text="SIN ETIQUETAR">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #B8C5B8;" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FDF7BE;" />
                      </content>
                   </TitledPane>
               </panes>
             </Accordion>
          </left>
          <right>
-            <Accordion fx:id="acordeonDer" style="-fx-background-color: #EDE3EB;" BorderPane.alignment="CENTER">
+            <Accordion fx:id="acordeonDer" style="-fx-background-color: #E8FA3C;" BorderPane.alignment="CENTER">
               <panes>
                 <TitledPane animated="false" text="PUBLICAS">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #7F8693;" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #DFDFDF;" />
                   </content>
                 </TitledPane>
                 <TitledPane animated="false" text="PRIVADAS">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #F2EBEB;" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;" />
                   </content>
                 </TitledPane>
               </panes>
             </Accordion>
          </right>
          <bottom>
-            <Pane prefHeight="41.0" prefWidth="1200.0" style="-fx-background-color: #888BB6;" BorderPane.alignment="CENTER" />
+            <Pane prefHeight="41.0" prefWidth="1200.0" style="-fx-background-color: #FF6B6B;" BorderPane.alignment="CENTER" />
          </bottom>
          <top>
-            <HBox prefHeight="68.0" prefWidth="1200.0" style="-fx-background-color: #E16E6C;" BorderPane.alignment="CENTER">
+            <HBox prefHeight="84.0" prefWidth="1222.0" style="-fx-background-color: #52E3D2;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="68.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imagenes/infinito2.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lblApodoUsuario" prefHeight="42.0" prefWidth="80.0" text="Label">
+                  <Label fx:id="lblApodoUsuario" prefHeight="42.0" prefWidth="103.0" text="Label">
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
@@ -87,23 +89,47 @@
                         <Font name="Modern No. 20" size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnAnadirRecurso" mnemonicParsing="false" onAction="#anadirRecurso" prefHeight="35.0" prefWidth="123.0" text="Recursos">
+                  <Button fx:id="btnAnadirRecurso" contentDisplay="TOP" mnemonicParsing="false" onAction="#anadirRecurso" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #ffffff; -fx-background-radius: 30;" text="Listar">
                      <HBox.margin>
-                        <Insets top="17.0" />
+                        <Insets top="8.0" />
                      </HBox.margin>
                      <font>
-                        <Font size="15.0" />
-                     </font></Button>
-                  <Button fx:id="prueba" mnemonicParsing="false" onAction="#pruebas" prefHeight="25.0" prefWidth="47.0" text="Button" />
+                        <Font size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="38.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/icons8_list_64px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <JFXButton fx:id="btnAnadirRecEnBase" contentDisplay="TOP" onAction="#AnadirRecEnBase" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #ffffff; -fx-background-radius: 30;" text="Añadir">
+                     <HBox.margin>
+                        <Insets left="10.0" top="8.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="38.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/icons8_add_list_64px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </JFXButton>
                   <HBox prefHeight="35.0" prefWidth="357.0" styleClass="boxBuscar" stylesheets="@../estilos/estilos.css">
                      <HBox.margin>
-                        <Insets bottom="15.0" left="540.0" top="15.0" />
+                        <Insets bottom="15.0" left="500.0" top="15.0" />
                      </HBox.margin>
                      <children>
                         <TextField onKeyPressed="#buscarRecursosHBox" prefHeight="38.0" prefWidth="320.0" style="-fx-background-color: white;" styleClass="tf" stylesheets="@../estilos/estilos.css">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" top="5.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="13.0" />
+                           </font>
                         </TextField>
                         <FontAwesomeIcon glyphStyle="-fx-fill:DEDEE4" iconName="SEARCH" size="2em" wrappingWidth="36.0">
                            <HBox.margin>
@@ -115,10 +141,19 @@
                </children></HBox>
          </top>
          <center>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ScrollPane fx:id="scrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/estilos.css">
                <content>
-                  <FlowPane fx:id="flow" prefHeight="693.0" prefWidth="820.0" />
+                  <FlowPane fx:id="flow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="693.0" prefWidth="820.0" style="-fx-background-color: gray;" />
                </content>
+               <styleClass>
+                  <String fx:value="decrement-arrow" />
+                  <String fx:value="decrement-button" />
+                  <String fx:value="increment-arrow" />
+                  <String fx:value="scroll-bar" />
+                  <String fx:value="scroll-pane" />
+                  <String fx:value="thumb" />
+                  <String fx:value="track" />
+               </styleClass>
             </ScrollPane>
          </center>
       </BorderPane>

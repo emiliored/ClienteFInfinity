@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +43,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
@@ -50,17 +52,22 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.faces.flow.Flow;
 import static javax.ws.rs.client.Entity.text;
 
 /**
@@ -110,7 +117,9 @@ public class BaseController implements Initializable {
     private JFXButton btnVer;
     //-----------------------------
     @FXML
-    private Button prueba;
+    private JFXButton btnAnadirRecEnBase;
+    @FXML
+    private ScrollPane scrollPane;
     
 
 
@@ -118,6 +127,7 @@ public class BaseController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        
         
             lblApodoUsuario.setText(superNombre);
             //recibeParametros(text);
@@ -129,8 +139,12 @@ public class BaseController implements Initializable {
                         }
                     }
             );
-           
-        //recurso();
+//        try {    
+            //recurso();
+            //cargarListaRecursos();
+//        } catch (IOException ex) {
+//            Logger.getLogger(BaseController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     //Métodos nuestros.
@@ -161,56 +175,88 @@ public class BaseController implements Initializable {
     }
     
     public void recurso() {
-
+        
+        
         HBox hboxMultiple;
+        AnchorPane caja;
+
         List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
         System.out.println(listaRecursos);
         flow.getChildren().removeAll();
         flow.getChildren().clear();
 
         for (Recurso r : listaRecursos) {
+            caja = new AnchorPane();
             hboxMultiple = new HBox();
+            caja.setPrefSize(801, 128);            
+            caja.setStyle("-fx-background-color: #FF6B6B;");
+            
             hboxMultiple.setPrefSize(801, 128);
-            hboxMultiple.setSpacing(15);
-            hboxMultiple.setPadding(new Insets(15, 20, 10, 10));
-            FxIconicsLabel labelTextDefault = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
-                    .size(24)
-                    .text("ARCHIVO")
-                    .color(MaterialColor.ORANGE_500)
-                    .build();
-            labelTextDefault.setPadding(new Insets(10, 0, 0, 10));//public Insets(double top,double right,double bottom,double left)
+            //hboxMultiple.setSpacing(15);
+            hboxMultiple.setStyle("-fx-background-color: #AA4747;");            
+//            hboxMultiple.setPadding(new Insets(15, 20, 10, 10));
+            AnchorPane.setTopAnchor(hboxMultiple, 10.0);
+            AnchorPane.setLeftAnchor(hboxMultiple, 10.0);
+            AnchorPane.setRightAnchor(hboxMultiple, 10.0);
+            AnchorPane.setBottomAnchor(hboxMultiple, 10.0);
+            
+            
+//            FxIconicsLabel labelTextDefault = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
+//                    .size(2)
+//                    //.text("ARCHIVO")
+//                    .color(MaterialColor.WHITE)
+//                    .build();
+            //labelTextDefault.setPadding(new Insets(10, 0, 0, 10));//public Insets(double top,double right,double bottom,double left)
 
-            hboxMultiple.getChildren().add(labelTextDefault);
-            Button btnVer = new Button("VER");
-            btnVer.setPrefSize(110, 42);
-
-            btnVer.setOnAction(new EventHandler<ActionEvent>() {
+            //hboxMultiple.getChildren().add(labelTextDefault);
+            JFXButton btVer = new JFXButton("VER");
+            //btVer.setPrefSize(110, 42);
+            btVer.setPadding(new Insets(60, 0, 0, 0));
+            btVer.setStyle("-fx-text-fill: #000000;"
+                            +"-fx-background-color: #ffffff;"
+                            + "-fx-font-size: 16px;\n" 
+                            +"-fx-font-family: \"System\"");
+            btVer.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
                     addGrid(r.getIdRecurso());
                 }
             });
 
-            hboxMultiple.getChildren().add(btnVer);
+            hboxMultiple.getChildren().add(btVer);
             Label lbApodo = new Label(superNombre);
-            lbApodo.setPrefSize(136, 35);
+            lbApodo.setPrefSize(104, 35);
+            lbApodo.setPadding(new Insets(10, 0, 0, 20));
+            lbApodo.setStyle("-fx-text-fill: #ffffff;"
+                            + "-fx-font-size: 16px;\n" +
+                            "-fx-font-family: \"System\"");
             hboxMultiple.getChildren().add(lbApodo);
 
             Label lbRecurso = new Label(r.getNombre());
-            lbRecurso.setPrefSize(136, 35);
+            lbRecurso.setPrefSize(105, 35);
+            lbRecurso.setPadding(new Insets(10, 0, 0, 20));
+            lbRecurso.setStyle("-fx-text-fill: #ffffff;"
+                            + "-fx-font-size: 16px;\n" +
+                            "-fx-font-family: \"System\"");
             hboxMultiple.getChildren().add(lbRecurso);
 
             Label lblDescripcion = new Label(r.getDescripcion());
             lblDescripcion.setPrefSize(351, 58);
+            lblDescripcion.setPadding(new Insets(50, 10, 10, 20));
+            lblDescripcion.setStyle("-fx-text-fill: #ffffff;"
+                            + "-fx-font-size: 16px;\n" +
+                            "-fx-font-family: \"System\"");
             lblDescripcion.setAlignment(Pos.CENTER);
             hboxMultiple.getChildren().add(lblDescripcion);
+            caja.getChildren().add(hboxMultiple);
 
-            flow.getChildren().add(hboxMultiple);
+            flow.getChildren().add(caja);
         }
+        //border.setCenter(flow);
     }
 
-    private void addGrid(int idRecurso) {
-
+    public void addGrid(int idRecurso) {
+        
         GridPane gridRecurso = new GridPane();
         Recurso recurso = obtenerRecursosPorId(idRecurso);
 
@@ -325,8 +371,8 @@ public class BaseController implements Initializable {
         hb.setSpacing(10);
         hb.getChildren().addAll(lista);
         gridRecurso.add(hb, 0, 5, 3, 4);
-
         flow.getChildren().add(gridRecurso);
+        
     }
 
     private void comentario() {
@@ -357,20 +403,17 @@ public class BaseController implements Initializable {
     }
 
     @FXML
-    private void anadirRecurso(ActionEvent event) throws IOException {
-
-        parent = FXMLLoader.load(getClass().getResource("/fxml/AnadirRecurso.fxml"));        
-        flow.getChildren().clear();
-        flow.getChildren().add(parent);
+    private void anadirRecurso(ActionEvent event){
+        
+        recurso();
     }   
     
-    public void acederRecursos() throws IOException {          
+    public void cargarListaRecursos() throws IOException {          
 
-        HBox hboxMultiple;
+        AnchorPane hboxMultiple;
         Label a=new Label();
         Label b=new Label();
         Label c=new Label();
-        JFXButton j = new JFXButton();
         List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
         System.out.println(listaRecursos);
         flow.getChildren().removeAll();
@@ -381,28 +424,40 @@ public class BaseController implements Initializable {
             a.setText(r.getNombre());            
             b.setText(r.getDescripcion());
             c.setText(Integer.toString(r.getIdUsuario()));
-            j.setText("VER");
-            j.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent e) {
-                    addGrid(r.getIdRecurso());
-                }
-            });
-            hboxMultiple = new HBox();
+//            btnVer.setText("VER");
+//            btnVer.setOnAction(new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent e) {
+//                    addGrid(r.getIdRecurso());
+//                    System.out.println("entro");
+//                }
+//            });
+            hboxMultiple = new AnchorPane();
             //hboxMultiple = FXMLLoader.load(getClass().getResource("/fxml/BoxRecurso.fxml")); 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BoxRecurso.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PanelCentral.fxml"));
             hboxMultiple = loader.load();
-            BoxRecursoController con = (BoxRecursoController)loader.getController();
-            con.setLabelText(a.getText(), b.getText(),c.getText());
-            hboxMultiple.getChildren().addAll(a,b,c,j);
+            PanelCentralController controller = (PanelCentralController)loader.getController();
+            controller.setLabelText(a.getText(), b.getText(),c.getText());
             flow.getChildren().add(hboxMultiple);
         }
         
     }
+    
 
-    @FXML
-    private void pruebas(ActionEvent event) throws IOException {
-        acederRecursos();
+    public void ojo(Parent papa) throws IOException{
+        parent = FXMLLoader.load(getClass().getResource("/fxml/AnadirRecurso.fxml"));        
+        flow.getChildren().clear();
+        flow.getChildren().add(papa);
+        border.setCenter(papa);
     }
 
+    @FXML
+    private void AnadirRecEnBase(ActionEvent event) throws IOException {
+        
+        AnchorPane anchor = FXMLLoader.load(getClass().getResource("/fxml/AnadirRecurso.fxml"));        
+        flow.getChildren().clear();
+        flow.getChildren().add(anchor);
+        //border.setCenter(anchor);      
+
+    }
 }

@@ -15,9 +15,9 @@
          </image>
       </ImageView>
       <Pane opacity="0.45" prefHeight="800.0" prefWidth="1222.0" style="-fx-background-color: #000000;" />
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="BIENVENIDOS">
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="BIENVENIDOS" wrappingWidth="453.4140625">
          <font>
-            <Font name="Roboto Medium" size="56.0" />
+            <Font name="Jokerman" size="64.0" />
          </font>
       </Text>
    </children>

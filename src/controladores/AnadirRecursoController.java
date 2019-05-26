@@ -6,6 +6,7 @@
 package controladores;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import conexion.FicherosBinarios;
 import conexion.objetos.Recurso;
@@ -18,6 +19,8 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,18 +55,57 @@ public class AnadirRecursoController implements Initializable {
     private Label lbSubido;
     @FXML
     private AnchorPane vistaSubirRecurso;
+    @FXML
+    private JFXButton btnEtiquetar;
+    @FXML
+    private FlowPane flowEtiquetas;
+    @FXML
+    private JFXTextField txtEtiquetar;
 
     final FileChooser fileChooser = new FileChooser();
     private Stage stage;
     private Parent parent;
     private File file;
     private Recurso r;
-    private FlowPane flow;
+    private FlowPane flow;    
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        //Resize para componetes, pero son demasiados...pppffffffff
+//        vistaSubirRecurso.heightProperty().addListener(new ChangeListener(){
+//            @Override
+//            public void changed (ObservableValue arg0, Object arg1, Object arg2){
+//                double height =(double) arg2;
+//                btnSeleccionar.setPrefHeight(height/5);
+//                tgVisibilidad.setPrefHeight(height/5);
+//                btnSubir.setPrefHeight(height/5);
+//                btnCancelar.setPrefHeight(height/5);
+//                txtAreaDescripcion.setPrefHeight(height/5);
+//                lbVisibilidad.setPrefHeight(height/5);
+//                lbSubido.setPrefHeight(height/5);
+//                btnEtiquetar.setPrefHeight(height/5);
+//                flowEtiquetas.setPrefHeight(height/5);
+//                txtEtiquetar.setPrefHeight(height/5);
+//            }
+//        });
+//        vistaSubirRecurso.widthProperty().addListener(new ChangeListener(){
+//            @Override
+//            public void changed (ObservableValue arg0, Object arg1, Object arg2){
+//                double width =(double) arg2;
+//                btnSeleccionar.setPrefHeight(width/5);
+//                tgVisibilidad.setPrefHeight(width/5);
+//                btnSubir.setPrefHeight(width/5);
+//                btnCancelar.setPrefHeight(width/5);
+//                txtAreaDescripcion.setPrefHeight(width/5);
+//                lbVisibilidad.setPrefHeight(width/5);
+//                lbSubido.setPrefHeight(width/5);
+//                btnEtiquetar.setPrefHeight(width/5);
+//                flowEtiquetas.setPrefHeight(width/5);
+//                txtEtiquetar.setPrefHeight(width/5);
+//            }
+//        });
     }    
 
     @FXML
@@ -119,6 +161,10 @@ public class AnadirRecursoController implements Initializable {
     private void limpiaLabel(InputMethodEvent event) {
         
         lbSubido.setText("");
+    }
+
+    @FXML
+    private void etiquetar(ActionEvent event) {
     }
     
 }

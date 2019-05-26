@@ -1,62 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXScrollPane?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="vistaSubirRecurso" prefHeight="693.0" prefWidth="820.0" style="-fx-background-color: #FDF7BE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.AnadirRecursoController">
+<AnchorPane id="AnchorPane" fx:id="vistaSubirRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="693.0" prefWidth="820.0" style="-fx-background-color: #00B8D0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.AnadirRecursoController">
    <children>
-      <JFXButton fx:id="btnSeleccionar" contentDisplay="TOP" layoutX="100.0" layoutY="191.0" onAction="#seleccionar" prefHeight="138.0" prefWidth="104.0" ripplerFill="#dfdfdf" style="-fx-background-color: #FF6B6B; -fx-border-radius: 5px;" text="Seleccionar" textFill="WHITE">
+      <JFXButton fx:id="btnSeleccionar" contentDisplay="TOP" layoutX="39.0" layoutY="191.0" onAction="#seleccionar" prefHeight="97.0" prefWidth="104.0" ripplerFill="#dfdfdf" style="-fx-background-color: #FF6B6B; -fx-background-radius: 45;" text="Seleccionar" textFill="WHITE">
          <font>
-            <Font size="16.0" />
+            <Font size="15.0" />
          </font>
          <graphic>
-            <ImageView fitHeight="97.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="56.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../imagenes/Add%20File_100px.png" />
+                  <Image url="@../imagenes/icons8_add_list_64px.png" />
                </image>
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXToggleButton fx:id="tgVisibilidad" layoutX="362.0" layoutY="201.0" onAction="#visibilidad" text="Visibilidad ">
+      <JFXToggleButton fx:id="tgVisibilidad" layoutX="14.0" layoutY="82.0" onAction="#visibilidad" prefHeight="62.0" prefWidth="153.0" text="Visibilidad " textFill="WHITE" toggleColor="#8f000f" toggleLineColor="#c27878">
          <font>
-            <Font size="16.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </JFXToggleButton>
-      <JFXButton fx:id="btnSubir" layoutX="300.0" layoutY="298.0" onAction="#subir" prefHeight="97.0" prefWidth="104.0" style="-fx-background-color: #6465D9;" text="Subir">
+      <JFXButton fx:id="btnSubir" contentDisplay="TOP" layoutX="557.0" layoutY="191.0" onAction="#subir" prefHeight="97.0" prefWidth="104.0" style="-fx-background-color: #6465D9; -fx-background-radius: 45;" text="Subir" textFill="WHITE">
          <font>
-            <Font size="16.0" />
+            <Font size="15.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="56.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/icons8_ok_hand_64px.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnCancelar" layoutX="546.0" layoutY="298.0" onAction="#cancelar" prefHeight="97.0" prefWidth="104.0" style="-fx-background-color: #F0D49E;" text="Cancelar">
+      <JFXButton fx:id="btnCancelar" contentDisplay="TOP" layoutX="682.0" layoutY="191.0" onAction="#cancelar" prefHeight="97.0" prefWidth="104.0" style="-fx-background-color: #607D8B; -fx-background-radius: 45;" text="Cancelar" textFill="#fcf8f8">
          <font>
-            <Font size="16.0" />
+            <Font size="15.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="56.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/icons8_cancel_64px.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </JFXButton>
-      <Label layoutX="68.0" layoutY="43.0" prefHeight="39.0" prefWidth="89.0" text="Descripción:">
+      <Label layoutX="147.0" layoutY="43.0" prefHeight="39.0" prefWidth="104.0" text="Descripción:" textFill="WHITE">
          <font>
-            <Font size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <TextArea fx:id="txtAreaDescripcion" layoutX="182.0" layoutY="48.0" onInputMethodTextChanged="#limpiaLabel" prefHeight="97.0" prefWidth="522.0" />
-      <Label fx:id="lbVisibilidad" layoutX="515.0" layoutY="220.0" prefHeight="24.0" prefWidth="89.0" text="Privada">
+      <TextArea fx:id="txtAreaDescripcion" layoutX="276.0" layoutY="49.0" onInputMethodTextChanged="#limpiaLabel" prefHeight="97.0" prefWidth="522.0" style="-fx-background-color: #E8DAEE;">
          <font>
-            <Font size="16.0" />
+            <Font size="15.0" />
+         </font></TextArea>
+      <Label fx:id="lbVisibilidad" layoutX="162.0" layoutY="98.0" prefHeight="31.0" prefWidth="69.0" text="Privada" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <ImageView fitHeight="239.0" fitWidth="572.0" layoutX="124.0" layoutY="446.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="97.0" fitWidth="104.0" layoutX="227.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../imagenes/gifFile.gif" />
+            <Image url="@../imagenes/files.gif" />
          </image></ImageView>
-      <Label fx:id="lbSubido" alignment="CENTER" layoutX="124.0" layoutY="642.0" prefHeight="39.0" prefWidth="572.0">
+      <Label fx:id="lbSubido" alignment="CENTER" layoutX="124.0" layoutY="642.0" prefHeight="39.0" prefWidth="572.0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <JFXButton fx:id="btnEtiquetar" contentDisplay="TOP" layoutX="39.0" layoutY="315.0" onAction="#etiquetar" prefHeight="97.0" prefWidth="104.0" style="-fx-background-color: #C5F263; -fx-background-radius: 45;" text="Etiquetar" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="56.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/icons8_add_tag_64px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXScrollPane layoutX="410.0" layoutY="315.0" prefHeight="97.0" prefWidth="372.0" stylesheets="@../estilos/estilos.css">
+         <children>
+            <FlowPane fx:id="flowEtiquetas" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #E8DAEE;" />
+         </children>
+         <styleClass>
+            <String fx:value="scroll-pane" />
+            <String fx:value="scroll-bar" />
+            <String fx:value="decrement-arrow" />
+            <String fx:value="decrement-button" />
+            <String fx:value="increment-arrow" />
+            <String fx:value="track" />
+         </styleClass>
+      </JFXScrollPane>
+      <JFXTextField fx:id="txtEtiquetar" layoutX="231.0" layoutY="351.0" style="-fx-background-color: #E8DAEE;" />
+      <FontAwesomeIcon glyphStyle="-fx-fill: #FF6B6B" iconName="BACKWARD" layoutX="169.0" layoutY="250.0" size="3em" wrappingWidth="30.0" />
+      <FontAwesomeIcon glyphStyle="-fx-fill:  #C5F263" iconName="FORWARD" layoutX="167.0" layoutY="378.0" size="3em" text="" />
    </children>
 </AnchorPane>
