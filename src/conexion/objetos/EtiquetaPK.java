@@ -14,7 +14,6 @@ import java.io.Serializable;
 
     
 public class EtiquetaPK implements Serializable {
-
     
     private int idUsuario;    
     private String nombre;

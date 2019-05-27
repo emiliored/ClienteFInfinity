@@ -62,6 +62,7 @@ import javafx.stage.Stage;
 import static conexion.EtiquetaUsuario.obtenerEtiquetasGenerales;
 import conexion.objetos.RecursoCliente;
 import javafx.application.Platform;
+import javafx.scene.control.ContentDisplay;
 
 /**
  * FXML Controller class
@@ -108,12 +109,13 @@ public class BaseController implements Initializable {
     TextField textComentar = new TextField();
     Parent parent;
     private Stage stage;
-    //Vista HBox recurso
+    //Vista HBox recursosDinamicos
     private HBox vistaRecursos;
     private Label lblApodo;
     private Label lblRecurso;
     private Label lblDescripcion;
     private JFXButton btnVer;
+    Image cerrarTag = new Image("/imagenes/delete3.png");
     //-----------------------------
     @FXML
     private JFXButton btnSalir;
@@ -200,39 +202,42 @@ public class BaseController implements Initializable {
                     }
                 }));
             }
-             if (o instanceof String) { //PUBLICAS / PRIVADAS
+            if (o instanceof String) { //PUBLICAS / PRIVADAS
                 String s = (String) o;
-                l = new Label("#" + s);
+                tagButton(contenido, ("#" + s));
+                //l = new Label("#" + s);
+                
+//                l.setOnMouseClicked((new EventHandler<MouseEvent>() {
+//                    
+//                    @Override
+//                    public void handle(MouseEvent event) {
+//                        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+//
+//                            System.out.println("Hola");
+//                        }
+//                    }
+//                }));
+            }             
+            if (o instanceof RecursoCliente) {  //SIN ETIQUETAR
+                RecursoCliente rc = (RecursoCliente) o;
+                l = new Label("#" + rc.getNombre().substring(0, rc.getNombre().lastIndexOf(".")));
                 l.setOnMouseClicked((new EventHandler<MouseEvent>() {
-
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-
-                            System.out.println("Hola");
+                            //addGrid(rc.getIdRecurso());
                         }
                     }
                 }));
             }
-             
-                if (o instanceof RecursoCliente) {  //SIN ETIQUETAR
-                    RecursoCliente rc = (RecursoCliente) o;
-                    l = new Label("#" + rc.getNombre().substring(0, rc.getNombre().lastIndexOf(".")));
-                    l.setOnMouseClicked((new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                                //addGrid(rc.getIdRecurso());
-                            }
-                        }
-                    }));
-                }
-            contenido.getChildren().add(l);
+            if(! (o instanceof String)){//Solo añade cuando no es una instancia de String,el metodo tagButton añade los botones al box
+                
+            contenido.getChildren().add(l);}
         }
         return contenido;
     }
 
-    public void recurso() {
+    public void recursosDinamicos() {
 
         HBox hboxMultiple;
         AnchorPane caja;
@@ -274,7 +279,7 @@ public class BaseController implements Initializable {
                     + "-fx-font-size: 15px;\n"
                     + "-fx-font-family: \"System\"");
             btVer.setOnAction((ActionEvent e) -> {
-                addGrid(r.getIdRecurso());
+                addGridRecurso(r.getIdRecurso());
             });
 
             hboxMultiple.getChildren().add(btVer);
@@ -309,9 +314,10 @@ public class BaseController implements Initializable {
         //border.setCenter(flow);
     }
 
-    public void addGrid(int idRecurso) {
+    public void addGridRecurso(int idRecurso) {
 
         GridPane gridRecurso = new GridPane();
+        gridRecurso.setStyle("-fx-background-color: #AFB1CD;");
         Recurso recurso = obtenerRecursosPorId(idRecurso);
 
         flow.getChildren().removeAll();
@@ -323,14 +329,14 @@ public class BaseController implements Initializable {
         gridRecurso.setVgap(25);
 
         Text textRecurso = new Text("Nombre del archivo:");
-        textRecurso.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        textRecurso.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridRecurso.add(textRecurso, 1, 0);
 
         Text nombreRecurso = new Text(recurso.getNombre());
-        nombreRecurso.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        nombreRecurso.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridRecurso.add(nombreRecurso, 2, 0);
 
-        Text descripcion = new Text("Descripción");
+        Text descripcion = new Text("Descripción:");
         descripcion.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridRecurso.add(descripcion, 1, 1, 2, 1);
 
@@ -344,35 +350,35 @@ public class BaseController implements Initializable {
         gridRecurso.add(textDescripcion, 1, 2, 2, 1);
 
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10));
-        vbox.setSpacing(8);
+        vbox.setPadding(new Insets(3));
+        vbox.setSpacing(2);
 
         Text title = new Text("TAGS");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         vbox.getChildren().add(title);
 
         List<Etiqueta> listaEtiquetas = obtenerEtiquetasGenerales();
-        Hyperlink options[] = new Hyperlink[]{
-            new Hyperlink("#" + "playa"),
-            new Hyperlink("montaña"),
-            new Hyperlink("peliculas"),
-            new Hyperlink("losnepesdeEmilio"),
-            new Hyperlink("#" + "playa"),
-            new Hyperlink("montaña"),
-            new Hyperlink("montaña"),
-            new Hyperlink("peliculas"),
-            new Hyperlink("losnepesdeEmilio")};
-
-        for (int i = 0; i < 9; i++) {
-            VBox.setMargin(options[i], new Insets(0, 0, 0, 6));
-            vbox.getChildren().add(options[i]);
-        }
-
-        for (Etiqueta e : listaEtiquetas) {
+        for(Etiqueta e:listaEtiquetas){
+            
             vbox.getChildren().add(new Hyperlink("#" + e.getEtiquetaPK().getNombre()));
         }
+        gridRecurso.add(vbox, 4, 0, 2, 6);     
 
-        gridRecurso.add(vbox, 3, 0, 2, 4);
+        
+        Text tag = new Text("Añadir Tag");
+        tag.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        gridRecurso.add(tag, 3,0);
+        
+        TextField textField = new TextField();
+        textField.setPromptText("Tag nombre-ENTER ");
+        textField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                 vbox.getChildren().add(new Hyperlink("#" + textField.getText()));
+                //tagButton(tagsPane, textField.getText());
+                textField.clear();
+            }
+        });
+        gridRecurso.add(textField,3, 1);
 
         Button descargar = new Button("DESCARGAR");
         descargar.setPrefSize(100, 20);
@@ -425,7 +431,7 @@ public class BaseController implements Initializable {
         hb.setPadding(new Insets(10, 10, 10, 10));
         hb.setSpacing(10);
         hb.getChildren().addAll(lista);
-        gridRecurso.add(hb, 0, 5, 3, 4);
+        gridRecurso.add(hb, 0, 5, 3, 1);
         flow.getChildren().add(gridRecurso);
 
     }
@@ -484,7 +490,7 @@ public class BaseController implements Initializable {
 //            btnVer.setOnAction(new EventHandler<ActionEvent>() {
 //                @Override
 //                public void handle(ActionEvent e) {
-//                    addGrid(r.getIdRecurso());
+//                    addGridRecurso(r.getIdRecurso());
 //                    System.out.println("entro");
 //                }
 //            });
@@ -547,7 +553,7 @@ public class BaseController implements Initializable {
                     + "-fx-font-size: 15px;\n"
                     + "-fx-font-family: \"System\"");
             btVer.setOnAction((ActionEvent e) -> {
-                addGrid(r.getIdRecurso());
+                addGridRecurso(r.getIdRecurso());
             }); 
 
             Label lbRecurso = new Label(r.getNombre());
@@ -592,5 +598,15 @@ public class BaseController implements Initializable {
             gridPane.add(lblDescripcion, 3, 1, 1, 1);
             flow.getChildren().add(gridPane);
         }
+    }
+    
+    public void tagButton(VBox box,String tag){
+        ImageView iconCerrar = new ImageView(cerrarTag);
+        Button btTag = new Button(tag,iconCerrar);
+        btTag.setPrefHeight(20);
+        btTag.setContentDisplay(ContentDisplay.RIGHT);
+
+        btTag.setOnAction(event -> box.getChildren().remove(btTag));
+        box.getChildren().add(btTag);
     }
 }

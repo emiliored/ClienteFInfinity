@@ -58,12 +58,12 @@
               <panes>
                 <TitledPane fx:id="PUBLICAS" animated="false" text="PUBLICAS">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #DFDFDF;" />
+                    <AnchorPane minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #DFDFDF;" />
                   </content>
                 </TitledPane>
                 <TitledPane fx:id="PRIVADAS" animated="false" text="PRIVADAS">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;" />
+                    <AnchorPane minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;" />
                   </content>
                 </TitledPane>
               </panes>

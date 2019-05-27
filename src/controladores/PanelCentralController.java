@@ -68,7 +68,7 @@ public class PanelCentralController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResource("/fxml/BaseController.fxml"));
         BaseController controller = (BaseController)loader.getController();
-//        controller.addGrid(Integer.parseInt(lblId.getText()));
+//        controller.addGridRecurso(Integer.parseInt(lblId.getText()));
         
         System.out.println("Pulsado");
         List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
@@ -109,7 +109,7 @@ public class PanelCentralController implements Initializable {
 //                btnVer.setOnAction(new EventHandler<ActionEvent>() {
 //                    @Override
 //                    public void handle(ActionEvent e) {
-//                        //BaseController.addGrid(r.getIdRecurso());
+//                        //BaseController.addGridRecurso(r.getIdRecurso());
 //                    }
 //                });
 //                

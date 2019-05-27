@@ -16,8 +16,6 @@ public class Etiqueta implements Serializable{
     private static final long serialVersionUID = 1L;
 
     protected EtiquetaPK etiquetaPK;
-
-
     private Usuario usuario;
 
     public Etiqueta() {

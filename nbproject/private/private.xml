@@ -5,11 +5,9 @@
         <group>
             <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/controladores/AnadirRecursoController.java</file>
             <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/controladores/PanelCentralController.java</file>
-            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/estilos/estilos.css</file>
-            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/controladores/BoxRecursoController.java</file>
-            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/fxml/BoxRecurso.fxml</file>
             <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/controladores/BaseController.java</file>
-            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/fxml/PanelCentral.fxml</file>
+            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/fxml/gridRecursos.fxml</file>
+            <file>file:/C:/Users/Alfredo/Documents/GitHub/ClienteFInfinity/src/controladores/IdentificarController.java</file>
         </group>
     </open-files>
 </project-private>
