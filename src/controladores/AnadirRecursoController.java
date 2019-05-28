@@ -67,46 +67,8 @@ public class AnadirRecursoController implements Initializable {
 
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-        //Resize para componetes, pero son demasiados...pppffffffff
-//        vistaSubirRecurso.heightProperty().addListener(new ChangeListener(){
-//            @Override
-//            public void changed (ObservableValue arg0, Object arg1, Object arg2){
-//                double height =(double) arg2;
-//                btnSeleccionar.setPrefHeight(height/2);
-//                tgVisibilidad.setPrefHeight(height/2);
-//                btnSubir.setPrefHeight(height/2);
-//                btnCancelar.setPrefHeight(height/5);
-//                txtAreaDescripcion.setPrefHeight(height/2);
-//                lbVisibilidad.setPrefHeight(height/2);
-//                lbSubido.setPrefHeight(height/2);
-//                btnEtiquetar.setPrefHeight(height/2);
-//                flowEtiquetas.setPrefHeight(height/2);
-//                txtEtiquetar.setPrefHeight(height/2);
-//            }
-//
-////            @Override
-////            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-////                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-////            }
-//        });
-//        vistaSubirRecurso.widthProperty().addListener(new ChangeListener(){
-//            @Override
-//            public void changed (ObservableValue arg0, Object arg1, Object arg2){
-//                double width =(double) arg2;
-//                btnSeleccionar.setPrefHeight(width/2);
-//                tgVisibilidad.setPrefHeight(width/2);
-//                btnSubir.setPrefHeight(width/2);
-//                btnCancelar.setPrefHeight(width/2);
-//                txtAreaDescripcion.setPrefHeight(width/2);
-//                lbVisibilidad.setPrefHeight(width/2);
-//                lbSubido.setPrefHeight(width/2);
-//                btnEtiquetar.setPrefHeight(width/2);
-//                flowEtiquetas.setPrefHeight(width/2);
-//                txtEtiquetar.setPrefHeight(width/2);
-//            }
-//        });
+    public void initialize(URL url, ResourceBundle rb) {        
+    
     }    
 
     @FXML

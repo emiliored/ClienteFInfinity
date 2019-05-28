@@ -45,18 +45,6 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnCancelar" contentDisplay="TOP" layoutX="686.0" layoutY="191.0" onAction="#cancelar" prefHeight="97.0" prefWidth="104.0" style="-fx-background-color: #607D8B; -fx-background-radius: 45;" text="Cancelar" textFill="#fcf8f8">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="56.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/icons8_cancel_64px.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
       <Label layoutX="147.0" layoutY="43.0" prefHeight="39.0" prefWidth="104.0" text="Descripción:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />

@@ -204,7 +204,7 @@ public class BaseController implements Initializable {
             }
             if (o instanceof String) { //PUBLICAS / PRIVADAS
                 String s = (String) o;
-                tagButton(contenido, ("#" + s));
+                tagButton(contenido, ("#" + s));//Falta metodo para eliminar etiquetas de la base de datos
                 //l = new Label("#" + s);
                 
 //                l.setOnMouseClicked((new EventHandler<MouseEvent>() {
@@ -237,87 +237,10 @@ public class BaseController implements Initializable {
         return contenido;
     }
 
-    public void recursosDinamicos() {
-
-        HBox hboxMultiple;
-        AnchorPane caja;
-
-        List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
-        System.out.println(listaRecursos);
-        flow.getChildren().removeAll();
-        flow.getChildren().clear();
-
-        for (Recurso r : listaRecursos) {
-            caja = new AnchorPane();
-            hboxMultiple = new HBox();
-            caja.setPrefSize(801, 128);
-            caja.setStyle("-fx-background-color: #FF6B6B;");
-
-            hboxMultiple.setPrefSize(801, 128);
-            hboxMultiple.setSpacing(5);
-            hboxMultiple.setStyle("-fx-background-color: #AA4747;");
-            hboxMultiple.setPadding(new Insets(30, 0, 0, 0));
-            AnchorPane.setTopAnchor(hboxMultiple, 10.0);
-            AnchorPane.setLeftAnchor(hboxMultiple, 10.0);
-            AnchorPane.setRightAnchor(hboxMultiple, 10.0);
-            AnchorPane.setBottomAnchor(hboxMultiple, 10.0);
-
-            FxIconicsLabel labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
-                    .size(30)
-                    //.text("ARCHIVO")
-                    .color(MaterialColor.WHITE)
-                    .build();
-            labIcon.setPadding(new Insets(-10, 0, 0, 10));//public Insets(double top,double right,double bottom,double left)
-            hboxMultiple.getChildren().add(labIcon);
-
-            JFXButton btVer = new JFXButton();
-            btVer.setText("VER");
-            btVer.setPrefSize(104, 30);
-            //btVer.setPadding(new Insets(0, 0, 0, 0));
-            btVer.setStyle("-fx-text-fill: #000000;"
-                    + "-fx-background-color: #ffffff;"
-                    + "-fx-font-size: 15px;\n"
-                    + "-fx-font-family: \"System\"");
-            btVer.setOnAction((ActionEvent e) -> {
-                addGridRecurso(r.getIdRecurso());
-            });
-
-            hboxMultiple.getChildren().add(btVer);
-            Label lbApodo = new Label(superNombre);
-            lbApodo.setPrefSize(90, 35);
-            lbApodo.setPadding(new Insets(0, 0, 0, 20));
-            lbApodo.setStyle("-fx-text-fill: #ffffff;"
-                    + "-fx-font-size: 15px;\n"
-                    + "-fx-font-family: \"System\"");
-            hboxMultiple.getChildren().add(lbApodo);
-
-            Label lbRecurso = new Label(r.getNombre());
-            lbRecurso.setPrefSize(140, 35);
-            lbRecurso.setPadding(new Insets(0, 0, 0, 20));
-            lbRecurso.setStyle("-fx-text-fill: #ffffff;"
-                    + "-fx-font-size: 15px;\n"
-                    + "-fx-font-family: \"System\"");
-            hboxMultiple.getChildren().add(lbRecurso);
-
-            Label lblDescripcion = new Label(r.getDescripcion());
-            lblDescripcion.setPrefSize(340, 58);
-            lblDescripcion.setPadding(new Insets(40, 10, 10, 20));
-            lblDescripcion.setStyle("-fx-text-fill: #ffffff;"
-                    + "-fx-font-size: 15px;\n"
-                    + "-fx-font-family: \"System\"");
-            lblDescripcion.setAlignment(Pos.CENTER);
-            hboxMultiple.getChildren().add(lblDescripcion);
-            caja.getChildren().add(hboxMultiple);
-
-            flow.getChildren().add(caja);
-        }
-        //border.setCenter(flow);
-    }
-
-    public void addGridRecurso(int idRecurso) {
+    public void cargarRecursoCompleto(int idRecurso) {//Carga un recurso con toda la informacion (se ejecuta cuando en los recursos dinamicos se pulsa "VER"
 
         GridPane gridRecurso = new GridPane();
-        gridRecurso.setStyle("-fx-background-color: #AFB1CD;");
+        gridRecurso.setStyle("-fx-background-color: #FFCDCD;");
         Recurso recurso = obtenerRecursosPorId(idRecurso);
 
         flow.getChildren().removeAll();
@@ -401,7 +324,7 @@ public class BaseController implements Initializable {
             @Override
             public void handle(ActionEvent e) {
                 //recurso();
-                gridNuevo();
+                cargarListaRecursos();
             }
         });
         gridRecurso.add(volver, 1, 3);
@@ -459,61 +382,17 @@ public class BaseController implements Initializable {
 
         if (event.getCode() == KeyCode.ENTER) {
 
-        } else {
-        }
+        }else{}
     }
 
     @FXML
-    private void anadirRecurso(ActionEvent event) {
+    private void botonListarRecursos(ActionEvent event) {//Boton de la interfaz para listar los recursos
 
-        //recurso();
-        gridNuevo();
-    }
-
-    public void cargarListaRecursos() throws IOException {
-
-        AnchorPane hboxMultiple;
-        Label a = new Label();
-        Label b = new Label();
-        Label c = new Label();
-        List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
-        System.out.println(listaRecursos);
-        flow.getChildren().removeAll();
-        flow.getChildren().clear();
-
-        for (Recurso r : listaRecursos) {
-
-            a.setText(r.getNombre());
-            b.setText(r.getDescripcion());
-            c.setText(Integer.toString(r.getIdUsuario()));
-//            btnVer.setText("VER");
-//            btnVer.setOnAction(new EventHandler<ActionEvent>() {
-//                @Override
-//                public void handle(ActionEvent e) {
-//                    addGridRecurso(r.getIdRecurso());
-//                    System.out.println("entro");
-//                }
-//            });
-            hboxMultiple = new AnchorPane();
-            //hboxMultiple = FXMLLoader.load(getClass().getResource("/fxml/BoxRecurso.fxml")); 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PanelCentral.fxml"));
-            hboxMultiple = loader.load();
-            PanelCentralController controller = (PanelCentralController) loader.getController();
-            controller.setLabelText(a.getText(), b.getText(), c.getText());
-            flow.getChildren().add(hboxMultiple);
-        }
-
-    }
-
-    public void ojo(Parent papa) throws IOException {
-        parent = FXMLLoader.load(getClass().getResource("/fxml/AnadirRecurso.fxml"));
-        flow.getChildren().clear();
-        flow.getChildren().add(papa);
-        border.setCenter(papa);
+        cargarListaRecursos();
     }
 
     @FXML
-    private void AnadirRecEnBase(ActionEvent event) throws IOException {
+    private void vistaSubirRecurso(ActionEvent event) throws IOException {//Carga la vista para subir un recurso.
 
         AnchorPane anchor = FXMLLoader.load(getClass().getResource("/fxml/AnadirRecurso.fxml"));
         flow.getChildren().clear();
@@ -527,8 +406,9 @@ public class BaseController implements Initializable {
         Platform.exit();
     }
     
-    public void gridNuevo(){
-        
+    public void cargarListaRecursos(){//Carga dinamicamente una vista con la lista de recursos
+                
+        AnchorPane caja;
         GridPane gridPane = new GridPane();
         List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
         System.out.println(listaRecursos);
@@ -536,8 +416,21 @@ public class BaseController implements Initializable {
         flow.getChildren().clear();
 
         for (Recurso r : listaRecursos) {
+            
+            caja = new AnchorPane();
+            caja.setPrefSize(810, 87);
+            caja.setStyle("-fx-background-color: #FF6B6B;");
             gridPane = new GridPane();
-            gridPane.setPrefSize(801, 87);
+            gridPane.setPrefSize(808, 87);
+            gridPane.setStyle("-fx-background-color: #AA4747;");
+            gridPane.setPadding(new Insets(15));
+            gridPane.setHgap(40);
+            gridPane.setVgap(15);
+            AnchorPane.setTopAnchor(gridPane, 10.0);
+            AnchorPane.setLeftAnchor(gridPane, 10.0);
+            AnchorPane.setRightAnchor(gridPane, 10.0);
+            AnchorPane.setBottomAnchor(gridPane, 10.0);
+            
             FxIconicsLabel labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
                        .size(30)
                        //.text("ARCHIVO")
@@ -547,13 +440,12 @@ public class BaseController implements Initializable {
             JFXButton btVer = new JFXButton();
             btVer.setText("VER");
             btVer.setPrefSize(104, 30);
-            //btVer.setPadding(new Insets(0, 0, 0, 0));
             btVer.setStyle("-fx-text-fill: #000000;"
                     + "-fx-background-color: #ffffff;"
                     + "-fx-font-size: 15px;\n"
                     + "-fx-font-family: \"System\"");
-            btVer.setOnAction((ActionEvent e) -> {
-                addGridRecurso(r.getIdRecurso());
+            btVer.setOnAction((ActionEvent e) -> {//Carga la informacion de un recurso completo cuando se pulsa "VER".
+                cargarRecursoCompleto(r.getIdRecurso());
             }); 
 
             Label lbRecurso = new Label(r.getNombre());
@@ -576,17 +468,21 @@ public class BaseController implements Initializable {
             lblDescripcion.wrapTextProperty();
             //lblDescripcion.setAlignment(Pos.CENTER);
             
-            Label lbUsuario = new Label("Usuario: ");
+            Label lbUsuario = new Label("Usuario:");
             lbUsuario.setPrefSize(90, 35);
-            lbUsuario.setStyle("-fx-text-fill: #ffffff;"
-                    + "-fx-font-size: 14px;\n"
-                    + "-fx-font-family: \"System\"");
+            lbUsuario.setFont(Font.font("System", FontWeight.BOLD, 16));
+            lbUsuario.setStyle("-fx-text-fill: #ffffff;");
+                    
             
-            Label lbNombreRecurso = new Label("Recurso ");
-            lbNombreRecurso.setPrefSize(90, 35); 
+            Label lbNombreRecurso = new Label("Recurso:");
+            lbNombreRecurso.setPrefSize(90, 35);
+            lbNombreRecurso.setFont(Font.font("System", FontWeight.BOLD, 16));
+            lbNombreRecurso.setStyle("-fx-text-fill: #ffffff;");
             
-            Label lbDescripcion = new Label("Descripcion: ");
-            lbDescripcion.setPrefSize(90, 35); 
+            Label lbDescripcion = new Label("Descripcion:");
+            lbDescripcion.setPrefSize(100, 35);
+            lbDescripcion.setFont(Font.font("System", FontWeight.BOLD, 16));
+            lbDescripcion.setStyle("-fx-text-fill: #ffffff;");
 
             gridPane.add(labIcon, 0, 0, 1, 1);
             gridPane.add(lbUsuario, 1, 0, 1, 1);
@@ -596,7 +492,8 @@ public class BaseController implements Initializable {
             gridPane.add(lbApodo, 1, 1, 1, 1);
             gridPane.add(lbRecurso, 2, 1, 1, 1);
             gridPane.add(lblDescripcion, 3, 1, 1, 1);
-            flow.getChildren().add(gridPane);
+            caja.getChildren().add(gridPane);
+            flow.getChildren().add(caja);
         }
     }
     

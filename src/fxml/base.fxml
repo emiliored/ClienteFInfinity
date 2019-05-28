@@ -73,7 +73,7 @@
             <Pane prefHeight="41.0" prefWidth="1200.0" style="-fx-background-color: #FF6B6B;" BorderPane.alignment="CENTER" />
          </bottom>
          <top>
-            <HBox prefHeight="84.0" prefWidth="1222.0" style="-fx-background-color: #38C1AC;" BorderPane.alignment="CENTER">
+            <HBox prefHeight="84.0" prefWidth="1222.0" style="-fx-background-color: #BB91CD;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="68.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -88,7 +88,7 @@
                         <Font name="Agency FB Bold" size="34.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="btnAnadirRecurso" contentDisplay="TOP" mnemonicParsing="false" onAction="#anadirRecurso" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #DAE0E3; -fx-background-radius: 30;" text="Listar">
+                  <JFXButton fx:id="btnAnadirRecurso" contentDisplay="TOP" mnemonicParsing="false" onAction="#botonListarRecursos" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #DAE0E3; -fx-background-radius: 30;" text="Listar">
                      <HBox.margin>
                         <Insets top="8.0" />
                      </HBox.margin>
@@ -103,7 +103,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnAnadirRecEnBase" contentDisplay="TOP" onAction="#AnadirRecEnBase" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #DAE0E3; -fx-background-radius: 30;" text="Añadir">
+                  <JFXButton fx:id="btnAnadirRecEnBase" contentDisplay="TOP" onAction="#vistaSubirRecurso" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #DAE0E3; -fx-background-radius: 30;" text="Añadir">
                      <HBox.margin>
                         <Insets left="10.0" top="8.0" />
                      </HBox.margin>
@@ -158,7 +158,7 @@
          <center>
             <ScrollPane fx:id="scrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/estilos.css">
                <content>
-                  <FlowPane fx:id="flow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="693.0" prefWidth="820.0" style="-fx-background-color: #A9AEB7;" />
+                  <FlowPane fx:id="flow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="693.0" prefWidth="815.0" style="-fx-background-color: #A9AEB7;" />
                </content>
                <styleClass>
                   <String fx:value="decrement-arrow" />
