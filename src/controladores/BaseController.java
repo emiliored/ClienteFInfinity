@@ -338,7 +338,7 @@ public class BaseController implements Initializable {
         textComentar.setStyle("-fx-background-color: #FAE83C;");
         gridRecurso.add(textComentar, 1, 4, 2, 1);
 
-        ObservableList<String> data = FXCollections.observableArrayList("chocolate", "salmon", "gold");
+        ObservableList<String> data = FXCollections.observableArrayList("chocolate", "salmon", "gold");//Aqui cargar comentarios del recurso
 
         lista.setItems(data);
         lista.setPrefSize(500, 200);
@@ -347,6 +347,7 @@ public class BaseController implements Initializable {
             @Override
             public void handle(ActionEvent e) {
                 comentario();
+                //Aqui llamar metodo para guardar comentario
             }
         });
 
@@ -359,7 +360,7 @@ public class BaseController implements Initializable {
 
     }
 
-    private void comentario() {
+    private void comentario() {//Metodo que crea el comentario con fecha y usuario
 
         Date objDate = new Date(); // Sistema actual La fecha y la hora se asignan a objDate 
 
