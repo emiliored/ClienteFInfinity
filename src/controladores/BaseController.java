@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.pepperonas.fxiconics.FxIconicsLabel;
 import com.pepperonas.fxiconics.MaterialColor;
 import com.pepperonas.fxiconics.gmd.FxFontGoogleMaterial;
+import conexion.ComentarioRecurso;
 import conexion.EtiquetaUsuario;
 import conexion.FicherosBinarios;
 import conexion.RecursoClase;
@@ -59,8 +60,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import static conexion.EtiquetaUsuario.obtenerEtiquetasGenerales;
-import conexion.objetos.RecursoCliente;
+import conexion.objetos.Comentario;
+import conexion.objetos.ComentarioPK;
+import conexion.objetos.EtiquetaPK;
+import conexion.objetos.Visibilidad;
+import conexion.objetos.VisibilidadPK;
+import java.util.Collection;
 import javafx.application.Platform;
 import javafx.scene.control.ContentDisplay;
 
@@ -116,6 +121,8 @@ public class BaseController implements Initializable {
     private Label lblDescripcion;
     private JFXButton btnVer;
     Image cerrarTag = new Image("/imagenes/delete3.png");
+
+    private int idRecurso;  //MEJORAR  --- id del recurso que está visualizando el usuario actualmente.
     //-----------------------------
     @FXML
     private JFXButton btnSalir;
@@ -142,14 +149,12 @@ public class BaseController implements Initializable {
                     }
                 }
         );
-                  
-
+        cargarListaRecursos(RecursoClase.obtenerRecursos());
     }
 
     //Métodos nuestros.
     public void cargarListasTags(TitledPane tp) {
 
-        int i = 3;    //IDUSUARIO recuperarlo-----------------------------------------*********
         VBox contenido = null;
         //Switch para cargar el TitledPane apropiado.
         System.out.println(tp.getText());
@@ -170,10 +175,10 @@ public class BaseController implements Initializable {
                 contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerRecursoSinEtiquetar());
                 break;
             case "PUBLICAS":
-                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(i));
+                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(IdentificarController.usuarioActual.getIdUsuario()));
                 break;
             case "PRIVADAS":
-                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(i));
+                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(IdentificarController.usuarioActual.getIdUsuario()));
                 break;
 
         }
@@ -196,43 +201,31 @@ public class BaseController implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-
-                            System.out.println("Hola");
+                            System.out.println("Has pinchado en una etiqueta."+e);
+                            cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(e.getEtiquetaPK().getNombre()));
                         }
                     }
                 }));
             }
             if (o instanceof String) { //PUBLICAS / PRIVADAS
                 String s = (String) o;
-                tagButton(contenido, ("#" + s));//Falta metodo para eliminar etiquetas de la base de datos
-                //l = new Label("#" + s);
-                
-//                l.setOnMouseClicked((new EventHandler<MouseEvent>() {
-//                    
-//                    @Override
-//                    public void handle(MouseEvent event) {
-//                        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-//
-//                            System.out.println("Hola");
-//                        }
-//                    }
-//                }));
-            }             
-            if (o instanceof RecursoCliente) {  //SIN ETIQUETAR
-                RecursoCliente rc = (RecursoCliente) o;
-                l = new Label("#" + rc.getNombre().substring(0, rc.getNombre().lastIndexOf(".")));
+                tagButton(contenido, new Etiqueta(new EtiquetaPK(IdentificarController.usuarioActual.getIdUsuario(), s)));
+            }
+            if (o instanceof Recurso) {  //SIN ETIQUETAR
+                Recurso r = (Recurso) o;
+                l = new Label("#" + r.getNombre().substring(0, r.getNombre().lastIndexOf(".")));
                 l.setOnMouseClicked((new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                            //addGrid(rc.getIdRecurso());
+                            cargarRecursoCompleto(r.getIdRecurso());
                         }
                     }
                 }));
             }
-            if(! (o instanceof String)){//Solo añade cuando no es una instancia de String,el metodo tagButton añade los botones al box
-                
-            contenido.getChildren().add(l);}
+            if (!(o instanceof String)) {//Solo añade cuando no es una instancia de String,el metodo tagButton añade los botones al box
+                contenido.getChildren().add(l);
+            }
         }
         return contenido;
     }
@@ -280,28 +273,35 @@ public class BaseController implements Initializable {
         title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         vbox.getChildren().add(title);
 
-        List<Etiqueta> listaEtiquetas = obtenerEtiquetasGenerales();
-        for(Etiqueta e:listaEtiquetas){
-            
-            vbox.getChildren().add(new Hyperlink("#" + e.getEtiquetaPK().getNombre()));
-        }
-        gridRecurso.add(vbox, 4, 0, 2, 6);     
+        List<Etiqueta> listaEtiquetas = EtiquetaUsuario.obtenerEtiquetasRecurso(recurso.getIdRecurso());
+        for (Etiqueta e : listaEtiquetas) {
 
-        
+            Hyperlink h = new Hyperlink("#" + e.getEtiquetaPK().getNombre());
+            h.setOnAction(value -> {
+                System.out.println("Has pinchado en una etiqueta.");
+                this.cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(e.getEtiquetaPK().getNombre()));
+            });
+            vbox.getChildren().add(h);
+        }
+        gridRecurso.add(vbox, 4, 0, 2, 6);
+
         Text tag = new Text("Añadir Tag");
         tag.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        gridRecurso.add(tag, 3,0);
-        
+        gridRecurso.add(tag, 3, 0);
+
         TextField textField = new TextField();
         textField.setPromptText("Tag nombre-ENTER ");
         textField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                 vbox.getChildren().add(new Hyperlink("#" + textField.getText()));
-                //tagButton(tagsPane, textField.getText());
+                //Crear etiquetas.
+                if (EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(IdentificarController.usuarioActual.getIdUsuario(), textField.getText(), recurso.getIdRecurso()), true))) {
+                    vbox.getChildren().add(new Hyperlink("#" + textField.getText()));
+                    System.out.println("ETIQUETA creada correctamente.");
+                }
                 textField.clear();
             }
         });
-        gridRecurso.add(textField,3, 1);
+        gridRecurso.add(textField, 3, 1);
 
         Button descargar = new Button("DESCARGAR");
         descargar.setPrefSize(100, 20);
@@ -324,7 +324,7 @@ public class BaseController implements Initializable {
             @Override
             public void handle(ActionEvent e) {
                 //recurso();
-                cargarListaRecursos();
+                cargarListaRecursos(RecursoClase.obtenerRecursos());
             }
         });
         gridRecurso.add(volver, 1, 3);
@@ -338,7 +338,12 @@ public class BaseController implements Initializable {
         textComentar.setStyle("-fx-background-color: #FAE83C;");
         gridRecurso.add(textComentar, 1, 4, 2, 1);
 
-        ObservableList<String> data = FXCollections.observableArrayList("chocolate", "salmon", "gold");//Aqui cargar comentarios del recurso
+        ObservableList<String> data = FXCollections.observableArrayList();
+        for(Comentario c:ComentarioRecurso.obtenerComentariosPorRecurso(recurso.getIdRecurso())){
+            data.add(c.toString());
+        }
+
+        //ObservableList<String> data = FXCollections.observableArrayList("chocolate", "salmon", "gold");//Aqui cargar comentarios del recurso
 
         lista.setItems(data);
         lista.setPrefSize(500, 200);
@@ -346,8 +351,7 @@ public class BaseController implements Initializable {
         buttonSave.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                comentario();
-                //Aqui llamar metodo para guardar comentario
+                comentario(recurso);
             }
         });
 
@@ -360,19 +364,19 @@ public class BaseController implements Initializable {
 
     }
 
-    private void comentario() {//Metodo que crea el comentario con fecha y usuario
+    private void comentario(Recurso r) {//Metodo que crea el comentario con fecha y usuario
 
         Date objDate = new Date(); // Sistema actual La fecha y la hora se asignan a objDate 
 
-        System.out.println(objDate);
-        String strDateFormat = "hh:mm:ss a dd-MMM-yyyy"; // El formato de fecha está especificado  
-        SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat); // La cadena de formato de fecha se pasa como un argumento al objeto 
-        String fecha = (objSDF.format(objDate)); // El formato de fecha se aplica a la fecha actual
+        String fecha = (new SimpleDateFormat("hh:mm:ss a dd-MMM-yyyy").format(objDate)); // El formato de fecha se aplica a la fecha actual
 
         if (!"".equals(textComentar.getText())) {
-            String texto;
-            texto = (fecha + "  Usuario: " + superNombre + "\n" + textComentar.getText());
+            String texto = (fecha + " El usuario " + superNombre + " ,dice: \"" + textComentar.getText()+"\"");
             System.out.println(texto);
+            if (ComentarioRecurso.subirComentario(new Comentario(new ComentarioPK(r.getIdUsuario(), r.getIdRecurso(), objDate), texto))) //Añado el comentario en la base de datos.
+            {
+                System.out.println("Comentario subido correctamente.");
+            }
             lista.getItems().add(texto + "\n");
             textComentar.clear();
         }
@@ -383,13 +387,14 @@ public class BaseController implements Initializable {
 
         if (event.getCode() == KeyCode.ENTER) {
 
-        }else{}
+        } else {
+        }
     }
 
     @FXML
     private void botonListarRecursos(ActionEvent event) {//Boton de la interfaz para listar los recursos
 
-        cargarListaRecursos();
+        cargarListaRecursos(RecursoClase.obtenerRecursos());
     }
 
     @FXML
@@ -406,18 +411,17 @@ public class BaseController implements Initializable {
     private void salir(ActionEvent event) {
         Platform.exit();
     }
-    
-    public void cargarListaRecursos(){//Carga dinamicamente una vista con la lista de recursos
-                
+
+    public void cargarListaRecursos(List<Recurso> listaRecursos) {//Carga dinamicamente una vista con la lista de recursos
+
         AnchorPane caja;
         GridPane gridPane = new GridPane();
-        List<Recurso> listaRecursos = RecursoClase.obtenerRecursos();
-        System.out.println(listaRecursos);
+
         flow.getChildren().removeAll();
         flow.getChildren().clear();
 
         for (Recurso r : listaRecursos) {
-            
+
             caja = new AnchorPane();
             caja.setPrefSize(810, 87);
             caja.setStyle("-fx-background-color: #FF6B6B;");
@@ -431,13 +435,13 @@ public class BaseController implements Initializable {
             AnchorPane.setLeftAnchor(gridPane, 10.0);
             AnchorPane.setRightAnchor(gridPane, 10.0);
             AnchorPane.setBottomAnchor(gridPane, 10.0);
-            
+
             FxIconicsLabel labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
-                       .size(30)
-                       //.text("ARCHIVO")
-                       .color(MaterialColor.WHITE)
-                       .build();
-            
+                    .size(30)
+                    //.text("ARCHIVO")
+                    .color(MaterialColor.WHITE)
+                    .build();
+
             JFXButton btVer = new JFXButton();
             btVer.setText("VER");
             btVer.setPrefSize(104, 30);
@@ -447,20 +451,21 @@ public class BaseController implements Initializable {
                     + "-fx-font-family: \"System\"");
             btVer.setOnAction((ActionEvent e) -> {//Carga la informacion de un recurso completo cuando se pulsa "VER".
                 cargarRecursoCompleto(r.getIdRecurso());
-            }); 
+                this.idRecurso = r.getIdRecurso();
+            });
 
             Label lbRecurso = new Label(r.getNombre());
             lbRecurso.setPrefSize(140, 35);
             lbRecurso.setStyle("-fx-text-fill: #ffffff;"
-                                + "-fx-font-size: 15px;\n"
-                                + "-fx-font-family: \"System\"");
-            
+                    + "-fx-font-size: 15px;\n"
+                    + "-fx-font-family: \"System\"");
+
             Label lbApodo = new Label(superNombre);
-            lbApodo.setPrefSize(90, 35);            
+            lbApodo.setPrefSize(90, 35);
             lbApodo.setStyle("-fx-text-fill: #ffffff;"
                     + "-fx-font-size: 15px;\n"
                     + "-fx-font-family: \"System\"");
-            
+
             Label lblDescripcion = new Label(r.getDescripcion());
             lblDescripcion.setPrefSize(340, 58);
             lblDescripcion.setStyle("-fx-text-fill: #ffffff;"
@@ -468,18 +473,17 @@ public class BaseController implements Initializable {
                     + "-fx-font-family: \"System\"");
             lblDescripcion.wrapTextProperty();
             //lblDescripcion.setAlignment(Pos.CENTER);
-            
+
             Label lbUsuario = new Label("Usuario:");
             lbUsuario.setPrefSize(90, 35);
             lbUsuario.setFont(Font.font("System", FontWeight.BOLD, 16));
             lbUsuario.setStyle("-fx-text-fill: #ffffff;");
-                    
-            
+
             Label lbNombreRecurso = new Label("Recurso:");
             lbNombreRecurso.setPrefSize(90, 35);
             lbNombreRecurso.setFont(Font.font("System", FontWeight.BOLD, 16));
             lbNombreRecurso.setStyle("-fx-text-fill: #ffffff;");
-            
+
             Label lbDescripcion = new Label("Descripcion:");
             lbDescripcion.setPrefSize(100, 35);
             lbDescripcion.setFont(Font.font("System", FontWeight.BOLD, 16));
@@ -497,14 +501,21 @@ public class BaseController implements Initializable {
             flow.getChildren().add(caja);
         }
     }
-    
-    public void tagButton(VBox box,String tag){
+
+    public void tagButton(VBox box, Etiqueta tag) {
         ImageView iconCerrar = new ImageView(cerrarTag);
-        Button btTag = new Button(tag,iconCerrar);
+        Button btTag = new Button("#" + tag.getEtiquetaPK().getNombre(), iconCerrar);
         btTag.setPrefHeight(20);
         btTag.setContentDisplay(ContentDisplay.RIGHT);
-
-        btTag.setOnAction(event -> box.getChildren().remove(btTag));
+        //Para borrar al etiqueta.
+        btTag.setOnAction((ActionEvent value) -> {
+            if (EtiquetaUsuario.borrarEtiqueta(tag.getEtiquetaPK())) {
+                System.out.println("ETIQUETA borrada.");
+                box.getChildren().remove(btTag);
+                this.cargarRecursoCompleto(this.idRecurso);
+            }
+        });
         box.getChildren().add(btTag);
     }
+
 }

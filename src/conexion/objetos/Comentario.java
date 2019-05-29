@@ -90,7 +90,7 @@ public class Comentario implements Serializable {
 
     @Override
     public String toString() {
-        return "fish.payara.ejemploserverrest.Comentario[ comentarioPK=" + comentarioPK + " ]";
+        return texto;
     }
     
 }

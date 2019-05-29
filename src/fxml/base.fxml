@@ -56,12 +56,12 @@
          <right>
             <Accordion fx:id="acordeonDer" style="-fx-background-color: #EFFB7D;" BorderPane.alignment="CENTER">
               <panes>
-                <TitledPane fx:id="PUBLICAS" animated="false" text="PUBLICAS">
+                <TitledPane fx:id="PUBLICAS" animated="false" minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" text="PUBLICAS">
                   <content>
                     <AnchorPane minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #DFDFDF;" />
                   </content>
                 </TitledPane>
-                <TitledPane fx:id="PRIVADAS" animated="false" text="PRIVADAS">
+                <TitledPane fx:id="PRIVADAS" animated="false" minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" text="PRIVADAS">
                   <content>
                     <AnchorPane minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;" />
                   </content>

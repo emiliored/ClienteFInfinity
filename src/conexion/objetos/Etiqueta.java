@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author ALF
  */
-public class Etiqueta implements Serializable{
+public class Etiqueta implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,6 +21,10 @@ public class Etiqueta implements Serializable{
     public Etiqueta() {
     }
 
+    public Etiqueta(int idUsuario, String nombre) {
+        this.etiquetaPK = new EtiquetaPK(idUsuario, nombre);
+    }
+
     public Etiqueta(EtiquetaPK etiquetaPK) {
         this.etiquetaPK = etiquetaPK;
     }
@@ -28,7 +32,6 @@ public class Etiqueta implements Serializable{
 //    public Etiqueta(int idUsuario, String nombre) {
 //        this.etiquetaPK = new EtiquetaPK(idUsuario, nombre);
 //    }
-
     public EtiquetaPK getEtiquetaPK() {
         return etiquetaPK;
     }
@@ -41,11 +44,9 @@ public class Etiqueta implements Serializable{
 //    public Collection<Visibilidad> getVisibilidadCollection() {
 //        return visibilidadCollection;
 //    }
-
 //    public void setVisibilidadCollection(Collection<Visibilidad> visibilidadCollection) {
 //        this.visibilidadCollection = visibilidadCollection;
 //    }
-
     public Usuario getUsuario() {
         return usuario;
     }
@@ -78,5 +79,5 @@ public class Etiqueta implements Serializable{
     public String toString() {
         return "fish.payara.ejemploserverrest.Etiqueta[ etiquetaPK=" + etiquetaPK + " ]";
     }
-    
+
 }
