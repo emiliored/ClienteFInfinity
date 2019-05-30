@@ -45,4 +45,10 @@ public class RecursoClase {
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Recurso>>(){});
     }
     
+    public static List<Recurso> obtenerRecursosBuscarPorEtiqueta(String nombre) {
+        Client client = ClientBuilder.newClient();
+        return client.target(
+                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/recurso/buscar?nombre="+nombre)
+                .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Recurso>>(){});
+    }
 }

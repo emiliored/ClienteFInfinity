@@ -6,6 +6,7 @@
 package conexion;
 
 import static conexion.Conectar.IPSERVER;
+import conexion.objetos.Comentario;
 import conexion.objetos.Usuario;
 import controladores.IdentificarController;
 import java.util.List;
@@ -48,6 +49,13 @@ public class UsuarioLogin {
         System.out.println("Estado:"+Status.CREATED.getStatusCode()+"Retorno:"+estadoServidor);
         System.out.println(u.toString());
         return respuesta;
+    }
+    
+    public static String obtenerApodoUsuario(int idUsuario){
+         Client client=ClientBuilder.newClient();
+        return client.target(
+             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/usuario/apodo?idUsuario="+idUsuario)
+                .request(MediaType.APPLICATION_JSON).get(new GenericType<String>(){});
     }
 }
     

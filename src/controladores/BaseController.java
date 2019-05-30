@@ -14,6 +14,7 @@ import conexion.EtiquetaUsuario;
 import conexion.FicherosBinarios;
 import conexion.RecursoClase;
 import static conexion.RecursoClase.obtenerRecursosPorId;
+import conexion.UsuarioLogin;
 import conexion.objetos.Etiqueta;
 import conexion.objetos.Recurso;
 import static controladores.IdentificarController.superNombre;
@@ -126,6 +127,8 @@ public class BaseController implements Initializable {
     //-----------------------------
     @FXML
     private JFXButton btnSalir;
+    @FXML
+    private TextField txtBuscador;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -213,7 +216,7 @@ public class BaseController implements Initializable {
             }
             if (o instanceof Recurso) {  //SIN ETIQUETAR
                 Recurso r = (Recurso) o;
-                l = new Label("#" + r.getNombre().substring(0, r.getNombre().lastIndexOf(".")));
+                l = new Label(r.getNombre().substring(0, r.getNombre().lastIndexOf(".")));
                 l.setOnMouseClicked((new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -295,7 +298,7 @@ public class BaseController implements Initializable {
             if (event.getCode() == KeyCode.ENTER) {
                 //Crear etiquetas.
                 if (EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(IdentificarController.usuarioActual.getIdUsuario(), textField.getText(), recurso.getIdRecurso()), true))) {
-                    vbox.getChildren().add(new Hyperlink("#" + textField.getText()));
+                    this.cargarRecursoCompleto(recurso.getIdRecurso());
                     System.out.println("ETIQUETA creada correctamente.");
                 }
                 textField.clear();
@@ -311,6 +314,7 @@ public class BaseController implements Initializable {
             public void handle(ActionEvent e) {
                 FileChooser fileChooser = new FileChooser();
                 //Show save file dialog
+                fileChooser.setInitialFileName(recurso.getNombre().substring(0, recurso.getNombre().lastIndexOf(".")));
                 File file = fileChooser.showSaveDialog(stage);
                 FicherosBinarios.descargar(recurso.getIdRecurso(), file);
             }
@@ -342,8 +346,6 @@ public class BaseController implements Initializable {
         for(Comentario c:ComentarioRecurso.obtenerComentariosPorRecurso(recurso.getIdRecurso())){
             data.add(c.toString());
         }
-
-        //ObservableList<String> data = FXCollections.observableArrayList("chocolate", "salmon", "gold");//Aqui cargar comentarios del recurso
 
         lista.setItems(data);
         lista.setPrefSize(500, 200);
@@ -386,8 +388,8 @@ public class BaseController implements Initializable {
     private void buscarRecursosHBox(KeyEvent event) {
 
         if (event.getCode() == KeyCode.ENTER) {
-
-        } else {
+            this.cargarListaRecursos(RecursoClase.obtenerRecursosBuscarPorEtiqueta(txtBuscador.getText()));
+            txtBuscador.setText("");
         }
     }
 
@@ -460,7 +462,7 @@ public class BaseController implements Initializable {
                     + "-fx-font-size: 15px;\n"
                     + "-fx-font-family: \"System\"");
 
-            Label lbApodo = new Label(superNombre);
+            Label lbApodo = new Label(UsuarioLogin.obtenerApodoUsuario(r.getIdUsuario()));
             lbApodo.setPrefSize(90, 35);
             lbApodo.setStyle("-fx-text-fill: #ffffff;"
                     + "-fx-font-size: 15px;\n"

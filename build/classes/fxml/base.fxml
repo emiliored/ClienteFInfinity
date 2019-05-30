@@ -138,12 +138,12 @@
                         <Insets bottom="15.0" left="400.0" top="15.0" />
                      </HBox.margin>
                      <children>
-                        <TextField onKeyPressed="#buscarRecursosHBox" prefHeight="38.0" prefWidth="320.0" style="-fx-background-color: white;" styleClass="tf" stylesheets="@../estilos/estilos.css">
+                        <TextField fx:id="txtBuscador" onKeyPressed="#buscarRecursosHBox" prefHeight="38.0" prefWidth="320.0" promptText="Buscar y pulsar ENTER" style="-fx-background-color: white;" styleClass="tf" stylesheets="@../estilos/estilos.css">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" top="5.0" />
                            </HBox.margin>
                            <font>
-                              <Font size="13.0" />
+                              <Font size="17.0" />
                            </font>
                         </TextField>
                         <FontAwesomeIcon glyphStyle="-fx-fill:DEDEE4" iconName="SEARCH" size="2em" wrappingWidth="36.0">
