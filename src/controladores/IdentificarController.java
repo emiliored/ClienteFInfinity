@@ -6,6 +6,7 @@
 package controladores;
 
 import com.jfoenix.controls.JFXButton;
+import conexion.UsuarioCliente;
 import conexion.UsuarioLogin;
 import static conexion.UsuarioLogin.loginUsuario;
 import conexion.objetos.Usuario;
@@ -43,11 +44,8 @@ public class IdentificarController implements Initializable {
     private JFXButton btnAceptar1;
     @FXML
     private Label lbError;
-    
-    static String superNombre;//Quitar importante, y usar usuario.
-    
-    public static Usuario usuarioActual;
-    
+   
+    public static UsuarioCliente usuarioInicio;
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
         
@@ -57,8 +55,6 @@ public class IdentificarController implements Initializable {
     private void identificarABase(ActionEvent event) throws IOException {
         
         if((loginUsuario(txtApodo1.getText(),txtContrasena1.getText()))==true){
-            
-            superNombre = txtApodo1.getText();
             
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/fxml/base.fxml"));
             Parent parent = myLoader.load();            

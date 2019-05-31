@@ -25,7 +25,7 @@ public class RecursoClase {
     public static List<Recurso> obtenerRecursos() {
         Client client = ClientBuilder.newClient();
         return client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/recurso?idUsuario="+IdentificarController.usuarioActual.getIdUsuario())
+                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/recurso?idUsuario="+IdentificarController.usuarioInicio.getIdUsuario())
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Recurso>>() {
         });
 

@@ -10,8 +10,6 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import conexion.FicherosBinarios;
 import conexion.objetos.Recurso;
-//import static controladores.BaseController.baseStack;
-import static controladores.IdentificarController.usuarioActual;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -82,7 +80,7 @@ public class AnadirRecursoController implements Initializable {
     private void subir(ActionEvent event) {
         if(Objects.nonNull(file)){
             r=new Recurso();
-            r.setIdUsuario(usuarioActual.getIdUsuario());
+            r.setIdUsuario(IdentificarController.usuarioInicio.getIdUsuario());
             r.setDescripcion(txtAreaDescripcion.getText().replace(' ', '+'));//Validar el textarea. Sólo letras, números, puntos, comas y espacios.
             r.setVisibilidad(tgVisibilidad.isSelected());
             if(FicherosBinarios.subir(file, r)){

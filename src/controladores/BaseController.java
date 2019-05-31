@@ -9,15 +9,18 @@ import com.jfoenix.controls.JFXButton;
 import com.pepperonas.fxiconics.FxIconicsLabel;
 import com.pepperonas.fxiconics.MaterialColor;
 import com.pepperonas.fxiconics.gmd.FxFontGoogleMaterial;
+import conexion.AprecioConectar;
 import conexion.ComentarioRecurso;
 import conexion.EtiquetaUsuario;
 import conexion.FicherosBinarios;
+import conexion.Like;
 import conexion.RecursoClase;
 import static conexion.RecursoClase.obtenerRecursosPorId;
 import conexion.UsuarioLogin;
+import conexion.objetos.Aprecio;
+import conexion.objetos.AprecioPK;
 import conexion.objetos.Etiqueta;
 import conexion.objetos.Recurso;
-import static controladores.IdentificarController.superNombre;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +37,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -66,9 +68,11 @@ import conexion.objetos.ComentarioPK;
 import conexion.objetos.EtiquetaPK;
 import conexion.objetos.Visibilidad;
 import conexion.objetos.VisibilidadPK;
-import java.util.Collection;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconName;
 import javafx.application.Platform;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -109,7 +113,10 @@ public class BaseController implements Initializable {
     private TitledPane PUBLICAS;
     @FXML
     private TitledPane PRIVADAS;
-
+    @FXML
+    private JFXButton btnSalir;
+    @FXML
+    private TextField txtBuscador;
     //------------------------------
     ListView<String> lista = new ListView<>();
     TextField textComentar = new TextField();
@@ -123,18 +130,18 @@ public class BaseController implements Initializable {
     private JFXButton btnVer;
     Image cerrarTag = new Image("/imagenes/delete3.png");
 
+    //TEMPORAL
+    //int likes=0;
+    Like likeObjeto;
     private int idRecurso;  //MEJORAR  --- id del recurso que está visualizando el usuario actualmente.
     //-----------------------------
-    @FXML
-    private JFXButton btnSalir;
-    @FXML
-    private TextField txtBuscador;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        flow.setStyle("-fx-background-image: url('/imagenes/fondolistar.png')");
         //System.out.println(EtiquetaUsuario.obtenerRecursoSinEtiquetar());
-        lblApodoUsuario.setText(superNombre);
+        lblApodoUsuario.setText(IdentificarController.usuarioInicio.getApodo());
         //recibeParametros(text);
         acordeonIzq.expandedPaneProperty().addListener(
                 (ObservableValue<? extends TitledPane> ov, TitledPane old_val,
@@ -153,6 +160,7 @@ public class BaseController implements Initializable {
                 }
         );
         cargarListaRecursos(RecursoClase.obtenerRecursos());
+        System.out.println(IdentificarController.usuarioInicio.toString());
     }
 
     //Métodos nuestros.
@@ -178,10 +186,10 @@ public class BaseController implements Initializable {
                 contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerRecursoSinEtiquetar());
                 break;
             case "PUBLICAS":
-                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(IdentificarController.usuarioActual.getIdUsuario()));
+                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(IdentificarController.usuarioInicio.getIdUsuario()));
                 break;
             case "PRIVADAS":
-                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(IdentificarController.usuarioActual.getIdUsuario()));
+                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(IdentificarController.usuarioInicio.getIdUsuario()));
                 break;
 
         }
@@ -204,7 +212,7 @@ public class BaseController implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                            System.out.println("Has pinchado en una etiqueta."+e);
+                            System.out.println("Has pinchado en una etiqueta." + e);
                             cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(e.getEtiquetaPK().getNombre()));
                         }
                     }
@@ -212,7 +220,7 @@ public class BaseController implements Initializable {
             }
             if (o instanceof String) { //PUBLICAS / PRIVADAS
                 String s = (String) o;
-                tagButton(contenido, new Etiqueta(new EtiquetaPK(IdentificarController.usuarioActual.getIdUsuario(), s)));
+                tagButton(contenido, new Etiqueta(new EtiquetaPK(IdentificarController.usuarioInicio.getIdUsuario(), s)));
             }
             if (o instanceof Recurso) {  //SIN ETIQUETAR
                 Recurso r = (Recurso) o;
@@ -235,45 +243,93 @@ public class BaseController implements Initializable {
 
     public void cargarRecursoCompleto(int idRecurso) {//Carga un recurso con toda la informacion (se ejecuta cuando en los recursos dinamicos se pulsa "VER"
 
-        GridPane gridRecurso = new GridPane();
-        gridRecurso.setStyle("-fx-background-color: #FFCDCD;");
-        Recurso recurso = obtenerRecursosPorId(idRecurso);
-
+        //Borra lo que hay actualmente en la escena(en el flow).
         flow.getChildren().removeAll();
         flow.getChildren().clear();
-
+        //Creas un nuevo Grid.
+        GridPane gridRecurso = new GridPane();
+        gridRecurso.setStyle("-fx-background-image: url('/imagenes/recursocompleto.png')");
+        Recurso recurso = obtenerRecursosPorId(idRecurso);
+        //Configura el Grid.
         gridRecurso.setPrefSize(818.0, 691.0);
         gridRecurso.setPadding(new Insets(20));
         gridRecurso.setHgap(25);
         gridRecurso.setVgap(25);
-
+        //Icono del fichero.
+        ImageView imageHouse = new ImageView(new Image(BaseController.class.getResourceAsStream("/imagenes/usuario-recurso.png")));
+        gridRecurso.add(imageHouse, 0, 0, 1, 2);
+        //Nombre del archivo.
         Text textRecurso = new Text("Nombre del archivo:");
         textRecurso.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        textRecurso.setFill(Color.web("#442850"));
         gridRecurso.add(textRecurso, 1, 0);
 
         Text nombreRecurso = new Text(recurso.getNombre());
-        nombreRecurso.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        nombreRecurso.setFill(Color.web("#221428"));
+        nombreRecurso.setFont(Font.font("Arial", 20));
         gridRecurso.add(nombreRecurso, 2, 0);
+        //LIKES
+        Text like = new Text("LIKES ");
+        like.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        like.setFill(Color.web("#AA4747"));
+        //Método para obtener los likes del servidor.
+        likeObjeto = AprecioConectar.obtenerLikesRecurso(recurso.getIdUsuario(), recurso.getIdRecurso());
 
+        Text cont = new Text(String.valueOf(likeObjeto.getContador()));
+        cont.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        Text icon = GlyphsDude.createIcon(FontAwesomeIconName.HEART, "2em");
+        //Colorea el like segun proceda.
+        if (likeObjeto.isPropio()) {
+            icon.setFill(Color.RED);
+        } else {
+            icon.setFill(Color.WHITE);
+        }
+
+        icon.setOnMousePressed((MouseEvent evento) -> {
+            if (!likeObjeto.isPropio()){ //Añadir
+                if (AprecioConectar.anadirAprecio(new Aprecio(new AprecioPK(recurso.getIdUsuario(), recurso.getIdRecurso()), new Date()))) {
+                    cont.setText(String.valueOf(likeObjeto.incrementar()));
+                    likeObjeto.invertir();
+                    System.out.println("Aprecio añadido.");
+                    icon.setFill(Color.RED);
+                }
+            }else{ //Borrar
+                if (AprecioConectar.borrarAprecio(recurso.getIdUsuario(), recurso.getIdRecurso())) {
+                    cont.setText(String.valueOf(likeObjeto.decrementar()));
+                    likeObjeto.invertir();
+                    System.out.println("Aprecio borrado.");
+                    icon.setFill(Color.WHITE);
+                }
+            }
+        });
+
+        HBox icli = new HBox();
+        icli.setPadding(new Insets(20));
+        icli.setSpacing(20);
+        icli.getChildren().addAll(like, icon, cont);
+        gridRecurso.add(icli, 1, 1);
+        //FIN LIKES
+        //Descripción
         Text descripcion = new Text("Descripción:");
-        descripcion.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        gridRecurso.add(descripcion, 1, 1, 2, 1);
-
-        ImageView imageHouse = new ImageView(new Image(BaseController.class.getResourceAsStream("/imagenes/usuario-recurso.png")));
-        gridRecurso.add(imageHouse, 0, 0, 1, 2);
+        descripcion.setFill(Color.web("#442850"));
+        descripcion.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+        gridRecurso.add(descripcion, 0, 2);
 
         Label textDescripcion = new Label(recurso.getDescripcion());
-        textDescripcion.setMaxSize(400.0, 300.0);
+        textDescripcion.setMaxSize(300.0, 200.0);
         textDescripcion.setWrapText(true);
-        textDescripcion.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        textDescripcion.setFont(Font.font("Arial", 16));
         gridRecurso.add(textDescripcion, 1, 2, 2, 1);
-
+        //FIN Descripción
+        //Etiquetas
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(3));
         vbox.setSpacing(2);
 
         Text title = new Text("TAGS");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        title.setFill(Color.web("#442850"));
         vbox.getChildren().add(title);
 
         List<Etiqueta> listaEtiquetas = EtiquetaUsuario.obtenerEtiquetasRecurso(recurso.getIdRecurso());
@@ -286,29 +342,32 @@ public class BaseController implements Initializable {
             });
             vbox.getChildren().add(h);
         }
-        gridRecurso.add(vbox, 4, 0, 2, 6);
-
-        Text tag = new Text("Añadir Tag");
-        tag.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        gridRecurso.add(tag, 3, 0);
-
+        gridRecurso.add(vbox, 4, 0, 1, 3);
+        //FIN Etiquetas
+        //Añadir Etiquetas
         TextField textField = new TextField();
-        textField.setPromptText("Tag nombre-ENTER ");
+        textField.setStyle("-fx-text-fill: #006697;");
+        textField.setFont(Font.font("Arial", 14));
+        textField.setPrefSize(135, 35);
+        textField.setPromptText("Crea Tag y ENTER ");
         textField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 //Crear etiquetas.
-                if (EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(IdentificarController.usuarioActual.getIdUsuario(), textField.getText(), recurso.getIdRecurso()), true))) {
+                if (EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(IdentificarController.usuarioInicio.getIdUsuario(), textField.getText(), recurso.getIdRecurso()), true))) {
                     this.cargarRecursoCompleto(recurso.getIdRecurso());
                     System.out.println("ETIQUETA creada correctamente.");
                 }
                 textField.clear();
             }
         });
-        gridRecurso.add(textField, 3, 1);
-
-        Button descargar = new Button("DESCARGAR");
-        descargar.setPrefSize(100, 20);
-        descargar.setStyle("-fx-background-color: #FAE83C;");
+        gridRecurso.add(textField, 2, 1);
+        //FIN Añadir Etiquetas
+        //Descargar
+        JFXButton descargar = new JFXButton("DESCARGAR");
+        descargar.setStyle("-fx-background-color: #333F3B;"
+                + " -fx-text-fill: #FFFFFF");
+        descargar.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        descargar.setPrefSize(135, 35);
         descargar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -319,11 +378,14 @@ public class BaseController implements Initializable {
                 FicherosBinarios.descargar(recurso.getIdRecurso(), file);
             }
         });
-        gridRecurso.add(descargar, 0, 3);
-
-        Button volver = new Button("VOLVER");
-        volver.setPrefSize(100, 20);
-        volver.setStyle("-fx-background-color: #FAE83C;");
+        gridRecurso.add(descargar, 0, 6);
+        //FIN Descargar
+        //Volver
+        JFXButton volver = new JFXButton("VOLVER");
+        volver.setStyle("-fx-background-color: #333F3B;"
+                + " -fx-text-fill: #FFFFFF");
+        volver.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        volver.setPrefSize(120, 35);
         volver.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -331,37 +393,36 @@ public class BaseController implements Initializable {
                 cargarListaRecursos(RecursoClase.obtenerRecursos());
             }
         });
-        gridRecurso.add(volver, 1, 3);
-
-        Button buttonSave = new Button("COMENTAR");
-        buttonSave.setPrefSize(100, 20);
-        buttonSave.setStyle("-fx-background-color: #FAE83C;");
-        gridRecurso.add(buttonSave, 0, 4);
-
-        textComentar.setPrefSize(200, 20);
-        textComentar.setStyle("-fx-background-color: #FAE83C;");
-        gridRecurso.add(textComentar, 1, 4, 2, 1);
-
-        ObservableList<String> data = FXCollections.observableArrayList();
-        for(Comentario c:ComentarioRecurso.obtenerComentariosPorRecurso(recurso.getIdRecurso())){
-            data.add(c.toString());
-        }
-
-        lista.setItems(data);
-        lista.setPrefSize(500, 200);
-
-        buttonSave.setOnAction(new EventHandler<ActionEvent>() {
+        gridRecurso.add(volver, 1, 6);
+        //FIN Volver
+        //Comentar
+        JFXButton buttonGuardarComen = new JFXButton("COMENTAR");
+        buttonGuardarComen.setStyle("-fx-background-color: #333F3B;"
+                + " -fx-text-fill: #FFFFFF");
+        buttonGuardarComen.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        buttonGuardarComen.setPrefSize(120, 35);
+        buttonGuardarComen.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 comentario(recurso);
             }
         });
+        gridRecurso.add(buttonGuardarComen, 0, 3);
 
-        HBox hb = new HBox();
-        hb.setPadding(new Insets(10, 10, 10, 10));
-        hb.setSpacing(10);
-        hb.getChildren().addAll(lista);
-        gridRecurso.add(hb, 0, 5, 3, 1);
+        textComentar.setPrefSize(200, 20);
+        textComentar.setStyle("-fx-background-color: #FFFFFF;");
+        gridRecurso.add(textComentar, 1, 3, 2, 1);
+
+        ObservableList<String> data = FXCollections.observableArrayList();
+        for (Comentario c : ComentarioRecurso.obtenerComentariosPorRecurso(recurso.getIdRecurso())) {
+            data.add(c.toString());
+        }
+
+        lista.setItems(data);
+        lista.setPrefSize(150, 140);
+        gridRecurso.add(lista, 0, 4, 4, 2);
+        //FIN Comentar
+        //Se añade el Grid al flow.
         flow.getChildren().add(gridRecurso);
 
     }
@@ -373,7 +434,7 @@ public class BaseController implements Initializable {
         String fecha = (new SimpleDateFormat("hh:mm:ss a dd-MMM-yyyy").format(objDate)); // El formato de fecha se aplica a la fecha actual
 
         if (!"".equals(textComentar.getText())) {
-            String texto = (fecha + " El usuario " + superNombre + " ,dice: \"" + textComentar.getText()+"\"");
+            String texto = (fecha + " El usuario " + IdentificarController.usuarioInicio.getApodo() + " ,dice: \"" + textComentar.getText() + "\"");
             System.out.println(texto);
             if (ComentarioRecurso.subirComentario(new Comentario(new ComentarioPK(r.getIdUsuario(), r.getIdRecurso(), objDate), texto))) //Añado el comentario en la base de datos.
             {
@@ -429,7 +490,7 @@ public class BaseController implements Initializable {
             caja.setStyle("-fx-background-color: #FF6B6B;");
             gridPane = new GridPane();
             gridPane.setPrefSize(808, 87);
-            gridPane.setStyle("-fx-background-color: #AA4747;");
+            gridPane.setStyle("-fx-background-image: url('/imagenes/recursodinamico.png')");
             gridPane.setPadding(new Insets(15));
             gridPane.setHgap(40);
             gridPane.setVgap(15);

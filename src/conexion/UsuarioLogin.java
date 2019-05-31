@@ -31,7 +31,7 @@ public class UsuarioLogin {
              "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/usuario/login?apodo="+apodoUser+"&contrasena="+contrasenaUser).request()
                 .get();
         if(Status.ACCEPTED.getStatusCode()==respuestaServidor.getStatus()){
-            IdentificarController.usuarioActual=respuestaServidor.readEntity(Usuario.class);
+            IdentificarController.usuarioInicio=respuestaServidor.readEntity(UsuarioCliente.class);
             respuesta=true;
         }    
         return respuesta;
