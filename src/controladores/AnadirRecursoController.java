@@ -8,20 +8,23 @@ package controladores;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
+import conexion.EtiquetaUsuario;
 import conexion.FicherosBinarios;
 import conexion.objetos.Recurso;
+import conexion.objetos.Visibilidad;
+import conexion.objetos.VisibilidadPK;
+import static controladores.BaseController.usuarioInicio;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.InputMethodEvent;
@@ -36,15 +39,13 @@ public class AnadirRecursoController implements Initializable {
     @FXML
     private JFXButton btnSeleccionar;
     @FXML
-    private JFXToggleButton tgVisibilidad;
+    private JFXToggleButton tgVisibilidadRecurso;
     @FXML
     private JFXButton btnSubir;
     @FXML
-    private JFXButton btnCancelar;
-    @FXML
     private TextArea txtAreaDescripcion;
     @FXML
-    private Label lbVisibilidad;
+    private Label lbVisibilidadRecurso;
     @FXML
     private Label lbSubido;
     @FXML
@@ -55,14 +56,17 @@ public class AnadirRecursoController implements Initializable {
     private FlowPane flowEtiquetas;
     @FXML
     private JFXTextField txtEtiquetar;
-
+    @FXML
+    private JFXToggleButton tgVisibilidadEtiqueta;
+    @FXML
+    private Label lbVisibilidadEtiqueta;
+    
+    
     final FileChooser fileChooser = new FileChooser();
     private Stage stage;
     private Parent parent;
     private File file;
-    private Recurso r;
-    private FlowPane flow;    
-
+    private Recurso r;    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
@@ -80,9 +84,9 @@ public class AnadirRecursoController implements Initializable {
     private void subir(ActionEvent event) {
         if(Objects.nonNull(file)){
             r=new Recurso();
-            r.setIdUsuario(IdentificarController.usuarioInicio.getIdUsuario());
+            r.setIdUsuario(usuarioInicio.getIdUsuario());
             r.setDescripcion(txtAreaDescripcion.getText().replace(' ', '+'));//Validar el textarea. Sólo letras, números, puntos, comas y espacios.
-            r.setVisibilidad(tgVisibilidad.isSelected());
+            r.setVisibilidad(tgVisibilidadRecurso.isSelected());
             if(FicherosBinarios.subir(file, r)){
                lbSubido.setText("Archivo subido correctamente.");
             }else{
@@ -90,32 +94,34 @@ public class AnadirRecursoController implements Initializable {
             }
             //Limpiamos el fichero y los campos.
             file=null;
-            tgVisibilidad.setSelected(false);
+            tgVisibilidadRecurso.setSelected(false);
             txtAreaDescripcion.setText("");
         }
            
     }
 
-    @FXML
     private void cancelar(ActionEvent event) throws IOException {
                 
 //        FXMLLoader loader = new FXMLLoader();
 //        loader.setLocation(AnadirRecursoController.class.getResource("/fxml/base.fxml"));
 //        StackPane stack = loader.load();
         
-         parent = FXMLLoader.load(getClass().getResource("/fxml/PanelUsuario.fxml"));
+        parent = FXMLLoader.load(getClass().getResource("/fxml/PanelUsuario.fxml"));
         vistaSubirRecurso.getChildren().clear();
         vistaSubirRecurso.getChildren().add(parent);
         
     }
 
-    @FXML
-    private void visibilidad(ActionEvent event) {
+   @FXML
+    private void visibilidadRecurso(ActionEvent event) {
         
-        if(tgVisibilidad.isSelected())
-            lbVisibilidad.setText("Pública");
-        else
-            lbVisibilidad.setText("Privada");
+        if(tgVisibilidadRecurso.isSelected()){
+            lbVisibilidadRecurso.setText("Pública");
+            lbVisibilidadRecurso.setStyle("-fx-text-fill: #3CE4A8");
+        }else{
+            lbVisibilidadRecurso.setText("Privada");
+            lbVisibilidadRecurso.setStyle("-fx-text-fill: #8f000f");
+        }
     }
 
     @FXML
@@ -125,7 +131,30 @@ public class AnadirRecursoController implements Initializable {
     }
 
     @FXML
-    private void etiquetar(ActionEvent event) {
+    private void anadirEtiquetar(ActionEvent event) {
+        
+        if(file.exists()&&!"".equals(txtEtiquetar.getText())){
+            EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(BaseController.usuarioInicio.getIdUsuario(), txtEtiquetar.getText(), r.getIdRecurso()),tgVisibilidadEtiqueta.isSelected()));
+            Hyperlink h = new Hyperlink("#" + txtEtiquetar.getText());
+            flowEtiquetas.getChildren().add(h);
+            System.out.println("ETIQUETA creada correctamente.");            
+        }else{
+            System.out.println("Error al crear etiqueta");    
+        }
+        txtEtiquetar.clear();
     }
+
+    @FXML
+    private void visibilidadEtiqueta(ActionEvent event) {
+        if(tgVisibilidadEtiqueta.isSelected()){
+            lbVisibilidadEtiqueta.setText("Pública");
+            lbVisibilidadEtiqueta.setStyle("-fx-text-fill: #3CE4A8");
+        }else{
+            lbVisibilidadEtiqueta.setText("Privada");
+            lbVisibilidadEtiqueta.setStyle("-fx-text-fill: #8f000f");
+        }
+    }
+
+    
     
 }

@@ -6,13 +6,11 @@
 package conexion;
 
 import static conexion.Conectar.IPSERVER;
-import conexion.objetos.Etiqueta;
 import conexion.objetos.Recurso;
-import controladores.IdentificarController;
+import controladores.BaseController;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
@@ -25,7 +23,7 @@ public class RecursoClase {
     public static List<Recurso> obtenerRecursos() {
         Client client = ClientBuilder.newClient();
         return client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/recurso?idUsuario="+IdentificarController.usuarioInicio.getIdUsuario())
+                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/recurso?idUsuario="+BaseController.usuarioInicio.getIdUsuario())
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Recurso>>() {
         });
 

@@ -44,8 +44,8 @@ public class IdentificarController implements Initializable {
     private JFXButton btnAceptar1;
     @FXML
     private Label lbError;
-   
-    public static UsuarioCliente usuarioInicio;
+
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
         

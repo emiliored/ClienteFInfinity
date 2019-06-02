@@ -6,6 +6,7 @@
 package controladores;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXToggleButton;
 import com.pepperonas.fxiconics.FxIconicsLabel;
 import com.pepperonas.fxiconics.MaterialColor;
 import com.pepperonas.fxiconics.gmd.FxFontGoogleMaterial;
@@ -16,6 +17,7 @@ import conexion.FicherosBinarios;
 import conexion.Like;
 import conexion.RecursoClase;
 import static conexion.RecursoClase.obtenerRecursosPorId;
+import conexion.UsuarioCliente;
 import conexion.UsuarioLogin;
 import conexion.objetos.Aprecio;
 import conexion.objetos.AprecioPK;
@@ -70,9 +72,15 @@ import conexion.objetos.Visibilidad;
 import conexion.objetos.VisibilidadPK;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconName;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
+import javax.swing.Action;
 
 /**
  * FXML Controller class
@@ -117,11 +125,22 @@ public class BaseController implements Initializable {
     private JFXButton btnSalir;
     @FXML
     private TextField txtBuscador;
+    @FXML
+    private JFXButton btnPerfil;
+    @FXML
+    private Label lblNArchivos;
+    @FXML
+    private Label lblNComentarios;
+    @FXML
+    private Label lblNLikes;
+    @FXML
+    private JFXButton btnSession;
+
     //------------------------------
     ListView<String> lista = new ListView<>();
     TextField textComentar = new TextField();
     Parent parent;
-    private Stage stage;
+    private static Stage stage;
     //Vista HBox recursosDinamicos
     private HBox vistaRecursos;
     private Label lblApodo;
@@ -130,18 +149,36 @@ public class BaseController implements Initializable {
     private JFXButton btnVer;
     Image cerrarTag = new Image("/imagenes/delete3.png");
 
-    //TEMPORAL
-    //int likes=0;
-    Like likeObjeto;
+    public static UsuarioCliente usuarioInicio;
+    private Like likeObjeto;
     private int idRecurso;  //MEJORAR  --- id del recurso que está visualizando el usuario actualmente.
-    //-----------------------------
+
+    @FXML
+    private ScrollPane scrollGeneral;
+    @FXML
+    private VBox boxGeneral;
+    @FXML
+    private ScrollPane scrollPublicas;
+    @FXML
+    private VBox boxPublicas;
+    @FXML
+    private ScrollPane scrollPrivadas;
+    @FXML
+    private VBox boxPrivadas;
+    @FXML
+    private ScrollPane scrollSinEti;
+    @FXML
+    private VBox boxSinEti;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         flow.setStyle("-fx-background-image: url('/imagenes/fondolistar.png')");
-        //System.out.println(EtiquetaUsuario.obtenerRecursoSinEtiquetar());
-        lblApodoUsuario.setText(IdentificarController.usuarioInicio.getApodo());
+        //Mostrar los datos del usuario.        
+        lblApodoUsuario.setText(usuarioInicio.getApodo());
+        lblNArchivos.setText(String.valueOf(usuarioInicio.getNumeroRecursos()));
+        lblNLikes.setText(String.valueOf(usuarioInicio.getNumeroLikes()));
+        lblNComentarios.setText(String.valueOf(usuarioInicio.getNumeroComentarios()));
         //recibeParametros(text);
         acordeonIzq.expandedPaneProperty().addListener(
                 (ObservableValue<? extends TitledPane> ov, TitledPane old_val,
@@ -160,51 +197,76 @@ public class BaseController implements Initializable {
                 }
         );
         cargarListaRecursos(RecursoClase.obtenerRecursos());
-        System.out.println(IdentificarController.usuarioInicio.toString());
+        btnSession.setText("");
+        System.out.println(usuarioInicio.toString());
     }
 
     //Métodos nuestros.
     public void cargarListasTags(TitledPane tp) {
 
-        VBox contenido = null;
+        tp.setStyle("-fx-background-color:#EAB0B2;");
         //Switch para cargar el TitledPane apropiado.
-        System.out.println(tp.getText());
+//        System.out.println(tp.getText());
         switch (tp.getText()) {
-            case "POPULARES":   //TODO
-                //contenido=configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasPopulares());
-                break;
-            case "MASVALORADAS":    //TODO
-                //contenido=configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasValoradas());
-                break;
-            case "NOVEDADES":
-                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasNovedades());
-                break;
+//            case "POPULARES":
+//                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasPopulares());
+//                sp.setContent(contenido);
+//                anchorGeneral.setStyle("-fx-background-color:#EAB0B2;");
+//                tp.setContent(anchorPopulares);
+//                break;
+//            case "MAS VALORADAS":
+//                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasValoradas());
+//                sp.setContent(contenido);
+//                anchorGeneral.setStyle("-fx-background-color:#EAB0B2;");
+//                tp.setContent(anchorValoradas);
+//                break;
+//            case "NOVEDADES":
+//                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasNovedades());
+//                sp.setContent(contenido);
+//                anchorGeneral.setStyle("-fx-background-color:#EAB0B2;");
+//                tp.setContent(anchorNovedades);
+//                break;
             case "GENERAL":
-                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasGenerales());
+                boxGeneral = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasGenerales());
+                boxGeneral.setStyle("-fx-background-color:#EAB0B2;");
+                scrollGeneral.setContent(boxGeneral);
+                scrollGeneral.setStyle("-fx-background-color:#EAB0B2;");
+                tp.setContent(scrollGeneral);
                 break;
             case "SIN ETIQUETAR":
-                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerRecursoSinEtiquetar());
+                boxSinEti = configurarListaEtiquetas(EtiquetaUsuario.obtenerRecursoSinEtiquetar());
+                boxSinEti.setStyle("-fx-background-color:#EAB0B2;");
+                scrollSinEti.setContent(boxSinEti);
+                scrollSinEti.setStyle("-fx-background-color:#EAB0B2;");
+                tp.setContent(scrollSinEti);
                 break;
             case "PUBLICAS":
-                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(IdentificarController.usuarioInicio.getIdUsuario()));
+                boxPublicas = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(usuarioInicio.getIdUsuario()));
+                boxPublicas.setStyle("-fx-background-color: #00B8D0;");
+                scrollPublicas.setContent(boxPublicas);
+                scrollPublicas.setStyle("-fx-background-color: #00B8D0;");
+                tp.setContent(scrollPublicas);
                 break;
             case "PRIVADAS":
-                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(IdentificarController.usuarioInicio.getIdUsuario()));
+                boxPrivadas = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(usuarioInicio.getIdUsuario()));
+                scrollPrivadas.setContent(boxPrivadas);
+                scrollPrivadas.setStyle("-fx-background-color:#EAB0B2;");
+                tp.setContent(scrollPrivadas);
                 break;
 
         }
-        tp.setContent(contenido);
-        //System.out.println(lista);
 
+        //System.out.println(lista);
     }
 
     private VBox configurarListaEtiquetas(List<?> lista) {
         Label l = null;
+
         VBox contenido = new VBox();
-        contenido.setStyle("-fx-background-color:#EAB0B2;");
+//        contenido.setStyle("-fx-background-color:#EAB0B2;");
 
         for (Object o : lista) {
-            if (o instanceof Etiqueta) {
+            if (o instanceof Etiqueta) {    //VALORADAS / POPULARES
                 Etiqueta e = (Etiqueta) o;
                 l = (new Label("#" + e.getEtiquetaPK().getNombre()));
                 l.setOnMouseClicked((new EventHandler<MouseEvent>() {
@@ -220,7 +282,7 @@ public class BaseController implements Initializable {
             }
             if (o instanceof String) { //PUBLICAS / PRIVADAS
                 String s = (String) o;
-                tagButton(contenido, new Etiqueta(new EtiquetaPK(IdentificarController.usuarioInicio.getIdUsuario(), s)));
+                tagButton(contenido, new Etiqueta(new EtiquetaPK(usuarioInicio.getIdUsuario(), s)));
             }
             if (o instanceof Recurso) {  //SIN ETIQUETAR
                 Recurso r = (Recurso) o;
@@ -287,14 +349,14 @@ public class BaseController implements Initializable {
         }
 
         icon.setOnMousePressed((MouseEvent evento) -> {
-            if (!likeObjeto.isPropio()){ //Añadir
+            if (!likeObjeto.isPropio()) { //Añadir
                 if (AprecioConectar.anadirAprecio(new Aprecio(new AprecioPK(recurso.getIdUsuario(), recurso.getIdRecurso()), new Date()))) {
                     cont.setText(String.valueOf(likeObjeto.incrementar()));
                     likeObjeto.invertir();
                     System.out.println("Aprecio añadido.");
                     icon.setFill(Color.RED);
                 }
-            }else{ //Borrar
+            } else { //Borrar
                 if (AprecioConectar.borrarAprecio(recurso.getIdUsuario(), recurso.getIdRecurso())) {
                     cont.setText(String.valueOf(likeObjeto.decrementar()));
                     likeObjeto.invertir();
@@ -332,6 +394,7 @@ public class BaseController implements Initializable {
         title.setFill(Color.web("#442850"));
         vbox.getChildren().add(title);
 
+        System.out.println(usuarioInicio.getIdUsuario());
         List<Etiqueta> listaEtiquetas = EtiquetaUsuario.obtenerEtiquetasRecurso(recurso.getIdRecurso());
         for (Etiqueta e : listaEtiquetas) {
 
@@ -345,6 +408,23 @@ public class BaseController implements Initializable {
         gridRecurso.add(vbox, 4, 0, 1, 3);
         //FIN Etiquetas
         //Añadir Etiquetas
+        JFXToggleButton tbEtiqueta = new JFXToggleButton();
+        //Seleccionado por defecto.
+        tbEtiqueta.setSelected(true);
+        tbEtiqueta.setText("Visibilidad Pública");
+        tbEtiqueta.setStyle("-fx-text-fill: #3CE4A8");
+        //Evento
+        tbEtiqueta.setOnAction((ActionEvent e) -> {
+            if (tbEtiqueta.isSelected()) {
+                tbEtiqueta.setText("Visibilidad Pública");
+                tbEtiqueta.setStyle("-fx-text-fill: #3CE4A8");
+            } else {
+                tbEtiqueta.setText("Visibilidad Privada");
+                tbEtiqueta.setStyle("-fx-text-fill: #8f000f");
+            }
+        });
+        gridRecurso.add(tbEtiqueta, 2, 6);
+
         TextField textField = new TextField();
         textField.setStyle("-fx-text-fill: #006697;");
         textField.setFont(Font.font("Arial", 14));
@@ -353,7 +433,7 @@ public class BaseController implements Initializable {
         textField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 //Crear etiquetas.
-                if (EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(IdentificarController.usuarioInicio.getIdUsuario(), textField.getText(), recurso.getIdRecurso()), true))) {
+                if (EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(usuarioInicio.getIdUsuario(), textField.getText(), recurso.getIdRecurso()), tbEtiqueta.isSelected()))) {
                     this.cargarRecursoCompleto(recurso.getIdRecurso());
                     System.out.println("ETIQUETA creada correctamente.");
                 }
@@ -368,15 +448,12 @@ public class BaseController implements Initializable {
                 + " -fx-text-fill: #FFFFFF");
         descargar.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         descargar.setPrefSize(135, 35);
-        descargar.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                FileChooser fileChooser = new FileChooser();
-                //Show save file dialog
-                fileChooser.setInitialFileName(recurso.getNombre().substring(0, recurso.getNombre().lastIndexOf(".")));
-                File file = fileChooser.showSaveDialog(stage);
-                FicherosBinarios.descargar(recurso.getIdRecurso(), file);
-            }
+        descargar.setOnAction((ActionEvent e) -> {
+            FileChooser fileChooser = new FileChooser();
+            //Show save file dialog
+            fileChooser.setInitialFileName(recurso.getNombre().substring(0, recurso.getNombre().lastIndexOf(".")));
+            File file = fileChooser.showSaveDialog(stage);
+            FicherosBinarios.descargar(recurso.getIdRecurso(), file);
         });
         gridRecurso.add(descargar, 0, 6);
         //FIN Descargar
@@ -434,7 +511,7 @@ public class BaseController implements Initializable {
         String fecha = (new SimpleDateFormat("hh:mm:ss a dd-MMM-yyyy").format(objDate)); // El formato de fecha se aplica a la fecha actual
 
         if (!"".equals(textComentar.getText())) {
-            String texto = (fecha + " El usuario " + IdentificarController.usuarioInicio.getApodo() + " ,dice: \"" + textComentar.getText() + "\"");
+            String texto = (fecha + " El usuario " + usuarioInicio.getApodo() + " ,dice: \"" + textComentar.getText() + "\"");
             System.out.println(texto);
             if (ComentarioRecurso.subirComentario(new Comentario(new ComentarioPK(r.getIdUsuario(), r.getIdRecurso(), objDate), texto))) //Añado el comentario en la base de datos.
             {
@@ -579,6 +656,26 @@ public class BaseController implements Initializable {
             }
         });
         box.getChildren().add(btTag);
+    }
+
+    @FXML
+    private void perfil(ActionEvent event) {
+    }
+
+    @FXML
+    private void cerrarSession(ActionEvent event) {
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+            Stage stage1 = new Stage();
+            Scene scene = new Scene(parent);
+            scene.getStylesheets().add("/estilos/estilos.css");
+            stage1.setScene(scene);
+            stage1.show();
+            stage.close();
+        } catch (IOException ex) {
+            Logger.getLogger(BaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

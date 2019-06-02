@@ -6,10 +6,8 @@
 package conexion;
 
 import static conexion.Conectar.IPSERVER;
-import conexion.objetos.Comentario;
 import conexion.objetos.Usuario;
-import controladores.IdentificarController;
-import java.util.List;
+import controladores.BaseController;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -31,7 +29,7 @@ public class UsuarioLogin {
              "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/usuario/login?apodo="+apodoUser+"&contrasena="+contrasenaUser).request()
                 .get();
         if(Status.ACCEPTED.getStatusCode()==respuestaServidor.getStatus()){
-            IdentificarController.usuarioInicio=respuestaServidor.readEntity(UsuarioCliente.class);
+            BaseController.usuarioInicio=respuestaServidor.readEntity(UsuarioCliente.class);
             respuesta=true;
         }    
         return respuesta;

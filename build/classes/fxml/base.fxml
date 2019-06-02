@@ -11,12 +11,12 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="baseStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1222.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.BaseController">
@@ -25,32 +25,25 @@
          <left>
             <Accordion fx:id="acordeonIzq" prefHeight="576.0" prefWidth="202.0" style="-fx-background-color: #FAF0DE;" BorderPane.alignment="CENTER">
               <panes>
-                <TitledPane fx:id="POPULARES" animated="false" text="POPULARES">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FAE83C;" />
-                  </content>
-                </TitledPane>
-                <TitledPane fx:id="MASVALORADAS" animated="false" text="MAS VALORADAS">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #C5F5F0;" />
-                  </content>
-                </TitledPane>
-                <TitledPane fx:id="NOVEDADES" animated="false" text="NOVEDADES">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #A8A47E;" />
-                  </content>
-                </TitledPane>
+                <TitledPane fx:id="POPULARES" animated="false" text="POPULARES" />
+                <TitledPane fx:id="MASVALORADAS" animated="false" text="MAS VALORADAS" />
+                <TitledPane fx:id="NOVEDADES" animated="false" text="NOVEDADES" />
                   <TitledPane fx:id="GENERAL" animated="false" text="GENERAL">
                      <content>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                        <ScrollPane fx:id="scrollGeneral" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;">
                            <content>
-                              <AnchorPane prefHeight="534.0" prefWidth="200.0" />
-                           </content></ScrollPane>
+                              <VBox fx:id="boxGeneral" prefHeight="509.0" prefWidth="208.0" style="-fx-background-color: #00B8D0;" />
+                           </content>
+                        </ScrollPane>
                      </content>
                   </TitledPane>
                   <TitledPane fx:id="SINETIQUETAR" animated="false" text="SIN ETIQUETAR">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FDF7BE;" />
+                        <ScrollPane fx:id="scrollSinEti" prefHeight="200.0" prefWidth="200.0">
+                           <content>
+                              <VBox fx:id="boxSinEti" prefHeight="503.0" prefWidth="203.0" />
+                           </content>
+                        </ScrollPane>
                      </content>
                   </TitledPane>
               </panes>
@@ -59,21 +52,83 @@
          <right>
             <Accordion fx:id="acordeonDer" style="-fx-background-color: #EFFB7D;" BorderPane.alignment="CENTER">
               <panes>
-                <TitledPane fx:id="PUBLICAS" animated="false" minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" text="PUBLICAS">
-                  <content>
-                    <AnchorPane minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #DFDFDF;" />
-                  </content>
+                <TitledPane fx:id="PUBLICAS" animated="false" minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;" text="PUBLICAS">
+                     <content>
+                        <ScrollPane fx:id="scrollPublicas" prefHeight="200.0" prefWidth="200.0">
+                           <content>
+                              <VBox fx:id="boxPublicas" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #00B8D0;" />
+                           </content>
+                        </ScrollPane>
+                     </content>
                 </TitledPane>
                 <TitledPane fx:id="PRIVADAS" animated="false" minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" text="PRIVADAS">
-                  <content>
-                    <AnchorPane minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;" />
-                  </content>
+                     <content>
+                        <ScrollPane fx:id="scrollPrivadas" prefHeight="200.0" prefWidth="200.0">
+                           <content>
+                              <VBox fx:id="boxPrivadas" prefHeight="586.0" prefWidth="206.0" />
+                           </content>
+                        </ScrollPane>
+                     </content>
                 </TitledPane>
               </panes>
             </Accordion>
          </right>
          <bottom>
-            <Pane prefHeight="41.0" prefWidth="1200.0" style="-fx-background-color: #FF6B6B;" BorderPane.alignment="CENTER" />
+            <Pane prefHeight="73.0" prefWidth="1222.0" style="-fx-background-color: #FF6B6B;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lblApodoUsuario" layoutX="126.0" layoutY="14.0" prefHeight="42.0" prefWidth="182.0" style="-fx-text-fill: #ffffff;" text="Label">
+                     <font>
+                        <Font name="Agency FB Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="34.0" layoutY="14.0" prefHeight="42.0" prefWidth="103.0" text="Usuario">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="342.0" layoutY="14.0" prefHeight="42.0" prefWidth="189.0" text="Archivos subidos">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblNArchivos" layoutX="540.0" layoutY="14.0" prefHeight="42.0" prefWidth="48.0" style="-fx-text-fill: #ffffff;" text="Nº">
+                     <font>
+                        <Font name="Agency FB Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="647.0" layoutY="14.0" prefHeight="42.0" prefWidth="245.0" text="Comentarios recibidos">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblNComentarios" layoutX="907.0" layoutY="14.0" prefHeight="42.0" prefWidth="48.0" style="-fx-text-fill: #ffffff;" text="Nº">
+                     <font>
+                        <Font name="Agency FB Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1007.0" layoutY="14.0" prefHeight="42.0" prefWidth="66.0" text="Likes">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblNLikes" layoutX="1073.0" layoutY="14.0" prefHeight="42.0" prefWidth="48.0" style="-fx-text-fill: #ffffff;" text="Nº">
+                     <font>
+                        <Font name="Agency FB Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="btnSession" contentDisplay="TOP" layoutX="1131.0" layoutY="6.0" onAction="#cerrarSession" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #DAE0E3; -fx-background-radius: 30;">
+                     <graphic>
+                        <ImageView fitHeight="38.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/icons8_exit_sign_40px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </JFXButton>
+               </children></Pane>
          </bottom>
          <top>
             <HBox prefHeight="84.0" prefWidth="1222.0" style="-fx-background-color: #BB91CD;" BorderPane.alignment="CENTER">
@@ -83,14 +138,6 @@
                         <Image url="@../imagenes/infinito2.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lblApodoUsuario" prefHeight="42.0" prefWidth="103.0" style="-fx-text-fill: #ffffff;" text="Label">
-                     <HBox.margin>
-                        <Insets left="10.0" top="15.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font name="Agency FB Bold" size="34.0" />
-                     </font>
-                  </Label>
                   <JFXButton fx:id="btnAnadirRecurso" contentDisplay="TOP" mnemonicParsing="false" onAction="#botonListarRecursos" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #DAE0E3; -fx-background-radius: 30;" text="Listar">
                      <HBox.margin>
                         <Insets top="8.0" />
@@ -120,6 +167,21 @@
                      <font>
                         <Font size="13.0" />
                      </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnPerfil" contentDisplay="TOP" onAction="#perfil" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #DAE0E3; -fx-background-radius: 30;" text="Perfil">
+                     <graphic>
+                        <ImageView fitHeight="38.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/icons8_resume_64px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="8.0" />
+                     </HBox.margin>
                   </JFXButton>
                   <JFXButton fx:id="btnSalir" contentDisplay="TOP" onAction="#salir" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #DAE0E3; -fx-background-radius: 30;" text="Salir">
                      <graphic>
@@ -161,7 +223,7 @@
          <center>
             <ScrollPane fx:id="scrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/estilos.css">
                <content>
-                  <FlowPane fx:id="flow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="693.0" prefWidth="815.0" />
+                  <FlowPane fx:id="flow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="641.0" prefWidth="819.0" />
                </content>
                <styleClass>
                   <String fx:value="decrement-arrow" />
