@@ -24,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -45,25 +46,40 @@ public class IdentificarController implements Initializable {
     @FXML
     private Label lbError;
 
+    //nuevo
+    private StackPane stack;
+    private Stage stage;
+    MainApp main;
+    //finNuevo
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
         
-    }    
-
+    } 
+    
     @FXML
     private void identificarABase(ActionEvent event) throws IOException {
         
         if((loginUsuario(txtApodo1.getText(),txtContrasena1.getText()))==true){
             
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/fxml/base.fxml"));
-            Parent parent = myLoader.load();            
+            Parent parent = myLoader.load();           
             
             Stage stage = new Stage();
             Scene scene = new Scene(parent);        
             stage.setScene(scene);            
             stage.show();
-            MainApp.stage.close();
+            cerrar();
+//            MainApp.stage.close();
+            
+//            FXMLLoader myLoader = new FXMLLoader();
+//            myLoader.setLocation(BaseController.class.getResource("/fxml/base.fxml"));
+//            stack = (StackPane)myLoader.load();
+//            Scene scene = new Scene(stack);
+//            scene.getStylesheets().add("/estilos/estilos.css");
+//            stage.setScene(scene);
+//            BaseController controller = (BaseController)myLoader.getController();
+//            controller.setStageBase(stage);
             
         }else {
             lbError.setText("EL USUARIO O LA CONTRASEÑA SON INCORRECTOS");            
@@ -74,5 +90,10 @@ public class IdentificarController implements Initializable {
     private void limpiarLabel(MouseEvent event) {
         
         lbError.setText("");
+    }
+    public void cerrar(){
+  
+        stage = (Stage)btnAceptar1.getScene().getWindow();
+        stage.close();
     }
 }

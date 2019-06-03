@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -36,7 +37,7 @@ public class LoginController implements Initializable {
     private VBox vbox;
     
     private Parent parent;
-    
+    private Stage stage;
            
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,7 +60,12 @@ public class LoginController implements Initializable {
         });
         
        
-    }    
+    }  
+    // nuevo metodo establece stage
+    public void setStageLogin(Stage stage){
+        
+        this.stage=stage;
+    }//fin metodo
 
     @FXML
     private void registrar(ActionEvent event) {

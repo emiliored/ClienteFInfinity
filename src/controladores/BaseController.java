@@ -140,7 +140,7 @@ public class BaseController implements Initializable {
     ListView<String> lista = new ListView<>();
     TextField textComentar = new TextField();
     Parent parent;
-    private static Stage stage;
+    //private static Stage stage;
     //Vista HBox recursosDinamicos
     private HBox vistaRecursos;
     private Label lblApodo;
@@ -153,6 +153,7 @@ public class BaseController implements Initializable {
     private Like likeObjeto;
     private int idRecurso;  //MEJORAR  --- id del recurso que está visualizando el usuario actualmente.
 
+    
     @FXML
     private ScrollPane scrollGeneral;
     @FXML
@@ -169,10 +170,12 @@ public class BaseController implements Initializable {
     private ScrollPane scrollSinEti;
     @FXML
     private VBox boxSinEti;
+    
+    private Stage stage;//nuevo para stage
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+       
         flow.setStyle("-fx-background-image: url('/imagenes/fondolistar.png')");
         //Mostrar los datos del usuario.        
         lblApodoUsuario.setText(usuarioInicio.getApodo());
@@ -200,6 +203,12 @@ public class BaseController implements Initializable {
         btnSession.setText("");
         System.out.println(usuarioInicio.toString());
     }
+    
+    // nuevo metodo establece stage
+    public void setStageBase(Stage stage){
+        
+        this.stage=stage;
+    }//fin metodo
 
     //Métodos nuestros.
     public void cargarListasTags(TitledPane tp) {
@@ -665,17 +674,22 @@ public class BaseController implements Initializable {
     @FXML
     private void cerrarSession(ActionEvent event) {
         try {
-            parent = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+            AnchorPane anchor = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
             Stage stage1 = new Stage();
-            Scene scene = new Scene(parent);
+            Scene scene = new Scene(anchor);
             scene.getStylesheets().add("/estilos/estilos.css");
             stage1.setScene(scene);
             stage1.show();
-            stage.close();
+            cerrar();
         } catch (IOException ex) {
             Logger.getLogger(BaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-
+    
+    public void cerrar(){
+  
+        stage = (Stage)btnSession.getScene().getWindow();
+        stage.close();
+    }
 }
