@@ -6,15 +6,10 @@
 package controladores;
 
 import com.jfoenix.controls.JFXButton;
-import conexion.UsuarioCliente;
-import conexion.UsuarioLogin;
 import static conexion.UsuarioLogin.loginUsuario;
-import conexion.objetos.Usuario;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -44,13 +38,9 @@ public class IdentificarController implements Initializable {
     @FXML
     private JFXButton btnAceptar1;
     @FXML
-    private Label lbError;
-
-    //nuevo
-    private StackPane stack;
-    private Stage stage;
-    MainApp main;
-    //finNuevo
+    private Label lbError;   
+    
+    private Stage stage;    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
@@ -69,18 +59,7 @@ public class IdentificarController implements Initializable {
             Scene scene = new Scene(parent);        
             stage.setScene(scene);            
             stage.show();
-            cerrar();
-//            MainApp.stage.close();
-            
-//            FXMLLoader myLoader = new FXMLLoader();
-//            myLoader.setLocation(BaseController.class.getResource("/fxml/base.fxml"));
-//            stack = (StackPane)myLoader.load();
-//            Scene scene = new Scene(stack);
-//            scene.getStylesheets().add("/estilos/estilos.css");
-//            stage.setScene(scene);
-//            BaseController controller = (BaseController)myLoader.getController();
-//            controller.setStageBase(stage);
-            
+            cerrar();            
         }else {
             lbError.setText("EL USUARIO O LA CONTRASEÑA SON INCORRECTOS");            
         }        
@@ -91,7 +70,8 @@ public class IdentificarController implements Initializable {
         
         lbError.setText("");
     }
-    public void cerrar(){
+    
+    public void cerrar(){//Metodo cerrar stage
   
         stage = (Stage)btnAceptar1.getScene().getWindow();
         stage.close();

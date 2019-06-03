@@ -77,10 +77,8 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javax.swing.Action;
 
 /**
  * FXML Controller class
@@ -134,27 +132,6 @@ public class BaseController implements Initializable {
     @FXML
     private Label lblNLikes;
     @FXML
-    private JFXButton btnSession;
-
-    //------------------------------
-    ListView<String> lista = new ListView<>();
-    TextField textComentar = new TextField();
-    Parent parent;
-    //private static Stage stage;
-    //Vista HBox recursosDinamicos
-    private HBox vistaRecursos;
-    private Label lblApodo;
-    private Label lblRecurso;
-    private Label lblDescripcion;
-    private JFXButton btnVer;
-    Image cerrarTag = new Image("/imagenes/delete3.png");
-
-    public static UsuarioCliente usuarioInicio;
-    private Like likeObjeto;
-    private int idRecurso;  //MEJORAR  --- id del recurso que está visualizando el usuario actualmente.
-
-    
-    @FXML
     private ScrollPane scrollGeneral;
     @FXML
     private VBox boxGeneral;
@@ -170,12 +147,27 @@ public class BaseController implements Initializable {
     private ScrollPane scrollSinEti;
     @FXML
     private VBox boxSinEti;
-    
+    @FXML
+    private Label lbCerrarSesion;
+
+    //------------------------------
+    ListView<String> lista = new ListView<>();
+    TextField textComentar = new TextField();
+    Parent parent;
+    private HBox vistaRecursos;
+    private Label lblApodo;
+    private Label lblRecurso;
+    private Label lblDescripcion;
+    private JFXButton btnVer;
+    Image cerrarTag = new Image("/imagenes/delete3.png");
+    public static UsuarioCliente usuarioInicio;
+    private Like likeObjeto;
+    int idRecurso;  //MEJORAR  --- id del recurso que está visualizando el usuario actualmente.     
     private Stage stage;//nuevo para stage
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+
         flow.setStyle("-fx-background-image: url('/imagenes/fondolistar.png')");
         //Mostrar los datos del usuario.        
         lblApodoUsuario.setText(usuarioInicio.getApodo());
@@ -200,20 +192,19 @@ public class BaseController implements Initializable {
                 }
         );
         cargarListaRecursos(RecursoClase.obtenerRecursos());
-        btnSession.setText("");
         System.out.println(usuarioInicio.toString());
     }
-    
+
     // nuevo metodo establece stage
-    public void setStageBase(Stage stage){
-        
-        this.stage=stage;
+    public void setStageBase(Stage stage) {
+
+        this.stage = stage;
     }//fin metodo
 
     //Métodos nuestros.
     public void cargarListasTags(TitledPane tp) {
 
-        tp.setStyle("-fx-background-color:#EAB0B2;");
+//        tp.setStyle("-fx-background-color:#EAB0B2;");
         //Switch para cargar el TitledPane apropiado.
 //        System.out.println(tp.getText());
         switch (tp.getText()) {
@@ -251,10 +242,10 @@ public class BaseController implements Initializable {
                 break;
             case "PUBLICAS":
                 boxPublicas = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(usuarioInicio.getIdUsuario()));
-                boxPublicas.setStyle("-fx-background-color: #00B8D0;");
+//                boxPublicas.setStyle("-fx-background-color: #00B8D0;");
                 scrollPublicas.setContent(boxPublicas);
-                scrollPublicas.setStyle("-fx-background-color: #00B8D0;");
-                tp.setContent(scrollPublicas);
+//                scrollPublicas.setStyle("-fx-background-color: #00B8D0;");
+                PUBLICAS.setContent(scrollPublicas);
                 break;
             case "PRIVADAS":
                 boxPrivadas = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(usuarioInicio.getIdUsuario()));
@@ -556,11 +547,6 @@ public class BaseController implements Initializable {
 
     }
 
-    @FXML
-    private void salir(ActionEvent event) {
-        Platform.exit();
-    }
-
     public void cargarListaRecursos(List<Recurso> listaRecursos) {//Carga dinamicamente una vista con la lista de recursos
 
         AnchorPane caja;
@@ -653,26 +639,46 @@ public class BaseController implements Initializable {
 
     public void tagButton(VBox box, Etiqueta tag) {
         ImageView iconCerrar = new ImageView(cerrarTag);
-        Button btTag = new Button("#" + tag.getEtiquetaPK().getNombre(), iconCerrar);
-        btTag.setPrefHeight(20);
-        btTag.setContentDisplay(ContentDisplay.RIGHT);
-        //Para borrar al etiqueta.
-        btTag.setOnAction((ActionEvent value) -> {
-            if (EtiquetaUsuario.borrarEtiqueta(tag.getEtiquetaPK())) {
-                System.out.println("ETIQUETA borrada.");
-                box.getChildren().remove(btTag);
-                this.cargarRecursoCompleto(this.idRecurso);
+        Label btTag = new Label("#" + tag.getEtiquetaPK().getNombre(), iconCerrar);
+//        btTag.setPrefHeight(20);
+//        btTag.setContentDisplay(ContentDisplay.RIGHT);
+//        Para borrar al etiqueta.
+//        btTag.setOnAction((ActionEvent value) -> {
+//           
+//        });
+//        iconCerrar.setOnMouseClicked((MouseEvent value)->{
+//             if (EtiquetaUsuario.borrarEtiqueta(tag.getEtiquetaPK())) {
+//                System.out.println("ETIQUETA borrada.");
+//                box.getChildren().removeAll(btTag);
+//                this.cargarRecursoCompleto(this.idRecurso);
+//            }
+//            
+//        });
+        btTag.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->iconCerrar.fireEvent(event));       
+                    
+        iconCerrar.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (EtiquetaUsuario.borrarEtiqueta(tag.getEtiquetaPK())) {
+                    System.out.println("ETIQUETA borrada.");
+                    box.getChildren().removeAll(btTag);
+                    cargarRecursoCompleto(idRecurso);
+                }
+                event.consume();
             }
         });
-        box.getChildren().add(btTag);
+        box.getChildren().addAll(btTag);
+    }
+
+    public void cerrar() {
+
+        stage = (Stage) lbCerrarSesion.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
-    private void perfil(ActionEvent event) {
-    }
+    private void cerrarSesion(MouseEvent event) {
 
-    @FXML
-    private void cerrarSession(ActionEvent event) {
         try {
             AnchorPane anchor = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
             Stage stage1 = new Stage();
@@ -684,12 +690,14 @@ public class BaseController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(BaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-    
-    public void cerrar(){
-  
-        stage = (Stage)btnSession.getScene().getWindow();
-        stage.close();
+
+    @FXML
+    private void salir(ActionEvent event) {
+        Platform.exit();
+    }
+
+    @FXML
+    private void perfil(ActionEvent event) {
     }
 }

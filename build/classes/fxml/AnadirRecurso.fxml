@@ -37,7 +37,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXToggleButton>
-      <JFXButton fx:id="btnSubir" contentDisplay="TOP" layoutX="400.0" layoutY="189.0" onAction="#subir" prefHeight="100.0" prefWidth="110.0" style="-fx-background-color: #607D8B; -fx-background-radius: 45;" text="Subir" textFill="WHITE">
+      <JFXButton fx:id="btnSubir" contentDisplay="TOP" layoutX="355.0" layoutY="534.0" onAction="#subir" prefHeight="100.0" prefWidth="110.0" style="-fx-background-color: #607D8B; -fx-background-radius: 45;" text="Subir" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -102,7 +102,7 @@
             <Font size="15.0" />
          </font></JFXTextField>
       <FontAwesomeIcon glyphStyle="-fx-fill:  #C5F263" iconName="FORWARD" layoutX="167.0" layoutY="412.0" size="3em" text="" />
-      <FontAwesomeIcon glyphStyle="-fx-fill: #FF6B6B" iconName="FORWARD" layoutX="349.0" layoutY="252.0" size="3em" text="" />
+      <FontAwesomeIcon glyphStyle="-fx-fill: #FF6B6B" iconName="FORWARD" layoutX="296.0" layoutY="596.0" size="3em" text="" />
       <FontAwesomeIcon glyphStyle="-fx-fill: #FF6B6B" iconName="FORWARD" layoutX="167.0" layoutY="252.0" size="3em" text="" />
       <JFXToggleButton fx:id="tgVisibilidadEtiqueta" layoutX="21.0" layoutY="462.0" onAction="#visibilidadEtiqueta" prefHeight="62.0" prefWidth="200.0" text="Visibilidad Tag" textFill="WHITE" toggleColor="#3ce4a8" toggleLineColor="#c5f8e5" unToggleColor="#8f000f" unToggleLineColor="#c27878">
          <font>

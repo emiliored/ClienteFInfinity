@@ -52,9 +52,9 @@
          <right>
             <Accordion fx:id="acordeonDer" style="-fx-background-color: #EFFB7D;" BorderPane.alignment="CENTER">
               <panes>
-                <TitledPane fx:id="PUBLICAS" animated="false" minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;" text="PUBLICAS">
+                <TitledPane fx:id="PUBLICAS" animated="false" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #00B8D0;" text="PUBLICAS">
                      <content>
-                        <ScrollPane fx:id="scrollPublicas" prefHeight="200.0" prefWidth="200.0">
+                        <ScrollPane fx:id="scrollPublicas" prefHeight="587.0" prefWidth="206.0">
                            <content>
                               <VBox fx:id="boxPublicas" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #00B8D0;" />
                            </content>
@@ -116,18 +116,15 @@
                         <Font name="Agency FB Bold" size="24.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="btnSession" contentDisplay="TOP" layoutX="1131.0" layoutY="6.0" onAction="#cerrarSession" prefHeight="62.0" prefWidth="69.0" style="-fx-background-color: #DAE0E3; -fx-background-radius: 30;">
+                  <Label fx:id="lbCerrarSesion" layoutX="1138.0" layoutY="9.0" onMouseClicked="#cerrarSesion" prefHeight="52.0" prefWidth="54.0">
                      <graphic>
-                        <ImageView fitHeight="38.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="49.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../imagenes/icons8_exit_sign_40px.png" />
                            </image>
                         </ImageView>
                      </graphic>
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </JFXButton>
+                  </Label>
                </children></Pane>
          </bottom>
          <top>
