@@ -18,9 +18,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -55,8 +57,11 @@ public class IdentificarController implements Initializable {
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/fxml/base.fxml"));
             Parent parent = myLoader.load();           
             
-            Stage stage = new Stage();
-            Scene scene = new Scene(parent);        
+            stage = new Stage();
+            Scene scene = new Scene(parent);
+            stage.setResizable(false);
+            stage.setTitle("FInfinity");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/icons8_infinity_large_40px.png")));
             stage.setScene(scene);            
             stage.show();
             cerrar();            

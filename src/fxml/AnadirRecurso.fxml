@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="vistaSubirRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="672.0" prefWidth="820.0" style="-fx-background-color: #386C73;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.AnadirRecursoController">
+<AnchorPane id="AnchorPane" fx:id="vistaSubirRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="641.0" prefWidth="849.0" style="-fx-background-color: #386C73;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.AnadirRecursoController">
    <children>
       <Circle fill="#007a8a" layoutX="410.0" layoutY="336.0" radius="320.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Circle fill="#55a2ad" layoutX="400.0" layoutY="336.0" radius="226.0" stroke="TRANSPARENT" strokeType="INSIDE" />
@@ -37,7 +37,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXToggleButton>
-      <JFXButton fx:id="btnSubir" contentDisplay="TOP" layoutX="355.0" layoutY="534.0" onAction="#subir" prefHeight="100.0" prefWidth="110.0" style="-fx-background-color: #607D8B; -fx-background-radius: 45;" text="Subir" textFill="WHITE">
+      <JFXButton fx:id="btnSubir" contentDisplay="TOP" layoutX="119.0" layoutY="535.0" onAction="#subir" prefHeight="100.0" prefWidth="110.0" style="-fx-background-color: #607D8B; -fx-background-radius: 45;" text="Subir" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -54,7 +54,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <TextArea fx:id="txtAreaDescripcion" layoutX="321.0" layoutY="49.0" onInputMethodTextChanged="#limpiaLabel" prefHeight="97.0" prefWidth="477.0" style="-fx-background-color: #E8DAEE;">
+      <TextArea fx:id="txtAreaDescripcion" layoutX="336.0" layoutY="50.0" onInputMethodTextChanged="#limpiaLabel" prefHeight="97.0" prefWidth="477.0" style="-fx-background-color: #E8DAEE;">
          <font>
             <Font size="15.0" />
          </font></TextArea>
@@ -67,7 +67,7 @@
          <image>
             <Image url="@../imagenes/files.gif" />
          </image></ImageView>
-      <Label fx:id="lbSubido" alignment="CENTER" layoutX="124.0" layoutY="564.0" prefHeight="39.0" prefWidth="572.0" textFill="WHITE">
+      <Label fx:id="lbSubido" alignment="CENTER" layoutX="262.0" layoutY="565.0" prefHeight="39.0" prefWidth="572.0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -84,7 +84,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXScrollPane layoutX="400.0" layoutY="351.0" prefHeight="97.0" prefWidth="372.0" stylesheets="@../estilos/estilos.css">
+      <JFXScrollPane layoutX="425.0" layoutY="351.0" prefHeight="97.0" prefWidth="372.0" stylesheets="@../estilos/estilos.css">
          <children>
             <FlowPane fx:id="flowEtiquetas" maxHeight="95.0" maxWidth="382.0" prefHeight="95.0" prefWidth="382.0" style="-fx-background-color: #E8DAEE;" />
          </children>
@@ -102,7 +102,7 @@
             <Font size="15.0" />
          </font></JFXTextField>
       <FontAwesomeIcon glyphStyle="-fx-fill:  #C5F263" iconName="FORWARD" layoutX="167.0" layoutY="412.0" size="3em" text="" />
-      <FontAwesomeIcon glyphStyle="-fx-fill: #FF6B6B" iconName="FORWARD" layoutX="296.0" layoutY="596.0" size="3em" text="" />
+      <FontAwesomeIcon glyphStyle="-fx-fill: #FF6B6B" iconName="FORWARD" layoutX="60.0" layoutY="596.0" size="3em" text="" />
       <FontAwesomeIcon glyphStyle="-fx-fill: #FF6B6B" iconName="FORWARD" layoutX="167.0" layoutY="252.0" size="3em" text="" />
       <JFXToggleButton fx:id="tgVisibilidadEtiqueta" layoutX="21.0" layoutY="462.0" onAction="#visibilidadEtiqueta" prefHeight="62.0" prefWidth="200.0" text="Visibilidad Tag" textFill="WHITE" toggleColor="#3ce4a8" toggleLineColor="#c5f8e5" unToggleColor="#8f000f" unToggleLineColor="#c27878">
          <font>

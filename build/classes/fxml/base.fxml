@@ -19,11 +19,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="baseStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1222.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.BaseController">
+<StackPane fx:id="baseStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1232.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.BaseController">
    <children>
       <BorderPane fx:id="border" prefHeight="200.0" prefWidth="200.0">
          <left>
-            <Accordion fx:id="acordeonIzq" prefHeight="576.0" prefWidth="202.0" style="-fx-background-color: #FAF0DE;" BorderPane.alignment="CENTER">
+            <Accordion fx:id="acordeonIzq" prefHeight="643.0" prefWidth="190.0" style="-fx-background-color: #FAF0DE;" BorderPane.alignment="CENTER">
               <panes>
                 <TitledPane fx:id="POPULARES" animated="false" text="POPULARES" />
                 <TitledPane fx:id="MASVALORADAS" animated="false" text="MAS VALORADAS" />
@@ -50,7 +50,7 @@
             </Accordion>
          </left>
          <right>
-            <Accordion fx:id="acordeonDer" style="-fx-background-color: #EFFB7D;" BorderPane.alignment="CENTER">
+            <Accordion fx:id="acordeonDer" prefHeight="643.0" prefWidth="158.0" style="-fx-background-color: #EFFB7D;" BorderPane.alignment="CENTER">
               <panes>
                 <TitledPane fx:id="PUBLICAS" animated="false" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #00B8D0;" text="PUBLICAS">
                      <content>
@@ -195,9 +195,17 @@
                         <Insets left="10.0" top="8.0" />
                      </HBox.margin>
                   </JFXButton>
+                  <Label fx:id="lbNullEti" prefHeight="42.0" prefWidth="390.0" text="¡NO SE HAN ENCONTRADO ARCHIVOS CON LA ETIQUETA!" textFill="WHITE" underline="true" visible="false">
+                     <HBox.margin>
+                        <Insets left="80.0" top="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
                   <HBox prefHeight="35.0" prefWidth="357.0" styleClass="boxBuscar" stylesheets="@../estilos/estilos.css">
                      <HBox.margin>
-                        <Insets bottom="15.0" left="400.0" top="15.0" />
+                        <Insets bottom="15.0" top="15.0" />
                      </HBox.margin>
                      <children>
                         <TextField fx:id="txtBuscador" onKeyPressed="#buscarRecursosHBox" prefHeight="38.0" prefWidth="320.0" promptText="Buscar y pulsar ENTER" style="-fx-background-color: white;" styleClass="tf" stylesheets="@../estilos/estilos.css">
@@ -218,9 +226,9 @@
                </children></HBox>
          </top>
          <center>
-            <ScrollPane fx:id="scrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/estilos.css">
+            <ScrollPane fx:id="scrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="643.0" prefWidth="851.0" stylesheets="@../estilos/estilos.css">
                <content>
-                  <FlowPane fx:id="flow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="641.0" prefWidth="819.0" />
+                  <FlowPane fx:id="flow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="645.0" prefWidth="845.0" />
                </content>
                <styleClass>
                   <String fx:value="decrement-arrow" />

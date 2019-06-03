@@ -72,13 +72,19 @@ import conexion.objetos.Visibilidad;
 import conexion.objetos.VisibilidadPK;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconName;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
+import static javafx.scene.paint.Color.RED;
+import javafx.scene.paint.Paint;
+import javafx.stage.PopupWindow;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -149,26 +155,33 @@ public class BaseController implements Initializable {
     private VBox boxSinEti;
     @FXML
     private Label lbCerrarSesion;
-
+    @FXML
+    private Label lbNullEti;
     //------------------------------
-    ListView<String> lista = new ListView<>();
-    TextField textComentar = new TextField();
-    Parent parent;
+    private ListView<String> lista = new ListView<>();
+    private TextField textComentar = new TextField();
+    private Parent parent;
     private HBox vistaRecursos;
     private Label lblApodo;
     private Label lblRecurso;
     private Label lblDescripcion;
     private JFXButton btnVer;
-    Image cerrarTag = new Image("/imagenes/delete3.png");
+    private final Image cerrarTag = new Image("/imagenes/delete3.png");
     public static UsuarioCliente usuarioInicio;
     private Like likeObjeto;
-    int idRecurso;  //MEJORAR  --- id del recurso que está visualizando el usuario actualmente.     
+    private int idRecurso;  //MEJORAR  --- id del recurso que está visualizando el usuario actualmente.     
     private Stage stage;//nuevo para stage
+    private static final String SQUARE_BUBBLE
+            = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
+    private static final String ROUND_BUBBLE
+            = "M12 1c-6.628 0-12 4.573-12 10.213 0 2.39.932 4.591 2.427 6.164l-2.427 5.623 7.563-2.26c9.495 2.598 16.437-3.251 16.437-9.527 0-5.64-5.372-10.213-12-10.213z";
+//    private Tooltip tool;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         flow.setStyle("-fx-background-image: url('/imagenes/fondolistar.png')");
+
         //Mostrar los datos del usuario.        
         lblApodoUsuario.setText(usuarioInicio.getApodo());
         lblNArchivos.setText(String.valueOf(usuarioInicio.getNumeroRecursos()));
@@ -191,15 +204,10 @@ public class BaseController implements Initializable {
                     }
                 }
         );
+        toolTip();
         cargarListaRecursos(RecursoClase.obtenerRecursos());
         System.out.println(usuarioInicio.toString());
     }
-
-    // nuevo metodo establece stage
-    public void setStageBase(Stage stage) {
-
-        this.stage = stage;
-    }//fin metodo
 
     //Métodos nuestros.
     public void cargarListasTags(TitledPane tp) {
@@ -253,17 +261,15 @@ public class BaseController implements Initializable {
                 scrollPrivadas.setStyle("-fx-background-color:#EAB0B2;");
                 tp.setContent(scrollPrivadas);
                 break;
-
         }
-
-        //System.out.println(lista);
     }
 
     private VBox configurarListaEtiquetas(List<?> lista) {
-        Label l = null;
 
+        Label l = null;
         VBox contenido = new VBox();
-//        contenido.setStyle("-fx-background-color:#EAB0B2;");
+        contenido.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        contenido.setStyle("-fx-background-color:#EAB0B2;");
 
         for (Object o : lista) {
             if (o instanceof Etiqueta) {    //VALORADAS / POPULARES
@@ -300,6 +306,8 @@ public class BaseController implements Initializable {
                 contenido.getChildren().add(l);
             }
         }
+//        contenido.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        contenido.setStyle("-fx-background-color:#EAB0B2;");
         return contenido;
     }
 
@@ -313,10 +321,15 @@ public class BaseController implements Initializable {
         gridRecurso.setStyle("-fx-background-image: url('/imagenes/recursocompleto.png')");
         Recurso recurso = obtenerRecursosPorId(idRecurso);
         //Configura el Grid.
-        gridRecurso.setPrefSize(818.0, 691.0);
+        gridRecurso.setPrefSize(846.0, 645.0);
         gridRecurso.setPadding(new Insets(20));
         gridRecurso.setHgap(25);
         gridRecurso.setVgap(25);
+        gridRecurso.getColumnConstraints().add(new ColumnConstraints(130));//Columna 0
+        gridRecurso.getColumnConstraints().add(new ColumnConstraints(150));//Columna 1
+        gridRecurso.getColumnConstraints().add(new ColumnConstraints(120));//Columna 2
+        gridRecurso.getColumnConstraints().add(new ColumnConstraints(140));//Columna 3
+        gridRecurso.getColumnConstraints().add(new ColumnConstraints(170));//Columna 4
         //Icono del fichero.
         ImageView imageHouse = new ImageView(new Image(BaseController.class.getResourceAsStream("/imagenes/usuario-recurso.png")));
         gridRecurso.add(imageHouse, 0, 0, 1, 2);
@@ -326,10 +339,11 @@ public class BaseController implements Initializable {
         textRecurso.setFill(Color.web("#442850"));
         gridRecurso.add(textRecurso, 1, 0);
 
-        Text nombreRecurso = new Text(recurso.getNombre());
-        nombreRecurso.setFill(Color.web("#221428"));
+        Label nombreRecurso = new Label(recurso.getNombre());
+        nombreRecurso.setStyle("-fx-text-fill: #221428");
+        nombreRecurso.setWrapText(true);
         nombreRecurso.setFont(Font.font("Arial", 20));
-        gridRecurso.add(nombreRecurso, 2, 0);
+        gridRecurso.add(nombreRecurso, 2, 0, 2, 1);
         //LIKES
         Text like = new Text("LIKES ");
         like.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -370,7 +384,7 @@ public class BaseController implements Initializable {
         icli.setPadding(new Insets(20));
         icli.setSpacing(20);
         icli.getChildren().addAll(like, icon, cont);
-        gridRecurso.add(icli, 1, 1);
+        gridRecurso.add(icli, 1, 1, 2, 1);
         //FIN LIKES
         //Descripción
         Text descripcion = new Text("Descripción:");
@@ -399,6 +413,8 @@ public class BaseController implements Initializable {
         for (Etiqueta e : listaEtiquetas) {
 
             Hyperlink h = new Hyperlink("#" + e.getEtiquetaPK().getNombre());
+            h.setStyle("-fx-text-fill: #006697;");
+            h.setFont(Font.font("Arial", 14));
             h.setOnAction(value -> {
                 System.out.println("Has pinchado en una etiqueta.");
                 this.cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(e.getEtiquetaPK().getNombre()));
@@ -411,19 +427,25 @@ public class BaseController implements Initializable {
         JFXToggleButton tbEtiqueta = new JFXToggleButton();
         //Seleccionado por defecto.
         tbEtiqueta.setSelected(true);
-        tbEtiqueta.setText("Visibilidad Pública");
-        tbEtiqueta.setStyle("-fx-text-fill: #3CE4A8");
+        tbEtiqueta.setFont(Font.font("Arial", 16));
+        tbEtiqueta.setStyle("-fx-text-fill: #009688");
+        tbEtiqueta.setText("Pública");
+        tbEtiqueta.setUnToggleColor(Color.RED);
+        tbEtiqueta.setUnToggleLineColor(Color.PINK);
+
         //Evento
         tbEtiqueta.setOnAction((ActionEvent e) -> {
             if (tbEtiqueta.isSelected()) {
-                tbEtiqueta.setText("Visibilidad Pública");
-                tbEtiqueta.setStyle("-fx-text-fill: #3CE4A8");
+                tbEtiqueta.setText("Pública");
+                tbEtiqueta.setStyle("-fx-text-fill: #009688");
             } else {
-                tbEtiqueta.setText("Visibilidad Privada");
+                tbEtiqueta.setUnToggleColor(Color.RED);
+                tbEtiqueta.setUnToggleLineColor(Color.PINK);
+                tbEtiqueta.setText("Privada");
                 tbEtiqueta.setStyle("-fx-text-fill: #8f000f");
             }
         });
-        gridRecurso.add(tbEtiqueta, 2, 6);
+        gridRecurso.add(tbEtiqueta, 3, 1);
 
         TextField textField = new TextField();
         textField.setStyle("-fx-text-fill: #006697;");
@@ -487,6 +509,8 @@ public class BaseController implements Initializable {
         gridRecurso.add(buttonGuardarComen, 0, 3);
 
         textComentar.setPrefSize(200, 20);
+        textComentar.setStyle("-fx-text-fill: #006697;");
+        textComentar.setFont(Font.font("Arial", 14));
         textComentar.setStyle("-fx-background-color: #FFFFFF;");
         gridRecurso.add(textComentar, 1, 3, 2, 1);
 
@@ -497,7 +521,7 @@ public class BaseController implements Initializable {
 
         lista.setItems(data);
         lista.setPrefSize(150, 140);
-        gridRecurso.add(lista, 0, 4, 4, 2);
+        gridRecurso.add(lista, 0, 4, 4, 1);
         //FIN Comentar
         //Se añade el Grid al flow.
         flow.getChildren().add(gridRecurso);
@@ -525,8 +549,14 @@ public class BaseController implements Initializable {
     @FXML
     private void buscarRecursosHBox(KeyEvent event) {
 
-        if (event.getCode() == KeyCode.ENTER) {
-            this.cargarListaRecursos(RecursoClase.obtenerRecursosBuscarPorEtiqueta(txtBuscador.getText()));
+        lbNullEti.setVisible(false);
+        if (event.getCode() == KeyCode.ENTER && !"".equals(txtBuscador.getText())) {
+            List<Recurso> buscaLista = RecursoClase.obtenerRecursosBuscarPorEtiqueta(txtBuscador.getText());
+            if (!buscaLista.isEmpty()) {
+                this.cargarListaRecursos(buscaLista);
+            } else {
+                lbNullEti.setVisible(true);
+            }
             txtBuscador.setText("");
         }
     }
@@ -558,14 +588,16 @@ public class BaseController implements Initializable {
         for (Recurso r : listaRecursos) {
 
             caja = new AnchorPane();
-            caja.setPrefSize(810, 87);
+            caja.setPrefSize(846, 87);
             caja.setStyle("-fx-background-color: #FF6B6B;");
             gridPane = new GridPane();
             gridPane.setPrefSize(808, 87);
             gridPane.setStyle("-fx-background-image: url('/imagenes/recursodinamico.png')");
             gridPane.setPadding(new Insets(15));
-            gridPane.setHgap(40);
+            gridPane.setHgap(30);
             gridPane.setVgap(15);
+            gridPane.getRowConstraints().add(new RowConstraints(20));//Fila 0
+            gridPane.getRowConstraints().add(new RowConstraints(67));//Fila 1
             AnchorPane.setTopAnchor(gridPane, 10.0);
             AnchorPane.setLeftAnchor(gridPane, 10.0);
             AnchorPane.setRightAnchor(gridPane, 10.0);
@@ -590,7 +622,8 @@ public class BaseController implements Initializable {
             });
 
             Label lbRecurso = new Label(r.getNombre());
-            lbRecurso.setPrefSize(140, 35);
+            lbRecurso.setPrefSize(140, 58);
+            lbRecurso.setWrapText(true);
             lbRecurso.setStyle("-fx-text-fill: #ffffff;"
                     + "-fx-font-size: 15px;\n"
                     + "-fx-font-family: \"System\"");
@@ -603,10 +636,11 @@ public class BaseController implements Initializable {
 
             Label lblDescripcion = new Label(r.getDescripcion());
             lblDescripcion.setPrefSize(340, 58);
+            lblDescripcion.setWrapText(true);
             lblDescripcion.setStyle("-fx-text-fill: #ffffff;"
                     + "-fx-font-size: 15px;\n"
                     + "-fx-font-family: \"System\"");
-            lblDescripcion.wrapTextProperty();
+            lblDescripcion.setWrapText(true);
             //lblDescripcion.setAlignment(Pos.CENTER);
 
             Label lbUsuario = new Label("Usuario:");
@@ -640,22 +674,16 @@ public class BaseController implements Initializable {
     public void tagButton(VBox box, Etiqueta tag) {
         ImageView iconCerrar = new ImageView(cerrarTag);
         Label btTag = new Label("#" + tag.getEtiquetaPK().getNombre(), iconCerrar);
-//        btTag.setPrefHeight(20);
-//        btTag.setContentDisplay(ContentDisplay.RIGHT);
-//        Para borrar al etiqueta.
-//        btTag.setOnAction((ActionEvent value) -> {
-//           
-//        });
-//        iconCerrar.setOnMouseClicked((MouseEvent value)->{
-//             if (EtiquetaUsuario.borrarEtiqueta(tag.getEtiquetaPK())) {
-//                System.out.println("ETIQUETA borrada.");
-//                box.getChildren().removeAll(btTag);
-//                this.cargarRecursoCompleto(this.idRecurso);
-//            }
-//            
-//        });
-        btTag.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->iconCerrar.fireEvent(event));       
-                    
+        btTag.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getTarget().getClass() == javafx.scene.control.Label.class) //IMAGEN
+            {
+                iconCerrar.fireEvent(event);
+            } else //TEXTO
+            {
+                this.cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(tag.getEtiquetaPK().getNombre()));
+            }
+        });
+
         iconCerrar.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -667,7 +695,7 @@ public class BaseController implements Initializable {
                 event.consume();
             }
         });
-        box.getChildren().addAll(btTag);
+        box.getChildren().add(btTag);
     }
 
     public void cerrar() {
@@ -684,12 +712,47 @@ public class BaseController implements Initializable {
             Stage stage1 = new Stage();
             Scene scene = new Scene(anchor);
             scene.getStylesheets().add("/estilos/estilos.css");
+            stage1.setTitle("FInfinity");
+            stage1.initStyle(StageStyle.UNDECORATED);
+            stage1.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/icons8_infinity_large_40px.png")));
             stage1.setScene(scene);
             stage1.show();
             cerrar();
         } catch (IOException ex) {
             Logger.getLogger(BaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private Tooltip formatoToolTip(Tooltip tooltip) {
+        tooltip.setStyle("-fx-font: normal bold 16 Langdon; "
+                + "-fx-base: #AE3522; "
+                + "-fx-text-fill: orange;"
+                + " -fx-shape: \"" + ROUND_BUBBLE + "\";");
+        tooltip.setAnchorLocation(PopupWindow.AnchorLocation.WINDOW_BOTTOM_LEFT);
+        //SQUARE_BUBBLE->distinto formato de la caja del tooltip.
+        return tooltip;
+        //        tool.setText("PULSE PARA\nVER PERFIL");
+//        tool.setStyle("-fx-font: normal bold 16 Langdon; "
+//                + "-fx-base: #AE3522; "
+//                + "-fx-text-fill: orange;");  
+    }
+    
+    private void toolTip(){//Metodo para cargar los Tooltip.
+        
+         //Tooltips 
+        btnSalir.setTooltip(formatoToolTip(new Tooltip("PULSE PARA SALIR")));
+        btnAnadirRecurso.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR ARCHIVOS PROPIOS")));
+        btnAnadirRecEnBase.setTooltip(formatoToolTip(new Tooltip("PULSE PARA AÑADIR UN ARCHIVO")));
+        txtBuscador.setTooltip(formatoToolTip(new Tooltip("PULSE PARA BUSCAR ARCHIVOS\nPOR ETIQUETA")));
+        POPULARES.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \n LAS ETIQUETAS MAS POPULARES")));
+        MASVALORADAS.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nLAS ETIQUETAS MAS VALORADAS")));
+        NOVEDADES.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR\nLAS ULTIMAS ETIQUETAS")));
+        GENERAL.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nTODAS LAS ETIQUETAS")));
+        SINETIQUETAR.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nARCHIVOS SIN ETIQUETAS")));
+        PUBLICAS.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nETIQUETAS PÚBLICAS PROPIAS")));
+        PRIVADAS.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nETIQUETAS PRIVADAS PROPIAS")));
+        lbCerrarSesion.setTooltip(formatoToolTip(new Tooltip("PULSE PARA \nCERRAR LA SESION")));
+        //Fin Tooltips
     }
 
     @FXML

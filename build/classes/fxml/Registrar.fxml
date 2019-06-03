@@ -4,6 +4,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -70,11 +71,16 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box" stylesheets="@../styles/estilos.css">
          <children>
-            <TextField fx:id="txtContrasena2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="44.0" prefWidth="297.0" promptText="Contraseña" styleClass="tf" stylesheets="@../styles/estilos.css" HBox.hgrow="ALWAYS">
+            <PasswordField fx:id="pass1" prefHeight="37.0" prefWidth="235.0" promptText="Contraseña" styleClass="tf" stylesheets="@../estilos/estilos.css">
                <font>
                   <Font size="15.0" />
                </font>
-            </TextField>
+            </PasswordField>
+            <Label fx:id="lb1" prefHeight="37.0" prefWidth="311.0" styleClass="tf" stylesheets="@../estilos/estilos.css">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
             <FontAwesomeIcon glyphStyle="-fx-fill:DEDEE4" iconName="KEY" size="2em" />
          </children>
          <VBox.margin>
@@ -83,14 +89,16 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box" stylesheets="@../styles/estilos.css">
          <children>
-            <TextField fx:id="txtConfirmarContarsena" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="204.0" promptText="Confirma la contraseña" styleClass="tf" stylesheets="@../styles/estilos.css" HBox.hgrow="ALWAYS">
+            <PasswordField fx:id="pass2" prefHeight="37.0" prefWidth="235.0" promptText="Repita contraseña" styleClass="tf" stylesheets="@../estilos/estilos.css">
                <font>
                   <Font size="15.0" />
                </font>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </TextField>
+            </PasswordField>
+            <Label fx:id="lb2" prefHeight="37.0" prefWidth="311.0" styleClass="tf" stylesheets="@../estilos/estilos.css">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
             <FontAwesomeIcon glyphStyle="-fx-fill:DEDEE4" iconName="KEY" size="2em" />
          </children>
          <VBox.margin>

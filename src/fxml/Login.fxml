@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginParent" prefHeight="800.0" prefWidth="1222.0" style="-fx-background-color: #52E3D2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.LoginController">
+<AnchorPane fx:id="loginParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1222.0" style="-fx-background-color: #52E3D2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.LoginController">
    <children>
       <Polygon fill="#c5f263" layoutX="1172.0" layoutY="146.0" points="-66.0, 39.99998474121094, 50.0, 40.0, 50.0, -52.84199523925781" stroke="#c5f263" strokeType="INSIDE" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff6b6b" height="406.0" layoutX="228.0" layoutY="20.0" rotate="-36.9" stroke="#ff6b6b" strokeType="INSIDE" width="981.0" />

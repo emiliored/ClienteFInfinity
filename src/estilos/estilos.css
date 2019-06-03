@@ -1,11 +1,11 @@
-.base{
+/*.base{
     -fx-background-image: url("/infinito/fondoGrisDegradado.jpg");
     -fx-background-size: contain;
     -fx-opacity: 0.2;
-/*    -fx-background-repeat: stretch;   
+    -fx-background-repeat: stretch;   
     -fx-background-size: 900 506;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); */
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }
 .inicio{
     -fx-font-size: 30pt;
@@ -20,19 +20,22 @@
 .base1{
     -fx-background-image: url("/infinito/fondoInicio.jpg");
     -fx-background-size: contain;
-/*    -fx-background-repeat: stretch;   
+    -fx-background-repeat: stretch;   
     -fx-background-size: 900 506;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); */
-}
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+}*/
 /*--------------------INICIO---------------------------------*/
-.parent{
+.parent
+{
     -fx-background-color:transparent;
 }
-.pane{
+.pane
+{
     -fx-background-color:#333333;
 }
-.trans-btn-white-border{
+.trans-btn-white-border
+{
     -fx-background-color:transparent;
     -fx-background-radius:5px;
     -fx-border-color:#cccccc;
@@ -40,18 +43,22 @@
     -fx-border-width:1px;
     -fx-text-fill:whitesmoke;
 }
-.white-pane{
+.white-pane
+{
     -fx-background-color:#FFFFFF;
 }
-.tf_box{
+.tf_box
+{
     -fx-background-color:transparent;
     -fx-border-color:#DEDEE4;
     -fx-border-width:0px 0px 1px 0px;    
 }
-.tf{
+.tf
+{
     -fx-background-color:transparent;    
 }
-.pink-btn{
+.pink-btn
+{
     -fx-background-color:#FF6B6B;
     -fx-background-radius:5px;
     -fx-text-fill:#FFFFFF;
@@ -110,3 +117,11 @@
     -fx-background-insets: 2, 0, 0;
     -fx-background-radius: 2em;
 }
+
+/*--------------*/
+/*.tooltip
+{
+    -fx-font: normal, bold, 4 Langdon; 
+    -fx-base: #AE3522; 
+    -fx-text-fill: orange;
+}*/
