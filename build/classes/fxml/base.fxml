@@ -37,14 +37,21 @@
                         </ScrollPane>
                      </content>
                   </TitledPane>
-                  <TitledPane fx:id="SINETIQUETAR" animated="false" text="SIN ETIQUETAR">
+                  <TitledPane fx:id="SINETIQUETAR" animated="false" style="-fx-background-color: #FDF7BE;" stylesheets="@../estilos/estilos.css" text="SIN ETIQUETAR">
                      <content>
-                        <ScrollPane fx:id="scrollSinEti" prefHeight="200.0" prefWidth="200.0">
+                        <ScrollPane fx:id="scrollSinEti" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FDF7BE;">
                            <content>
-                              <VBox fx:id="boxSinEti" prefHeight="503.0" prefWidth="203.0" />
+                              <VBox fx:id="boxSinEti" prefHeight="503.0" prefWidth="203.0" style="-fx-background-color: #FDF7BE;" />
                            </content>
                         </ScrollPane>
                      </content>
+                     <styleClass>
+                        <String fx:value="arrow" />
+                        <String fx:value="arrow-button" />
+                        <String fx:value="content" />
+                        <String fx:value="title" />
+                        <String fx:value="titled-pane" />
+                     </styleClass>
                   </TitledPane>
               </panes>
             </Accordion>
@@ -52,7 +59,7 @@
          <right>
             <Accordion fx:id="acordeonDer" prefHeight="643.0" prefWidth="158.0" style="-fx-background-color: #EFFB7D;" BorderPane.alignment="CENTER">
               <panes>
-                <TitledPane fx:id="PUBLICAS" animated="false" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #00B8D0;" text="PUBLICAS">
+                <TitledPane fx:id="PUBLICAS" animated="false" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #00B8D0;" stylesheets="@../estilos/estilos.css" text="PUBLICAS">
                      <content>
                         <ScrollPane fx:id="scrollPublicas" prefHeight="587.0" prefWidth="206.0">
                            <content>
@@ -60,8 +67,16 @@
                            </content>
                         </ScrollPane>
                      </content>
+                     <styleClass>
+                        <String fx:value="arrow" />
+                        <String fx:value="arrow-button" />
+                        <String fx:value="content" />
+                        <String fx:value="pane" />
+                        <String fx:value="title" />
+                        <String fx:value="titled-pane" />
+                     </styleClass>
                 </TitledPane>
-                <TitledPane fx:id="PRIVADAS" animated="false" minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" text="PRIVADAS">
+                <TitledPane fx:id="PRIVADAS" animated="false" minHeight="180.0" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../estilos/estilos.css" text="PRIVADAS">
                      <content>
                         <ScrollPane fx:id="scrollPrivadas" prefHeight="200.0" prefWidth="200.0">
                            <content>
@@ -69,6 +84,14 @@
                            </content>
                         </ScrollPane>
                      </content>
+                     <styleClass>
+                        <String fx:value="arrow" />
+                        <String fx:value="arrow-button" />
+                        <String fx:value="content" />
+                        <String fx:value="pane" />
+                        <String fx:value="title" />
+                        <String fx:value="titled-pane" />
+                     </styleClass>
                 </TitledPane>
               </panes>
             </Accordion>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -19,6 +20,9 @@
          <font>
             <Font name="Jokerman" size="64.0" />
          </font>
+         <effect>
+            <Reflection />
+         </effect>
       </Text>
    </children>
 </StackPane>
