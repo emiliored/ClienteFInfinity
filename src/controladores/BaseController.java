@@ -75,6 +75,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconName;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.ColumnConstraints;
@@ -174,6 +175,15 @@ public class BaseController implements Initializable {
             = "M12 1c-6.628 0-12 4.573-12 10.213 0 2.39.932 4.591 2.427 6.164l-2.427 5.623 7.563-2.26c9.495 2.598 16.437-3.251 16.437-9.527 0-5.64-5.372-10.213-12-10.213z";
 //    private Tooltip tool;
 
+    ObservableList<String> olPublicas;
+    ObservableList<String> olPrivadas;
+    @FXML
+    private VBox boxPopulares;
+    @FXML
+    private VBox boxValoradas;
+    @FXML
+    private VBox boxNovedades;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -196,7 +206,7 @@ public class BaseController implements Initializable {
         acordeonDer.expandedPaneProperty().addListener(
                 (ObservableValue<? extends TitledPane> ov, TitledPane old_val,
                         TitledPane new_val) -> {
-                    if (new_val != null) {                        
+                    if (new_val != null) {
                         cargarListasTags(new_val);
                     }
                 }
@@ -208,38 +218,78 @@ public class BaseController implements Initializable {
 
     //Métodos nuestros.
     public void cargarListasTags(TitledPane tp) {
-
-//        tp.setStyle("-fx-background-color:#EAB0B2;");
-        //Switch para cargar el TitledPane apropiado.
-//        System.out.println(tp.getText());
+        
         switch (tp.getText()) {
-//            case "POPULARES":
-//                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasPopulares());
-//                sp.setContent(contenido);
-//                anchorGeneral.setStyle("-fx-background-color:#EAB0B2;");
-//                tp.setContent(anchorPopulares);
-//                break;
-//            case "MAS VALORADAS":
-//                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasValoradas());
-//                sp.setContent(contenido);
-//                anchorGeneral.setStyle("-fx-background-color:#EAB0B2;");
-//                tp.setContent(anchorValoradas);
-//                break;
-//            case "NOVEDADES":
-//                contenido = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasNovedades());
-//                sp.setContent(contenido);
-//                anchorGeneral.setStyle("-fx-background-color:#EAB0B2;");
-//                tp.setContent(anchorNovedades);
-//                break;
+            case "POPULARES":
+                boxPopulares.getChildren().clear();
+                List<Etiqueta> lisEtiP = EtiquetaUsuario.obtenerEtiquetasPopulares();
+                for (Etiqueta e : lisEtiP) {
+                    Label l = (new Label("#" + e.getEtiquetaPK().getNombre()));
+                    l.setOnMouseClicked((new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                                System.out.println("Has pinchado en una etiqueta." + e);
+                                cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(e.getEtiquetaPK().getNombre()));
+                            }
+                        }
+                    }));
+                    boxPopulares.getChildren().add(l);
+                }
+                break;
+            case "MAS VALORADAS":
+                boxValoradas.getChildren().clear();
+                List<Etiqueta> lisEtiV = EtiquetaUsuario.obtenerEtiquetasValoradas();
+                for (Etiqueta e : lisEtiV) {
+                    Label l = (new Label("#" + e.getEtiquetaPK().getNombre()));
+                    l.setOnMouseClicked((new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                                System.out.println("Has pinchado en una etiqueta." + e);
+                                cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(e.getEtiquetaPK().getNombre()));
+                            }
+                        }
+                    }));
+                    boxValoradas.getChildren().add(l);
+                }
+                break;
+            case "NOVEDADES":
+                boxNovedades.getChildren().clear();
+                List<Etiqueta> lisEtiN = EtiquetaUsuario.obtenerEtiquetasNovedades();
+                for (Etiqueta e : lisEtiN) {
+                    Label l = (new Label("#" + e.getEtiquetaPK().getNombre()));
+                    l.setOnMouseClicked((new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                                System.out.println("Has pinchado en una etiqueta." + e);
+                                cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(e.getEtiquetaPK().getNombre()));
+                            }
+                        }
+                    }));
+                    boxNovedades.getChildren().add(l);
+                }
+                break;
             case "GENERAL":
-                boxGeneral = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasGenerales());
-//                boxGeneral.setStyle("-fx-background-color: #00B8D0;");
-                scrollGeneral.setContent(boxGeneral);
-//                scrollGeneral.setStyle("-fx-background-color: #00B8D0;");
-                tp.setContent(scrollGeneral);//tp.setContent(boxGeneral);//
-                tp.setStyle("-fx-background-color: #00B8D0;");
+                boxGeneral.getChildren().clear();
+                List<Etiqueta> lisEtiG = EtiquetaUsuario.obtenerEtiquetasGenerales();
+                for (Etiqueta e : lisEtiG) {
+                    Label l = (new Label("#" + e.getEtiquetaPK().getNombre()));
+                    l.setOnMouseClicked((new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                                System.out.println("Has pinchado en una etiqueta." + e);
+                                cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(e.getEtiquetaPK().getNombre()));
+                            }
+                        }
+                    }));
+                    boxGeneral.getChildren().add(l);
+                }
                 break;
             case "SIN ETIQUETAR":
+                boxSinEti.getChildren().clear();
                 List<Recurso> lisRe = EtiquetaUsuario.obtenerRecursoSinEtiquetar();
                 for (Recurso r : lisRe) {
                     Label l = new Label(r.getNombre().substring(0, r.getNombre().lastIndexOf(".")));
@@ -253,87 +303,22 @@ public class BaseController implements Initializable {
                     }));
                     boxSinEti.getChildren().add(l);
                 }
-//                boxSinEti = configurarListaEtiquetas(EtiquetaUsuario.obtenerRecursoSinEtiquetar());
-//                boxSinEti.setStyle("-fx-background-color:#EAB0B2;");
-//                scrollSinEti.setContent(boxSinEti);
-//                scrollSinEti.setStyle("-fx-background-color:#EAB0B2;");
-//                tp.setContent(scrollSinEti);
-//                tp.setStyle("-fx-background-color: #EAB0B2;");
                 break;
             case "PUBLICAS":
                 boxPublicas.getChildren().clear();
-                List<String> lis = (List<String>) EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(usuarioInicio.getIdUsuario());
-                ObservableList<String>ol=FXCollections.observableList(lis);
-                for (String o : lis) {
+                olPublicas = FXCollections.observableList((List<String>) EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(usuarioInicio.getIdUsuario()));
+                for (String o : olPublicas) {
                     tagButton(boxPublicas, new Etiqueta(new EtiquetaPK(usuarioInicio.getIdUsuario(), o)));
                 }
-//                boxPublicas = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(usuarioInicio.getIdUsuario()));
-//                boxPublicas.setStyle("-fx-background-color: #00B8D0;");
-//                scrollPublicas.setContent(boxPublicas);
-//                scrollPublicas.setStyle("-fx-background-color: #00B8D0;");
-//                PUBLICAS.setContent(scrollPublicas);
-//                PUBLICAS.setStyle("-fx-background-color: #EAB0B2;");
                 break;
             case "PRIVADAS":
                 boxPrivadas.getChildren().clear();
-                List<String> lis2 = (List<String>) EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(usuarioInicio.getIdUsuario());
-                for (String o : lis2) {
-                    tagButton(boxPublicas, new Etiqueta(new EtiquetaPK(usuarioInicio.getIdUsuario(), o)));
+                olPrivadas = FXCollections.observableList((List<String>) EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(usuarioInicio.getIdUsuario()));
+                for (String o : olPrivadas) {
+                    tagButton(boxPrivadas, new Etiqueta(new EtiquetaPK(usuarioInicio.getIdUsuario(), o)));
                 }
-//                boxPrivadas = configurarListaEtiquetas(EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(usuarioInicio.getIdUsuario()));
-//                scrollPrivadas.setContent(boxPrivadas);
-//                scrollPrivadas.setStyle("-fx-background-color:#EAB0B2;");
-//                PRIVADAS.setContent(scrollPrivadas);
-////                PRIVADAS.setStyle("-fx-background-color: #EAB0B2;");
                 break;
         }
-    }
-
-    private VBox configurarListaEtiquetas(List<?> lista) {
-
-        Label l = null;
-        VBox contenido = new VBox();
-//        contenido.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        contenido.setStyle("-fx-background-color:#EAB0B2;");
-
-        for (Object o : lista) {
-            if (o instanceof Etiqueta) {    //VALORADAS / POPULARES
-                Etiqueta e = (Etiqueta) o;
-                l = (new Label("#" + e.getEtiquetaPK().getNombre()));
-                l.setOnMouseClicked((new EventHandler<MouseEvent>() {
-
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                            System.out.println("Has pinchado en una etiqueta." + e);
-                            cargarListaRecursos(RecursoClase.obtenerRecursosPorEtiqueta(e.getEtiquetaPK().getNombre()));
-                        }
-                    }
-                }));
-            }
-            if (o instanceof String) { //PUBLICAS / PRIVADAS
-                String s = (String) o;
-                tagButton(contenido, new Etiqueta(new EtiquetaPK(usuarioInicio.getIdUsuario(), s)));
-            }
-            if (o instanceof Recurso) {  //SIN ETIQUETAR
-                Recurso r = (Recurso) o;
-                l = new Label(r.getNombre().substring(0, r.getNombre().lastIndexOf(".")));
-                l.setOnMouseClicked((new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                            cargarRecursoCompleto(r.getIdRecurso());
-                        }
-                    }
-                }));
-            }
-            if (!(o instanceof String)) {//Solo añade cuando no es una instancia de String,el metodo tagButton añade las etiquetas al box
-                contenido.getChildren().add(l);
-            }
-        }
-//        contenido.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        contenido.setStyle("-fx-background-color:#EAB0B2;");
-        return contenido;
     }
 
     public void cargarRecursoCompleto(int idRecurso) {//Carga un recurso con toda la informacion (se ejecuta cuando en los recursos dinamicos se pulsa "VER"
@@ -482,6 +467,11 @@ public class BaseController implements Initializable {
                 //Crear etiquetas.
                 if (EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(usuarioInicio.getIdUsuario(), textField.getText(), recurso.getIdRecurso()), tbEtiqueta.isSelected()))) {
                     this.cargarRecursoCompleto(recurso.getIdRecurso());
+                    if (tbEtiqueta.isSelected()) {
+                        this.cargarListasTags(PUBLICAS);
+                    } else {
+                        this.cargarListasTags(PRIVADAS);
+                    }
                     System.out.println("ETIQUETA creada correctamente.");
                 }
                 textField.clear();
@@ -604,6 +594,7 @@ public class BaseController implements Initializable {
 
     public void cargarListaRecursos(List<Recurso> listaRecursos) {//Carga dinamicamente una vista con la lista de recursos
 
+        FxIconicsLabel labIcon;
         AnchorPane caja;
         GridPane gridPane = new GridPane();
 
@@ -615,6 +606,7 @@ public class BaseController implements Initializable {
             caja = new AnchorPane();
             caja.setPrefSize(846, 87);
             caja.setStyle("-fx-background-color: #FF6B6B;");
+              
             gridPane = new GridPane();
             gridPane.setPrefSize(808, 87);
             gridPane.setStyle("-fx-background-image: url('/imagenes/recursodinamico.png')");
@@ -628,12 +620,17 @@ public class BaseController implements Initializable {
             AnchorPane.setRightAnchor(gridPane, 10.0);
             AnchorPane.setBottomAnchor(gridPane, 10.0);
 
-            FxIconicsLabel labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
+            if(!r.getVisibilidad()){ //Privado
+               labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
                     .size(30)
-                    //.text("ARCHIVO")
-                    .color(MaterialColor.WHITE)
+                    .color(MaterialColor.RED_900)
                     .build();
-
+            }else{  //Público
+                labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
+                    .size(30)
+                    .color(MaterialColor.LIME_900)
+                    .build();
+            }  
             JFXButton btVer = new JFXButton();
             btVer.setText("VER");
             btVer.setPrefSize(104, 30);
@@ -769,14 +766,14 @@ public class BaseController implements Initializable {
         btnAnadirRecurso.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR ARCHIVOS PROPIOS")));
         btnAnadirRecEnBase.setTooltip(formatoToolTip(new Tooltip("PULSE PARA AÑADIR UN ARCHIVO")));
         txtBuscador.setTooltip(formatoToolTip(new Tooltip("PULSE PARA BUSCAR ARCHIVOS\nPOR ETIQUETA")));
-        POPULARES.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \n LAS ETIQUETAS MAS POPULARES")));
-        MASVALORADAS.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nLAS ETIQUETAS MAS VALORADAS")));
-        NOVEDADES.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR\nLAS ULTIMAS ETIQUETAS")));
-        GENERAL.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nTODAS LAS ETIQUETAS")));
-        SINETIQUETAR.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nARCHIVOS SIN ETIQUETAS")));
-        PUBLICAS.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nETIQUETAS PÚBLICAS PROPIAS")));
-        PRIVADAS.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR \nETIQUETAS PRIVADAS PROPIAS")));
-        lbCerrarSesion.setTooltip(formatoToolTip(new Tooltip("PULSE PARA \nCERRAR LA SESION")));
+        POPULARES.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR LAS ETIQUETAS MAS POPULARES")));
+        MASVALORADAS.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR LAS ETIQUETAS MAS VALORADAS")));
+        NOVEDADES.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR LAS ULTIMAS ETIQUETAS")));
+        GENERAL.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR TODAS LAS ETIQUETAS")));
+        SINETIQUETAR.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR ARCHIVOS SIN ETIQUETAS")));
+        PUBLICAS.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR ETIQUETAS PÚBLICAS PROPIAS")));
+        PRIVADAS.setTooltip(formatoToolTip(new Tooltip("PULSE PARA LISTAR ETIQUETAS PRIVADAS PROPIAS")));
+        lbCerrarSesion.setTooltip(formatoToolTip(new Tooltip("PULSE PARA CERRAR LA SESION")));
         //Fin Tooltips
     }
 

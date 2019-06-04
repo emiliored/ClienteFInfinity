@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import conexion.EtiquetaUsuario;
 import conexion.FicherosBinarios;
+import conexion.RecursoClase;
 import conexion.objetos.Recurso;
 import conexion.objetos.Visibilidad;
 import conexion.objetos.VisibilidadPK;
@@ -32,7 +33,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 
 public class AnadirRecursoController implements Initializable {
 
@@ -60,65 +60,58 @@ public class AnadirRecursoController implements Initializable {
     private JFXToggleButton tgVisibilidadEtiqueta;
     @FXML
     private Label lbVisibilidadEtiqueta;
-    
-    
+
     final FileChooser fileChooser = new FileChooser();
     private Stage stage;
     private Parent parent;
     private File file;
-    private Recurso r;    
-    
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
-    
-    }    
+    public void initialize(URL url, ResourceBundle rb) {
+
+    }
 
     @FXML
     private void seleccionar(ActionEvent event) {
         lbSubido.setText("");
         file = fileChooser.showOpenDialog(stage);
-        
     }
 
     @FXML
     private void subir(ActionEvent event) {
-        if(Objects.nonNull(file)){
-            r=new Recurso();
+        if (Objects.nonNull(file)) {
+            Recurso r = new Recurso();
             r.setIdUsuario(usuarioInicio.getIdUsuario());
             r.setDescripcion(txtAreaDescripcion.getText().replace(' ', '+'));//Validar el textarea. Sólo letras, números, puntos, comas y espacios.
             r.setVisibilidad(tgVisibilidadRecurso.isSelected());
-            if(FicherosBinarios.subir(file, r)){
-               lbSubido.setText("Archivo subido correctamente.");
-            }else{
-               lbSubido.setText("Fallo durante la subida del archivo.");
+            if (FicherosBinarios.subir(file, r)) {
+                lbSubido.setText("Archivo subido correctamente.");
+            } else {
+                lbSubido.setText("Fallo durante la subida del archivo.");
             }
             //Limpiamos el fichero y los campos.
-            file=null;
+            file = null;
             tgVisibilidadRecurso.setSelected(false);
             txtAreaDescripcion.setText("");
         }
-           
+
     }
 
     private void cancelar(ActionEvent event) throws IOException {
-                
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(AnadirRecursoController.class.getResource("/fxml/base.fxml"));
-//        StackPane stack = loader.load();
-        
+
         parent = FXMLLoader.load(getClass().getResource("/fxml/PanelUsuario.fxml"));
         vistaSubirRecurso.getChildren().clear();
         vistaSubirRecurso.getChildren().add(parent);
-        
+
     }
 
-   @FXML
+    @FXML
     private void visibilidadRecurso(ActionEvent event) {
-        
-        if(tgVisibilidadRecurso.isSelected()){
+
+        if (tgVisibilidadRecurso.isSelected()) {
             lbVisibilidadRecurso.setText("Pública");
             lbVisibilidadRecurso.setStyle("-fx-text-fill: #3CE4A8");
-        }else{
+        } else {
             lbVisibilidadRecurso.setText("Privada");
             lbVisibilidadRecurso.setStyle("-fx-text-fill: #8f000f");
         }
@@ -126,35 +119,38 @@ public class AnadirRecursoController implements Initializable {
 
     @FXML
     private void limpiaLabel(InputMethodEvent event) {
-        
-       // lbSubido.setText("");
+
+        // lbSubido.setText("");
     }
 
     @FXML
     private void anadirEtiquetar(ActionEvent event) {
-        
-        if(file.exists()&&!"".equals(txtEtiquetar.getText())){
-            EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(BaseController.usuarioInicio.getIdUsuario(), txtEtiquetar.getText(), r.getIdRecurso()),tgVisibilidadEtiqueta.isSelected()));
-            Hyperlink h = new Hyperlink("#" + txtEtiquetar.getText());
-            flowEtiquetas.getChildren().add(h);
-            System.out.println("ETIQUETA creada correctamente.");            
-        }else{
-            System.out.println("Error al crear etiqueta");    
-        }
-        txtEtiquetar.clear();
+//
+//        try {
+//            int idRecurso=0; //TODO
+//            if (file.exists() && !"".equals(txtEtiquetar.getText())) {
+//                EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(BaseController.usuarioInicio.getIdUsuario(), txtEtiquetar.getText(), idRecurso), tgVisibilidadEtiqueta.isSelected()));
+//                Hyperlink h = new Hyperlink("#" + txtEtiquetar.getText());
+//                flowEtiquetas.getChildren().add(h);
+//                System.out.println("ETIQUETA creada correctamente.");
+//            } else {
+//                System.out.println("Error al crear etiqueta");
+//            }
+//        } catch (NullPointerException npe) {
+//
+//        }
+//        txtEtiquetar.clear();
     }
 
     @FXML
     private void visibilidadEtiqueta(ActionEvent event) {
-        if(tgVisibilidadEtiqueta.isSelected()){
+        if (tgVisibilidadEtiqueta.isSelected()) {
             lbVisibilidadEtiqueta.setText("Pública");
             lbVisibilidadEtiqueta.setStyle("-fx-text-fill: #3CE4A8");
-        }else{
+        } else {
             lbVisibilidadEtiqueta.setText("Privada");
             lbVisibilidadEtiqueta.setStyle("-fx-text-fill: #8f000f");
         }
     }
 
-    
-    
 }

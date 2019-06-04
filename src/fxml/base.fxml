@@ -25,9 +25,18 @@
          <left>
             <Accordion fx:id="acordeonIzq" prefHeight="643.0" prefWidth="190.0" style="-fx-background-color: #FAF0DE;" BorderPane.alignment="CENTER">
               <panes>
-                <TitledPane fx:id="POPULARES" animated="false" text="POPULARES" />
-                <TitledPane fx:id="MASVALORADAS" animated="false" text="MAS VALORADAS" />
-                <TitledPane fx:id="NOVEDADES" animated="false" text="NOVEDADES" />
+                <TitledPane fx:id="POPULARES" animated="false" text="POPULARES">
+                     <content>
+                        <VBox fx:id="boxPopulares" prefHeight="200.0" prefWidth="100.0" />
+                     </content></TitledPane>
+                <TitledPane fx:id="MASVALORADAS" animated="false" text="MAS VALORADAS">
+                     <content>
+                        <VBox fx:id="boxValoradas" prefHeight="200.0" prefWidth="100.0" />
+                     </content></TitledPane>
+                <TitledPane fx:id="NOVEDADES" animated="false" text="NOVEDADES">
+                     <content>
+                        <VBox fx:id="boxNovedades" prefHeight="200.0" prefWidth="100.0" />
+                     </content></TitledPane>
                   <TitledPane fx:id="GENERAL" animated="false" text="GENERAL">
                      <content>
                         <ScrollPane fx:id="scrollGeneral" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;">
