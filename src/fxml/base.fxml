@@ -25,26 +25,54 @@
          <left>
             <Accordion fx:id="acordeonIzq" prefHeight="643.0" prefWidth="190.0" style="-fx-background-color: #FAF0DE;" BorderPane.alignment="CENTER">
               <panes>
-                <TitledPane fx:id="POPULARES" animated="false" text="POPULARES">
+                <TitledPane fx:id="POPULARES" animated="false" stylesheets="@../estilos/estilos.css" text="POPULARES">
                      <content>
-                        <VBox fx:id="boxPopulares" prefHeight="200.0" prefWidth="100.0" />
-                     </content></TitledPane>
-                <TitledPane fx:id="MASVALORADAS" animated="false" text="MAS VALORADAS">
+                        <VBox fx:id="boxPopulares" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #AAE7EF;" />
+                     </content>
+                     <styleClass>
+                        <String fx:value="arrow" />
+                        <String fx:value="arrow-button" />
+                        <String fx:value="content" />
+                        <String fx:value="title" />
+                        <String fx:value="titled-pane" />
+                     </styleClass></TitledPane>
+                <TitledPane fx:id="MASVALORADAS" animated="false" stylesheets="@../estilos/estilos.css" text="MAS VALORADAS">
                      <content>
-                        <VBox fx:id="boxValoradas" prefHeight="200.0" prefWidth="100.0" />
-                     </content></TitledPane>
-                <TitledPane fx:id="NOVEDADES" animated="false" text="NOVEDADES">
+                        <VBox fx:id="boxValoradas" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #FFD9FF;" />
+                     </content>
+                     <styleClass>
+                        <String fx:value="arrow" />
+                        <String fx:value="arrow-button" />
+                        <String fx:value="content" />
+                        <String fx:value="title" />
+                        <String fx:value="titled-pane" />
+                     </styleClass></TitledPane>
+                <TitledPane fx:id="NOVEDADES" animated="false" style="-fx-background-color: #FFD9FF;" stylesheets="@../estilos/estilos.css" text="NOVEDADES">
                      <content>
-                        <VBox fx:id="boxNovedades" prefHeight="200.0" prefWidth="100.0" />
-                     </content></TitledPane>
-                  <TitledPane fx:id="GENERAL" animated="false" text="GENERAL">
+                        <VBox fx:id="boxNovedades" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #D8F697;" />
+                     </content>
+                     <styleClass>
+                        <String fx:value="arrow" />
+                        <String fx:value="arrow-button" />
+                        <String fx:value="content" />
+                        <String fx:value="title" />
+                        <String fx:value="titled-pane" />
+                     </styleClass></TitledPane>
+                  <TitledPane fx:id="GENERAL" animated="false" stylesheets="@../estilos/estilos.css" text="GENERAL">
                      <content>
-                        <ScrollPane fx:id="scrollGeneral" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00B8D0;">
+                        <ScrollPane fx:id="scrollGeneral" prefHeight="200.0" prefWidth="200.0">
                            <content>
-                              <VBox fx:id="boxGeneral" prefHeight="509.0" prefWidth="208.0" style="-fx-background-color: #00B8D0;" />
+                              <VBox fx:id="boxGeneral" prefHeight="520.0" prefWidth="191.0" style="-fx-background-color: #FAD69E;" />
                            </content>
                         </ScrollPane>
                      </content>
+                     <styleClass>
+                        <String fx:value="arrow" />
+                        <String fx:value="arrow-button" />
+                        <String fx:value="content" />
+                        <String fx:value="title" />
+                        <String fx:value="titled-pane" />
+                     </styleClass>
                   </TitledPane>
                   <TitledPane fx:id="SINETIQUETAR" animated="false" style="-fx-background-color: #FDF7BE;" stylesheets="@../estilos/estilos.css" text="SIN ETIQUETAR">
                      <content>
@@ -68,11 +96,11 @@
          <right>
             <Accordion fx:id="acordeonDer" prefHeight="643.0" prefWidth="158.0" style="-fx-background-color: #EFFB7D;" BorderPane.alignment="CENTER">
               <panes>
-                <TitledPane fx:id="PUBLICAS" animated="false" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #00B8D0;" stylesheets="@../estilos/estilos.css" text="PUBLICAS">
+                <TitledPane fx:id="PUBLICAS" animated="false" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #AAE7EF;" stylesheets="@../estilos/estilos.css" text="PUBLICAS">
                      <content>
                         <ScrollPane fx:id="scrollPublicas" prefHeight="587.0" prefWidth="206.0">
                            <content>
-                              <VBox fx:id="boxPublicas" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #00B8D0;" />
+                              <VBox fx:id="boxPublicas" prefHeight="587.0" prefWidth="206.0" style="-fx-background-color: #AAE7EF;" />
                            </content>
                         </ScrollPane>
                      </content>
@@ -89,7 +117,7 @@
                      <content>
                         <ScrollPane fx:id="scrollPrivadas" prefHeight="200.0" prefWidth="200.0">
                            <content>
-                              <VBox fx:id="boxPrivadas" prefHeight="586.0" prefWidth="206.0" />
+                              <VBox fx:id="boxPrivadas" prefHeight="586.0" prefWidth="206.0" style="-fx-background-color: #FFD9FF;" />
                            </content>
                         </ScrollPane>
                      </content>

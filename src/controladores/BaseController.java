@@ -313,7 +313,7 @@ public class BaseController implements Initializable {
                 break;
             case "PRIVADAS":
                 boxPrivadas.getChildren().clear();
-                olPrivadas = FXCollections.observableList((List<String>) EtiquetaUsuario.obtenerEtiquetasUsuarioPublicas(usuarioInicio.getIdUsuario()));
+                olPrivadas = FXCollections.observableList((List<String>) EtiquetaUsuario.obtenerEtiquetasUsuarioPrivadas(usuarioInicio.getIdUsuario()));
                 for (String o : olPrivadas) {
                     tagButton(boxPrivadas, new Etiqueta(new EtiquetaPK(usuarioInicio.getIdUsuario(), o)));
                 }
@@ -458,6 +458,7 @@ public class BaseController implements Initializable {
         gridRecurso.add(tbEtiqueta, 3, 1);
 
         TextField textField = new TextField();
+        
         textField.setStyle("-fx-text-fill: #006697;");
         textField.setFont(Font.font("Arial", 14));
         textField.setPrefSize(135, 35);
@@ -468,9 +469,9 @@ public class BaseController implements Initializable {
                 if (EtiquetaUsuario.crearEtiqueta(new Visibilidad(new VisibilidadPK(usuarioInicio.getIdUsuario(), textField.getText(), recurso.getIdRecurso()), tbEtiqueta.isSelected()))) {
                     this.cargarRecursoCompleto(recurso.getIdRecurso());
                     if (tbEtiqueta.isSelected()) {
-                        this.cargarListasTags(PUBLICAS);
+                        cargarListasTags(PUBLICAS);
                     } else {
-                        this.cargarListasTags(PRIVADAS);
+                        cargarListasTags(PRIVADAS);
                     }
                     System.out.println("ETIQUETA creada correctamente.");
                 }
