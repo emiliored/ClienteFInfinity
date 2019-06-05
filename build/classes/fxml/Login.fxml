@@ -45,8 +45,8 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <JFXButton layoutX="132.0" layoutY="283.0" onAction="#registrar" prefWidth="130.0" styleClass="trans-btn-white-border" stylesheets="@../estilos/estilos.css" text="REGISTRATE" />
-            <JFXButton layoutX="943.0" layoutY="284.0" onAction="#identificar" prefWidth="130.0" styleClass="trans-btn-white-border" stylesheets="@../estilos/estilos.css" text="IDENTIFICATE" />
+            <JFXButton fx:id="btRegistrar" layoutX="132.0" layoutY="283.0" onAction="#registrar" prefWidth="130.0" styleClass="trans-btn-white-border" stylesheets="@../estilos/estilos.css" text="REGISTRATE" />
+            <JFXButton fx:id="btIdentificar" layoutX="943.0" layoutY="284.0" onAction="#identificar" prefWidth="130.0" styleClass="trans-btn-white-border" stylesheets="@../estilos/estilos.css" text="IDENTIFICATE" />
             <VBox fx:id="vbox" layoutX="25.0" layoutY="-85.0" prefHeight="600.0" prefWidth="600.0" styleClass="white-pane" stylesheets="@../estilos/estilos.css">
                <children>
                   <ImageView fitHeight="529.0" fitWidth="602.0" pickOnBounds="true" preserveRatio="true">
@@ -61,5 +61,14 @@
             </VBox>
          </children>
       </Pane>
+      <Label fx:id="lbSalir" layoutX="1143.0" layoutY="729.0" onMouseClicked="#salir" prefHeight="51.0" prefWidth="51.0">
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/icons8_shutdown_64px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
    </children>
 </AnchorPane>

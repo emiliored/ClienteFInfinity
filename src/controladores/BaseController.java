@@ -75,6 +75,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconName;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
@@ -218,7 +219,7 @@ public class BaseController implements Initializable {
 
     //Métodos nuestros.
     public void cargarListasTags(TitledPane tp) {
-        
+
         switch (tp.getText()) {
             case "POPULARES":
                 boxPopulares.getChildren().clear();
@@ -458,7 +459,14 @@ public class BaseController implements Initializable {
         gridRecurso.add(tbEtiqueta, 3, 1);
 
         TextField textField = new TextField();
-        
+        textField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("([0-9A-Za-z]){0,30}")) {//"([A-Za-z0-9])"
+                    textField.setText(oldValue);
+                }
+            }
+        });
         textField.setStyle("-fx-text-fill: #006697;");
         textField.setFont(Font.font("Arial", 14));
         textField.setPrefSize(135, 35);
@@ -566,6 +574,14 @@ public class BaseController implements Initializable {
     private void buscarRecursosHBox(KeyEvent event) {
 
         lbNullEti.setVisible(false);
+        txtBuscador.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if ((!newValue.matches("([0-9A-Za-z]){0,30}"))) {
+                    txtBuscador.setText(oldValue);
+                }
+            }
+        });
         if (event.getCode() == KeyCode.ENTER && !"".equals(txtBuscador.getText())) {
             List<Recurso> buscaLista = RecursoClase.obtenerRecursosBuscarPorEtiqueta(txtBuscador.getText());
             if (!buscaLista.isEmpty()) {
@@ -607,7 +623,7 @@ public class BaseController implements Initializable {
             caja = new AnchorPane();
             caja.setPrefSize(846, 87);
             caja.setStyle("-fx-background-color: #FF6B6B;");
-              
+
             gridPane = new GridPane();
             gridPane.setPrefSize(808, 87);
             gridPane.setStyle("-fx-background-image: url('/imagenes/recursodinamico.png')");
@@ -621,17 +637,17 @@ public class BaseController implements Initializable {
             AnchorPane.setRightAnchor(gridPane, 10.0);
             AnchorPane.setBottomAnchor(gridPane, 10.0);
 
-            if(!r.getVisibilidad()){ //Privado
-               labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
-                    .size(30)
-                    .color(MaterialColor.RED_900)
-                    .build();
-            }else{  //Público
+            if (!r.getVisibilidad()) { //Privado
                 labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
-                    .size(30)
-                    .color(MaterialColor.LIME_900)
-                    .build();
-            }  
+                        .size(30)
+                        .color(MaterialColor.RED_900)
+                        .build();
+            } else {  //Público
+                labIcon = (FxIconicsLabel) new FxIconicsLabel.Builder(FxFontGoogleMaterial.Icons.gmd_folder_special)
+                        .size(30)
+                        .color(MaterialColor.LIME_900)
+                        .build();
+            }
             JFXButton btVer = new JFXButton();
             btVer.setText("VER");
             btVer.setPrefSize(104, 30);

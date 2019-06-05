@@ -4,6 +4,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,61 +13,66 @@
 <?import javafx.scene.text.Font?>
 
 <VBox id="VBox" fx:id="parentContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="white-pane" stylesheets="@../estilos/estilos.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.IdentificarController">
-  <children>
-      <ImageView fitHeight="123.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
-         <VBox.margin>
-            <Insets bottom="40.0" left="200.0" />
-         </VBox.margin>
-         <image>
-            <Image url="@../imagenes/infinito2.png" />
-         </image>
-      </ImageView>
-      <Label text="Identificate" textFill="#e66577">
-         <font>
-            <Font size="22.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="20.0" right="15.0" top="20.0" />
-         </VBox.margin>
-      </Label>
-      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box" stylesheets="@../styles/estilos.css">
-         <VBox.margin>
-            <Insets left="15.0" right="15.0" top="20.0" />
-         </VBox.margin>
-         <children>
-            <TextField fx:id="txtApodo1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#limpiarLabel" promptText="Usuario" styleClass="tf" stylesheets="@../styles/estilos.css" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </TextField>
-            <FontAwesomeIcon glyphStyle="-fx-fill:DEDEE4" iconName="USER" size="2em" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box" stylesheets="@../styles/estilos.css">
-         <VBox.margin>
-            <Insets left="15.0" right="15.0" top="20.0" />
-         </VBox.margin>
-         <children>
-            <TextField fx:id="txtContrasena1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#limpiarLabel" promptText="Contraseña" styleClass="tf" stylesheets="@../styles/estilos.css" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </TextField>
-            <FontAwesomeIcon glyphStyle="-fx-fill:DEDEE4" iconName="KEY" size="2em" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box" stylesheets="@../styles/estilos.css">
-         <VBox.margin>
-            <Insets left="15.0" right="15.0" top="20.0" />
-         </VBox.margin>
-         <children>
-            <Label fx:id="lbError" prefHeight="36.0" prefWidth="386.0" textFill="#fc0505" />
-            <JFXButton fx:id="btnAceptar1" onAction="#identificarABase" prefHeight="34.0" prefWidth="178.0" styleClass="pink-btn" stylesheets="@../styles/estilos.css" text="Aceptar">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-         </children>
-      </HBox>
-   </children>
+    <children>
+        <ImageView fitHeight="123.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
+            <VBox.margin>
+                <Insets bottom="40.0" left="200.0" />
+            </VBox.margin>
+            <image>
+                <Image url="@../imagenes/infinito2.png" />
+            </image>
+        </ImageView>
+        <Label text="Identificate" textFill="#e66577">
+            <font>
+                <Font size="22.0" />
+            </font>
+            <VBox.margin>
+                <Insets left="20.0" right="15.0" top="20.0" />
+            </VBox.margin>
+        </Label>
+        <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box" stylesheets="@../styles/estilos.css">
+            <VBox.margin>
+                <Insets left="15.0" right="15.0" top="20.0" />
+            </VBox.margin>
+            <children>
+                <TextField fx:id="txtApodo1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#limpiarLabel" promptText="Usuario" styleClass="tf" stylesheets="@../styles/estilos.css" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </TextField>
+                <FontAwesomeIcon glyphStyle="-fx-fill:DEDEE4" iconName="USER" size="2em" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box" stylesheets="@../styles/estilos.css">
+            <VBox.margin>
+                <Insets left="15.0" right="15.0" top="20.0" />
+            </VBox.margin>
+            <children>
+                <PasswordField fx:id="txtContrasena1" prefHeight="42.0" prefWidth="200.0" promptText="Contraseña" styleClass="tf" stylesheets="@../estilos/estilos.css">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </PasswordField>
+                <Label fx:id="lbError1" prefHeight="42.0" prefWidth="349.0" styleClass="tf" stylesheets="@../estilos/estilos.css">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <FontAwesomeIcon glyphStyle="-fx-fill:DEDEE4" iconName="KEY" size="2em" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box" stylesheets="@../styles/estilos.css">
+            <VBox.margin>
+                <Insets left="15.0" right="15.0" top="20.0" />
+            </VBox.margin>
+            <children>
+                <Label fx:id="lbError" prefHeight="36.0" prefWidth="386.0" textFill="#fc0505" />
+                <JFXButton fx:id="btnAceptar1" onAction="#identificarABase" prefHeight="34.0" prefWidth="178.0" styleClass="pink-btn" stylesheets="@../styles/estilos.css" text="Aceptar">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </JFXButton>
+            </children>
+        </HBox>
+    </children>
 </VBox>
