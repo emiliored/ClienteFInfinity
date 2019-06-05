@@ -14,7 +14,9 @@ import conexion.objetos.Recurso;
 import static controladores.BaseController.usuarioInicio;
 import java.io.File;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -33,7 +35,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class AnadirRecursoController implements Initializable {
-    
+
     @FXML
     private JFXButton btnSeleccionar;
     @FXML
@@ -56,23 +58,20 @@ public class AnadirRecursoController implements Initializable {
     private Label lbEliminar;
     @FXML
     private Label lbEminado;
-    
+
     private JFXToggleButton tgVisibilidadEtiqueta;
     private Label lbVisibilidadEtiqueta;
     final FileChooser fileChooser = new FileChooser();
     private Stage stage;
     private Parent parent;
     private File file;
-    private String nombreRe;
-    private int numIdRe;
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         txtAreaDescripcion.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if ((newValue.equals(" "))&&(!newValue.matches("([0-9A-Za-z]){1}([0-9A-Za-z\\s\\.\\,\\_\\-\\:])*"))) {
+                if ((newValue.equals(" ")) && (!newValue.matches("([0-9A-Za-z]){1}([0-9A-Za-z\\s\\.\\,\\_\\-\\:])*"))) {
                     txtAreaDescripcion.setText(oldValue);
                 }
             }
@@ -80,16 +79,16 @@ public class AnadirRecursoController implements Initializable {
         cargaListaRecurso();
         toolTip();
     }
-    
+
     @FXML
     private void seleccionar(ActionEvent event) {
         lbSubido.setText("");
         file = fileChooser.showOpenDialog(stage);
     }
-    
+
     @FXML
     private void subir(ActionEvent event) {
-        
+
         if (Objects.nonNull(file)) {
             Recurso r = new Recurso();
             r.setIdUsuario(usuarioInicio.getIdUsuario());
@@ -105,12 +104,12 @@ public class AnadirRecursoController implements Initializable {
             tgVisibilidadRecurso.setSelected(true);
             txtAreaDescripcion.setText("");
         }
-        
+
     }
-    
+
     @FXML
     private void visibilidadRecurso(ActionEvent event) {
-        
+
         if (tgVisibilidadRecurso.isSelected()) {
             lbVisibilidadRecurso.setText("Pública");
             lbVisibilidadRecurso.setStyle("-fx-text-fill: #3CE4A8");
@@ -119,42 +118,45 @@ public class AnadirRecursoController implements Initializable {
             lbVisibilidadRecurso.setStyle("-fx-text-fill: #8f000f");
         }
     }
-    
+
     @FXML
     private void limpiaLabel(InputMethodEvent event) {
 
         // lbSubido.setText("");
     }
-    
+
     @FXML
     private void eliminar(ActionEvent event) {
-    }
-    
-    public void cargaListaRecurso() {
-        int i = 0;
-        
-        List<Recurso> listaRe = RecursoClase.obtenerRecursos();
-        listaArchivos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);        
-        for ( Recurso r : listaRe) {
-            nombreRe = r.getNombre();
-            numIdRe = r.getIdRecurso();
-            listaArchivos.getItems().add(i, r);
-        }
-        listaArchivos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Recurso>() {
-            @Override
-            public void changed(ObservableValue<? extends Recurso> observable, Recurso oldValue, Recurso newValue) {
-//                Recurso re = null;
-//                lbEliminar.setText(re.getNombre());
+        int idRecurso = listaArchivos.getItems().get(listaArchivos.getSelectionModel().getSelectedIndex()).getIdRecurso();
+        if (!(idRecurso == -1)) {
+            System.out.println("item seleccionado. " + idRecurso);
+            if (RecursoClase.eliminarRecurso(idRecurso)) {
+                listaArchivos.getItems().remove(listaArchivos.getSelectionModel().getSelectedIndex());
+                System.out.println("Archivo borrado.");
+                lbEminado.setText("Archivo borrado.");
+            } else {
+                System.out.println("Error al borrar.");
+                lbEminado.setText("Error al borrar.");
             }
-        });
+        }
+
     }
-    
+
+    public void cargaListaRecurso() {
+
+        listaArchivos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        for (Recurso r : RecursoClase.obtenerRecursos()) {
+            listaArchivos.getItems().add(r);
+        }
+
+    }
+
     private Tooltip formatoToolTip(Tooltip tooltip) {
-           
+
         tooltip.setStyle("-fx-font: normal bold 14 Langdon; "
                 + "-fx-base: #AE3522; "
-                + "-fx-text-fill: orange;"); 
-        return tooltip;      
+                + "-fx-text-fill: orange;");
+        return tooltip;
     }
 
     private void toolTip() {//Metodo para cargar los Tooltip.

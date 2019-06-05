@@ -128,14 +128,9 @@ public class Recurso implements Serializable {
         return true;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Recurso{" + "idRecurso=" + idRecurso + ", nombre=" + nombre + ", descripcion=" + descripcion + ", filehash=" + filehash + ", ruta=" + ruta + ", visibilidad=" + visibilidad + ", idUsuario=" + idUsuario + ", usuario=" + usuario + '}';
-//    }
-
     @Override
     public String toString() {
-        return idRecurso + "  " + nombre ;
+        return nombre ;
     }
 
     
