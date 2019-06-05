@@ -14,9 +14,6 @@ import conexion.objetos.Recurso;
 import static controladores.BaseController.usuarioInicio;
 import java.io.File;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -54,8 +51,6 @@ public class AnadirRecursoController implements Initializable {
     private JFXListView<Recurso> listaArchivos;
     @FXML
     private JFXButton btnEliminar;
-    @FXML
-    private Label lbEliminar;
     @FXML
     private Label lbEminado;
 
@@ -148,7 +143,6 @@ public class AnadirRecursoController implements Initializable {
         for (Recurso r : RecursoClase.obtenerRecursos()) {
             listaArchivos.getItems().add(r);
         }
-
     }
 
     private Tooltip formatoToolTip(Tooltip tooltip) {

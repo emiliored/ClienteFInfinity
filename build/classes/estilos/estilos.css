@@ -1,31 +1,4 @@
-/*.base{
-    -fx-background-image: url("/infinito/fondoGrisDegradado.jpg");
-    -fx-background-size: contain;
-    -fx-opacity: 0.2;
-    -fx-background-repeat: stretch;   
-    -fx-background-size: 900 506;
-    -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
-}
-.inicio{
-    -fx-font-size: 30pt;
-    -fx-font-family: "Segoe UI Black";
-    -fx-text-fill: black;
-}
-
-.hBox{
-    -fx-font-size: 16px;
-    -fx-font-family: "System";
-}
-.base1{
-    -fx-background-image: url("/infinito/fondoInicio.jpg");
-    -fx-background-size: contain;
-    -fx-background-repeat: stretch;   
-    -fx-background-size: 900 506;
-    -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
-}*/
-/*--------------------INICIO---------------------------------*/
+/*--------------------INICIO Identificar/Registrar---------------------------------*/
 .parent
 {
     -fx-background-color:transparent;
@@ -118,14 +91,8 @@
     -fx-background-radius: 2em;
 }
 
-/*--------------*/
-/*.tooltip
-{
-    -fx-font: normal, bold, 4 Langdon; 
-    -fx-base: #AE3522; 
-    -fx-text-fill: orange;
-}*/
-/*-------------------------------------------*/
+
+/*--------------TitlePanel-----------------------------*/
 .titled-pane 
 {
 -fx-skin: "com.sun.javafx.scene.control.skin.TitledPaneSkin";    
