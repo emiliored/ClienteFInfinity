@@ -10,6 +10,6 @@ package conexion;
  */
 public class Conectar {
     
-    public static final String IPSERVER = "192.168.0.155";
+    public static String IPSERVER;
     public static final String PORTSERVER = "8080";
 }
