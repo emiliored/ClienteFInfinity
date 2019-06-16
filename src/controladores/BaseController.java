@@ -380,7 +380,6 @@ public class BaseController implements Initializable {
                     likeObjeto.invertir();
                     System.out.println("Aprecio añadido.");
                     icon.setFill(Color.RED);
-                    this.cargarRecursoCompleto(recurso.getIdRecurso());
                 }
             } else { //Borrar
                 if (AprecioConectar.borrarAprecio(recurso.getIdUsuario(), recurso.getIdRecurso())) {
@@ -388,7 +387,6 @@ public class BaseController implements Initializable {
                     likeObjeto.invertir();
                     System.out.println("Aprecio borrado.");
                     icon.setFill(Color.WHITE);
-                    this.cargarRecursoCompleto(recurso.getIdRecurso());
                 }
             }
         });
