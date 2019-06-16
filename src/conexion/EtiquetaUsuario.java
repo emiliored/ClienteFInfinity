@@ -29,7 +29,7 @@ public class EtiquetaUsuario {
     public static List<Etiqueta> obtenerEtiquetasPopulares() {
         Client client = ClientBuilder.newClient();
         return (List<Etiqueta>) client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/etiqueta/populares")
+                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/etiqueta/populares")
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Etiqueta>>() {
         });
     }
@@ -37,7 +37,7 @@ public class EtiquetaUsuario {
     public static List<Etiqueta> obtenerEtiquetasValoradas() {
         Client client = ClientBuilder.newClient();
         return (List<Etiqueta>) client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/etiqueta/valoradas")
+                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/etiqueta/valoradas")
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Etiqueta>>() {
         });
     }
@@ -45,7 +45,7 @@ public class EtiquetaUsuario {
     public static List<Etiqueta> obtenerEtiquetasNovedades() {
         Client client = ClientBuilder.newClient();
         return (List<Etiqueta>) client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/etiqueta/novedades")
+                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/etiqueta/novedades")
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Etiqueta>>() {
         });
 
@@ -54,7 +54,7 @@ public class EtiquetaUsuario {
     public static List<Etiqueta> obtenerEtiquetasGenerales() {
         Client client = ClientBuilder.newClient();
         return (List<Etiqueta>) client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/etiqueta/generales")
+                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/etiqueta/generales")
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Etiqueta>>() {
         });
 
@@ -63,7 +63,7 @@ public class EtiquetaUsuario {
     public static List<Recurso> obtenerRecursoSinEtiquetar() {
         Client client = ClientBuilder.newClient();
         return (List<Recurso>) client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/recurso/sinetiquetar")
+                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/sinetiquetar")
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Recurso>>() {
         });
     }
@@ -71,7 +71,7 @@ public class EtiquetaUsuario {
     public static List<String> obtenerEtiquetasUsuarioPublicas(int idUsuario) {
         Client client = ClientBuilder.newClient();
         return (List<String>) client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/etiqueta/publicas?idUsuario=" + idUsuario)
+                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/etiqueta/publicas?idUsuario=" + idUsuario)
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<String>>() {
         });
 
@@ -80,7 +80,7 @@ public class EtiquetaUsuario {
     public static List<String> obtenerEtiquetasUsuarioPrivadas(int idUsuario) {
         Client client = ClientBuilder.newClient();
         return (List<String>) client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/etiqueta/privadas?idUsuario=" + idUsuario)
+                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/etiqueta/privadas?idUsuario=" + idUsuario)
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<String>>() {
         });
 
@@ -90,7 +90,7 @@ public class EtiquetaUsuario {
     public static List<Etiqueta> obtenerEtiquetasRecurso(int idRecurso) {
         Client client = ClientBuilder.newClient();
         return (List<Etiqueta>) client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/etiqueta/recurso?idRecurso=" + idRecurso+"&idUsuario="+BaseController.usuarioInicio.getIdUsuario())
+                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/etiqueta/recurso?idRecurso=" + idRecurso+"&idUsuario="+BaseController.usuarioInicio.getIdUsuario())
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Etiqueta>>() {
         });
     }
@@ -101,7 +101,7 @@ public class EtiquetaUsuario {
         Client client = ClientBuilder.newClient();
         StatusType respuesta
                 = client.target(
-                        "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/etiqueta")
+                        "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/etiqueta")
                         .request().put(Entity.entity(v, MediaType.APPLICATION_JSON)).getStatusInfo();
         System.out.println(respuesta);
         if (respuesta.equals(Response.Status.CREATED)) {
@@ -117,7 +117,7 @@ public class EtiquetaUsuario {
         Client client = ClientBuilder.newClient();
         StatusType respuesta
                 = client.target(
-                        "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/etiqueta")
+                        "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/etiqueta")
                         .queryParam("idUsuario", tag.getIdUsuario())
                         .queryParam("nombre", tag.getNombre())
                         .request().delete().getStatusInfo();

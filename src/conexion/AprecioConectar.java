@@ -25,7 +25,7 @@ public class AprecioConectar {
     public static Like obtenerLikesRecurso(int idUsuario,int idRecurso) {
         Client client = ClientBuilder.newClient();
         return client.target(
-                "http://" + IPSERVER + ":8080/ServidorFInfinity/servicios/aprecio/likes?idUsuario="+idUsuario+"&idRecurso="+idRecurso)
+                "https://" + IPSERVER + ":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/aprecio/likes?idUsuario="+idUsuario+"&idRecurso="+idRecurso)
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<Like>(){});
     }
     
@@ -34,7 +34,7 @@ public class AprecioConectar {
         boolean boo=false;
         Client client=ClientBuilder.newClient();
         StatusType respuesta=client.target(
-             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/aprecio" )
+             "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/aprecio" )
                 .request().put(Entity.entity(a, MediaType.APPLICATION_JSON)).getStatusInfo();
         if(respuesta.equals(Status.CREATED))
             boo=true;
@@ -45,7 +45,7 @@ public class AprecioConectar {
         boolean boo=false;
         Client client=ClientBuilder.newClient();
         StatusType respuesta=client.target(
-             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/aprecio?idUsuario="+idUsuario+"&idRecurso="+idRecurso)
+             "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/aprecio?idUsuario="+idUsuario+"&idRecurso="+idRecurso)
                 .request().delete().getStatusInfo();
         if(respuesta.equals(Status.OK))
             boo=true;

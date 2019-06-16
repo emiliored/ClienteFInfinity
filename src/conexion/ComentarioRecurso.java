@@ -33,7 +33,7 @@ public class ComentarioRecurso {
     public static List<Comentario> obtenerComentariosPorRecurso(int idRecurso){
         Client client=ClientBuilder.newClient();
         return (List<Comentario>) client.target(
-             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/comentario/recurso?idRecurso="+idRecurso)
+             "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/comentario/recurso?idRecurso="+idRecurso)
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Comentario>>(){});
     }
     
@@ -41,7 +41,7 @@ public class ComentarioRecurso {
         boolean boo=false;
         Client client=ClientBuilder.newClient();
         StatusType respuesta=client.target(
-             "http://"+IPSERVER+":8080/ServidorFInfinity/servicios/comentario" )
+             "https://"+IPSERVER+":"+Conectar.PORTSERVER+"ServidorFInfinity/servicios/comentario" )
                 .request().put(Entity.entity(c, MediaType.APPLICATION_JSON)).getStatusInfo();
         if(respuesta.equals(Status.CREATED))
             boo=true;

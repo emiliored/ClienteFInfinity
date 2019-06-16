@@ -38,6 +38,7 @@ public class MainApp extends Application {
 
 
     public static void main(String[] args) {
+        System.setProperty("javax.net.ssl.trustStore", "keystore.jks");
         Conectar.IPSERVER=args[0];
         launch(args);
     }   
