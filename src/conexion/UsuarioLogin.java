@@ -26,7 +26,7 @@ public class UsuarioLogin {
         boolean respuesta=false;
         Client client=ClientBuilder.newClient();
         Response respuestaServidor=client.target(
-             "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/usuario/login?apodo="+apodoUser+"&contrasena="+contrasenaUser).request()
+             "http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/usuario/login?apodo="+apodoUser+"&contrasena="+contrasenaUser).request()
                 .get();
         if(Status.ACCEPTED.getStatusCode()==respuestaServidor.getStatus()){
             BaseController.usuarioInicio=respuestaServidor.readEntity(UsuarioCliente.class);
@@ -40,7 +40,7 @@ public class UsuarioLogin {
         Usuario u=new Usuario(null,apodoUser,nombreUser,apellidosUser,contrasenaUser,null);
         Client client=ClientBuilder.newClient();
         int estadoServidor=client.target(
-             "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/usuario/registro").request()
+             "http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/usuario/registro").request()
                 .put(Entity.entity(u,MediaType.APPLICATION_JSON)).getStatus();
         if(Status.CREATED.getStatusCode()==estadoServidor)
             respuesta=true;
@@ -52,7 +52,7 @@ public class UsuarioLogin {
     public static String obtenerApodoUsuario(int idUsuario){
          Client client=ClientBuilder.newClient();
         return client.target(
-             "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/usuario/apodo?idUsuario="+idUsuario)
+             "http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/usuario/apodo?idUsuario="+idUsuario)
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<String>(){});
     }
 }

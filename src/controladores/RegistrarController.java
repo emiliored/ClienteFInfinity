@@ -107,7 +107,7 @@ public class RegistrarController implements Initializable {
                 (registroUsuario(txtNombre2.getText(), txtApellidos2.getText(), txtApodo2.getText(), pass2.getText())) == true) {
             lbErrorRegistro.setText("REGISTRO CORRECTO, POR FAVOR ACCEDA A LOGIN");
         } else {
-            lbErrorRegistro.setText("ERROR EN EL REGISTRO, LOS DATOS NO SON CORRECTOS");
+            lbErrorRegistro.setText("ERROR EN EL REGISTRO, DATOS INCORRECTOS");
         }
     }
 

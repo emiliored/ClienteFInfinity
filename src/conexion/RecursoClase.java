@@ -25,7 +25,7 @@ public class RecursoClase {
     public static List<Recurso> obtenerRecursos() {
         Client client = ClientBuilder.newClient();
         return client.target(
-                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso?idUsuario=" + BaseController.usuarioInicio.getIdUsuario())
+                "http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso?idUsuario=" + BaseController.usuarioInicio.getIdUsuario())
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Recurso>>() {
         });
 
@@ -34,14 +34,14 @@ public class RecursoClase {
     public static Recurso obtenerRecursosPorId(int idRecurso) {
         Client client = ClientBuilder.newClient();
         return client.target(
-                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/" + idRecurso)
+                "http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/" + idRecurso)
                 .request(MediaType.APPLICATION_JSON).get(Recurso.class);
     }
 
     public static List<Recurso> obtenerRecursosPorEtiqueta(String nombre) {
         Client client = ClientBuilder.newClient();
         return client.target(
-                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/etiqueta?nombre=" + nombre)
+                "http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/etiqueta?nombre=" + nombre)
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Recurso>>() {
         });
     }
@@ -49,7 +49,7 @@ public class RecursoClase {
     public static List<Recurso> obtenerRecursosBuscarPorEtiqueta(String nombre) {
         Client client = ClientBuilder.newClient();
         return client.target(
-                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/buscar?nombre=" + nombre)
+                "http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/buscar?nombre=" + nombre)
                 .request(MediaType.APPLICATION_JSON).get(new GenericType<List<Recurso>>() {
         });
     }
@@ -58,7 +58,7 @@ public class RecursoClase {
         boolean boo = false;
         Client client = ClientBuilder.newClient();
         Response.StatusType estado = client.target(
-                "https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/borrar?idRecurso=" + idRecurso)
+                "http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/borrar?idRecurso=" + idRecurso)
                 .request().delete().getStatusInfo();
         if (Response.Status.OK.getStatusCode() == estado.getStatusCode()) {
             boo = true;

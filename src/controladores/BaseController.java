@@ -338,7 +338,7 @@ public class BaseController implements Initializable {
         gridRecurso.setVgap(25);
         gridRecurso.getColumnConstraints().add(new ColumnConstraints(130));//Columna 0
         gridRecurso.getColumnConstraints().add(new ColumnConstraints(150));//Columna 1
-        gridRecurso.getColumnConstraints().add(new ColumnConstraints(130));//Columna 2
+        gridRecurso.getColumnConstraints().add(new ColumnConstraints(135));//Columna 2
         gridRecurso.getColumnConstraints().add(new ColumnConstraints(140));//Columna 3
         gridRecurso.getColumnConstraints().add(new ColumnConstraints(170));//Columna 4
         //Icono del fichero.

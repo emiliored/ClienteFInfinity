@@ -33,7 +33,7 @@ public class FicherosBinarios {
             File ficheroComprimido = CompresionZip.comprimirFicheroTemp(fichero);
             InputStream is = new FileInputStream(ficheroComprimido);
             //Subir
-            int estado = cliente.target("https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/subir?idUsuario=" + r.getIdUsuario() + "&nombre=" + fichero.getName().substring(0, fichero.getName().lastIndexOf(".")) + ".zip" + "&descripcion=" + r.getDescripcion() + "&visibilidad=" + r.getVisibilidad())
+            int estado = cliente.target("http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/subir?idUsuario=" + r.getIdUsuario() + "&nombre=" + fichero.getName().substring(0, fichero.getName().lastIndexOf(".")) + ".zip" + "&descripcion=" + r.getDescripcion() + "&visibilidad=" + r.getVisibilidad())
                     .request()
                     .post(Entity.entity(is, MediaType.APPLICATION_OCTET_STREAM)).getStatus();
             if (estado != Status.CREATED.getStatusCode()) {
@@ -50,7 +50,7 @@ public class FicherosBinarios {
         try {
             Client cliente = ClientBuilder.newClient();
             //Descargar comprimido.
-            Response respuesta = cliente.target("https://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/descargar?idRecurso=" + idRecurso)
+            Response respuesta = cliente.target("http://"+IPSERVER+":"+Conectar.PORTSERVER+"/ServidorFInfinity/servicios/recurso/descargar?idRecurso=" + idRecurso)
                     .request(MediaType.APPLICATION_OCTET_STREAM)
                     .get();
             File fichero = File.createTempFile("temp", ".zip");
