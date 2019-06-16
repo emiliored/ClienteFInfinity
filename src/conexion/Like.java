@@ -55,7 +55,7 @@ public class Like implements Serializable {
     }
     
     public boolean invertir(){
-        return !this.propio;
+        return this.propio=!this.propio;
     }
     
     @Override

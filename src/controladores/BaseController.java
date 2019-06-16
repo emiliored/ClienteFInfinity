@@ -338,7 +338,7 @@ public class BaseController implements Initializable {
         gridRecurso.setVgap(25);
         gridRecurso.getColumnConstraints().add(new ColumnConstraints(130));//Columna 0
         gridRecurso.getColumnConstraints().add(new ColumnConstraints(150));//Columna 1
-        gridRecurso.getColumnConstraints().add(new ColumnConstraints(135));//Columna 2
+        gridRecurso.getColumnConstraints().add(new ColumnConstraints(140));//Columna 2
         gridRecurso.getColumnConstraints().add(new ColumnConstraints(140));//Columna 3
         gridRecurso.getColumnConstraints().add(new ColumnConstraints(170));//Columna 4
         //Icono del fichero.
@@ -360,7 +360,7 @@ public class BaseController implements Initializable {
         like.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         like.setFill(Color.web("#AA4747"));
         //Método para obtener los likes del servidor.
-        likeObjeto = AprecioConectar.obtenerLikesRecurso(recurso.getIdUsuario(), recurso.getIdRecurso());
+        likeObjeto = AprecioConectar.obtenerLikesRecurso(usuarioInicio.getIdUsuario(), recurso.getIdRecurso());
 
         Text cont = new Text(String.valueOf(likeObjeto.getContador()));
         cont.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -375,14 +375,14 @@ public class BaseController implements Initializable {
 
         icon.setOnMousePressed((MouseEvent evento) -> {
             if (!likeObjeto.isPropio()) { //Añadir
-                if (AprecioConectar.anadirAprecio(new Aprecio(new AprecioPK(recurso.getIdUsuario(), recurso.getIdRecurso()), new Date()))) {
+                if (AprecioConectar.anadirAprecio(new Aprecio(new AprecioPK(usuarioInicio.getIdUsuario(), recurso.getIdRecurso()), new Date()))) {
                     cont.setText(String.valueOf(likeObjeto.incrementar()));
                     likeObjeto.invertir();
                     System.out.println("Aprecio añadido.");
                     icon.setFill(Color.RED);
                 }
             } else { //Borrar
-                if (AprecioConectar.borrarAprecio(recurso.getIdUsuario(), recurso.getIdRecurso())) {
+                if (AprecioConectar.borrarAprecio(usuarioInicio.getIdUsuario(), recurso.getIdRecurso())) {
                     cont.setText(String.valueOf(likeObjeto.decrementar()));
                     likeObjeto.invertir();
                     System.out.println("Aprecio borrado.");
